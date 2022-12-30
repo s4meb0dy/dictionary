@@ -15,6 +15,9 @@ const AnimatedBg: React.FC<AnimatedBg> = ({ children }) => {
             <div className='absolute top-[70%] left-[-10%] h-full'>
                 <Ball width={'900px'} height={'900px'} />
             </div>
+            {/* <div className="absolute top-0 left-0 h-full w-full">
+
+            </div> */}
         </div>
     )
 }
