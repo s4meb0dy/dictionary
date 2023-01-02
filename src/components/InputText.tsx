@@ -1,39 +1,51 @@
-import React from "react"
-import { InputSizeEnum } from "../types"
+import React from 'react'
+import { InputSizeEnum } from '../types'
 
 type TextInputProps = {
     size: InputSizeEnum
     styles?: string
     width?: string
     placeholder?: string
-    defaultValue?: string
-    onChangeValue: (value: string) => void
+    onBlur?: (e: React.FocusEvent<any, Element>) => void
+    value: string
+    onChange: (e: React.ChangeEvent<any>) => void
     error?: string
+    type?: 'text' | 'password' | 'email'
+    name: string
+    id: string
 }
 
+const constStyles =
+    'border-[1px] border-solid outline-none rounded-[8px] text-[14px] flex items-center placeholder:text-[14px] active:shadow-null  transition-colors'
+
 const sizeStyles = {
-    large: "bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] px-[16px]",
+    large: 'bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] pl-[16px] pr-[56px]',
+}
+
+const stateStyles = {
+    default:
+        'focus:border-[#0086EA] placeholder:text-inputPlaceholder text-inputText',
+    error: 'border-error placeholder:text-error text-error',
+    success: 'border-success',
 }
 
 const TextInput: React.FC<TextInputProps> = ({
     size,
-    styles,
     width,
-    defaultValue,
-    placeholder,
-    onChangeValue,
+    styles = '',
+    type = 'text',
+    name,
+    id,
+    onBlur,
+    placeholder = '',
+    onChange,
+    value,
     error,
 }) => {
-    const [sizeStyle, setSizeStyle] = React.useState<string>("")
-
-    const [value, setValue] = React.useState<string>(
-        defaultValue ? defaultValue : ""
+    const [sizeStyle, setSizeStyle] = React.useState<string>('')
+    const [stateStyle, setStateStyle] = React.useState<string>(
+        stateStyles.default
     )
-
-    const changeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value)
-        onChangeValue(e.target.value)
-    }
 
     React.useEffect(() => {
         switch (size) {
@@ -43,18 +55,33 @@ const TextInput: React.FC<TextInputProps> = ({
         }
     }, [size, setSizeStyle])
 
+    React.useEffect(() => {
+        if (error) setStateStyle(stateStyles.error)
+        else setStateStyle(stateStyles.default)
+        console.log(error)
+    }, [error])
+
     return (
-        <input
-            className={`${sizeStyle} rounded-[8px] text-[14px] text-inputText flex items-center placeholder:text-[14px] placeholder:text-inputPlaceholder active:shadow-null outline-[#0086EA] transition-colors ${
-                styles ? styles : ""
-            }`}
-            style={width ? { width } : {}}
-            placeholder={placeholder ? placeholder : ""}
-            value={value}
-            onChange={changeHandler}
-        >
-            {defaultValue && defaultValue}
-        </input>
+        <div className={`relative ${styles}`}>
+            {error && (
+                <label
+                    htmlFor={id}
+                    className="absolute top-[50%] -translate-y-[12px] right-[16px] h-[24px] w-[24px] bg-error cursor-pointer"
+                />
+            )}
+            <input
+                className={`${sizeStyle}  ${stateStyle} ${constStyles}`}
+                style={width ? { width } : {}}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                type={type}
+                name={name}
+                id={id}
+                formNoValidate
+            />
+        </div>
     )
 }
 

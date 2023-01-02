@@ -1,0 +1,12 @@
+import axios from 'axios'
+
+export const instance = axios.create({
+    withCredentials: true,
+    // baseURL: `${process.env.REACT_APP_SERVER_HOST}/api`,
+    baseURL: `http://localhost:3001/api`,
+})
+
+instance.interceptors.request.use((config: any) => {
+    config.headers.Authorization = `Bearer ${localStorage.getItem('token')}`
+    return config
+})

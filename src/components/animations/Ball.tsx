@@ -1,16 +1,16 @@
-import React from "react"
+import React from 'react'
 
 type BallProps = {
     width: string
     height: string
+    styles?: string
 }
 
-const Ball: React.FC<BallProps> = ({ width, height }) => {
-
+const Ball: React.FC<BallProps> = ({ width, height, styles = '' }) => {
     return (
         <div
             style={{ width, height }}
-            className={`bg-gray rounded-full opacity-20`}
+            className={`rounded-full opacity-20 ${styles}`}
         />
     )
 }
