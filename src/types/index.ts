@@ -31,3 +31,15 @@ export enum InputStateEnum {
     Error = 1,
     Success = 2,
 }
+
+export enum DeviceTypeEnum {
+    Desktop = 0,
+    Tablet = 1,
+    Mobile = 2,
+}
+
+export type IconTypes = {
+    height: string
+    width: string
+    color: string
+}

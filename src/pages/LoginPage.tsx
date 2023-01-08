@@ -3,12 +3,11 @@ import FormContainer from '../components/auth/FormContainer'
 import Button from '../components/Button'
 import TextInput from '../components/InputText'
 import { InputSizeEnum } from '../types'
-import { Link } from 'react-router-dom'
-import { useFormik } from 'formik'
-import { Formik, Field, Form, FormikHelpers } from 'formik'
-
-import { login } from '../redux/features/userSlice'
+import { Link, useNavigate } from 'react-router-dom'
+import { useFormik, FormikHelpers } from 'formik'
 import { useAppDispatch } from '../hooks/reduxHooks'
+import WarningCircleIcon from '../components/icons/WarningCircleIcon'
+import { login } from '../redux/features/userSlice'
 
 type initialValuesType = {
     password: string
@@ -30,6 +29,10 @@ const validate: (values: initialValuesType) => object = (values) => {
 const LoginPage = () => {
     const dispatch = useAppDispatch()
 
+    const navigate = useNavigate()
+
+
+
     const formik = useFormik({
         initialValues: {
             email: '',
@@ -43,7 +46,10 @@ const LoginPage = () => {
             if (!values.email.includes('@'))
                 setFieldError('email', 'Email field must include @')
             console.log(values)
-            // dispatch(login(values))
+            dispatch(login(values)).then((res) => {
+                if(res.meta.requestStatus === 'fulfilled')
+                    navigate('/')
+            })
         },
     })
 
@@ -57,40 +63,68 @@ const LoginPage = () => {
                     className="flex flex-col items-center"
                     onSubmit={formik.handleSubmit}
                 >
-                    <TextInput
-                        size={InputSizeEnum.Large}
-                        name="email"
-                        id="email"
-                        width="400px"
-                        placeholder="Email"
-                        onChange={formik.handleChange}
-                        value={formik.values.email}
-                        onBlur={formik.handleBlur}
-                        error={
-                            formik.touched.email && formik.errors.email
-                                ? formik.errors.email
-                                : undefined
-                        }
-                        styles="mb-[15px]"
-                        // type="email"
-                    />
-                    <TextInput
-                        size={InputSizeEnum.Large}
-                        name="password"
-                        id="password"
-                        width="400px"
-                        placeholder="Password"
-                        onChange={formik.handleChange}
-                        onBlur={formik.handleBlur}
-                        value={formik.values.password}
-                        error={
-                            formik.touched.password && formik.errors.password
-                                ? formik.errors.password
-                                : undefined
-                        }
-                        styles="mb-[30px]"
-                        type="password"
-                    />
+                    <div className="mb-[15px] relative">
+                        <TextInput
+                            size={InputSizeEnum.Large}
+                            name="email"
+                            id="email"
+                            width="400px"
+                            placeholder="Email"
+                            rightIcon
+                            onChange={formik.handleChange}
+                            value={formik.values.email}
+                            onBlur={formik.handleBlur}
+                            error={
+                                formik.touched.email && formik.errors.email
+                                    ? formik.errors.email
+                                    : undefined
+                            }
+                        />
+                        {formik.touched.email && formik.errors.email && (
+                            <label
+                                htmlFor="email"
+                                className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
+                            >
+                                <WarningCircleIcon
+                                    height="24"
+                                    width="24"
+                                    color="#FE2836"
+                                />
+                            </label>
+                        )}
+                    </div>
+                    <div className="mb-[30px] relative">
+                        <TextInput
+                            size={InputSizeEnum.Large}
+                            name="password"
+                            id="password"
+                            width="400px"
+                            placeholder="Password"
+                            onChange={formik.handleChange}
+                            onBlur={formik.handleBlur}
+                            value={formik.values.password}
+                            rightIcon
+                            error={
+                                formik.touched.password &&
+                                formik.errors.password
+                                    ? formik.errors.password
+                                    : undefined
+                            }
+                            type="password"
+                        />
+                        {formik.touched.password && formik.errors.password && (
+                            <label
+                                htmlFor="password"
+                                className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
+                            >
+                                <WarningCircleIcon
+                                    height="24"
+                                    width="24"
+                                    color="#FE2836"
+                                />
+                            </label>
+                        )}
+                    </div>
                     <Button
                         styles="mb-[20px]"
                         name="Login"
@@ -106,8 +140,6 @@ const LoginPage = () => {
                     </Link>
                 </p>
             </FormContainer>
-
-            {/* <div className='bg-red-500 h-[1000px]'></div> */}
         </div>
     )
 }

@@ -4,28 +4,25 @@ import {
     AuthorizationEnum,
     loginDataType,
     registrationDataType,
-    userType,
 } from './../../types/index'
 
+import { loginResponseType, userInfoResponseType } from './../../types/apiTypes'
+
 export const login = createAsyncThunk<
-    { accessToken: string },
+    loginResponseType,
     loginDataType,
     { rejectValue: string }
 >('user/login', async (loginData, thunkAPI) => {
     try {
-        // const username = "11"
-        // const email = "11"
-        const accessToken = ''
-
         const response = await UserAPI.login(loginData)
 
-        // if(response.status )
         console.log(response)
 
-        return { accessToken: '' }
-    } catch (error) {
-        console.log(error)
-        return thunkAPI.rejectWithValue('Occurred some error')
+        return response.data
+    } catch (error: any) {
+        const errorMessage: string =
+            error.response.data.message.join('. ') || 'Occurred some error'
+        return thunkAPI.rejectWithValue(errorMessage)
     }
 })
 
@@ -33,22 +30,42 @@ export const registration = createAsyncThunk<
     undefined,
     registrationDataType,
     { rejectValue: string }
->('user/registration', async ({ username, email, password }, thunkAPI) => {
+>('user/registration', async (registerData, thunkAPI) => {
     try {
-        const username = '11'
-        const email = '11'
+        const response = await UserAPI.registration(registerData)
 
+        // console.log(response)
         // return { username, email }
-    } catch (error) {
-        console.log(error)
-        return thunkAPI.rejectWithValue('Occurred some error')
+        return
+    } catch (error: any) {
+        const errorMessage: string =
+            error.response.data.message.join('. ') || 'Occurred some error'
+        return thunkAPI.rejectWithValue(errorMessage)
+    }
+})
+
+export const fetchUserInfo = createAsyncThunk<
+    userInfoResponseType,
+    undefined,
+    { rejectValue: string }
+>('user/fetchUserInfo', async (_, thunkAPI) => {
+    try {
+        const response = await UserAPI.fetchUserInfo()
+
+        return response.data
+    } catch (error: any) {
+        const errorMessage: string =
+            error.response.data.message.join('. ') || 'Occurred some error'
+        return thunkAPI.rejectWithValue(errorMessage)
     }
 })
 
 type initialStateType = {
     id: number | null
     username: string | null
+    createdAt: string | null
     email: string | null
+    error: string | null
     authorizationStatus: AuthorizationEnum
     isLoading: boolean
 }
@@ -57,6 +74,8 @@ const initialState: initialStateType = {
     id: null,
     username: null,
     email: null,
+    createdAt: null,
+    error: null,
     authorizationStatus: AuthorizationEnum.Unknown,
     isLoading: false,
 }
@@ -69,9 +88,14 @@ const userSlice = createSlice({
         //---REGISTRATION
         builder
             .addCase(registration.pending, (state) => {
+                state.error = null
                 state.isLoading = true
             })
             .addCase(registration.fulfilled, (state) => {
+                state.username = null
+                state.email = null
+                state.createdAt = null
+                state.id = null
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false
             })
@@ -83,17 +107,47 @@ const userSlice = createSlice({
             //---LOGIN
             .addCase(login.pending, (state) => {
                 localStorage.removeItem('token')
+                state.error = null
                 state.isLoading = true
             })
             .addCase(
                 login.fulfilled,
-                (state, action: PayloadAction<{ accessToken: string }>) => {
-                    localStorage.setItem('token', action.payload.accessToken)
+                (state, action: PayloadAction<loginResponseType>) => {
+                    localStorage.setItem('token', action.payload.access_token)
+                    state.username = action.payload.username
+                    state.email = action.payload.email
+                    state.createdAt = action.payload.createdAt
+                    state.id = action.payload.id
                     state.authorizationStatus = AuthorizationEnum.Login
                     state.isLoading = false
                 }
             )
-            .addCase(login.rejected, (state) => {
+            .addCase(login.rejected, (state, action) => {
+                if (action.payload) state.error = action.payload
+                state.authorizationStatus = AuthorizationEnum.Logout
+                state.isLoading = false
+            })
+
+            //---FETCH USER INFO
+            .addCase(fetchUserInfo.pending, (state) => {
+                state.error = null
+                state.isLoading = true
+            })
+            .addCase(
+                fetchUserInfo.fulfilled,
+                (state, action: PayloadAction<userInfoResponseType>) => {
+                    // localStorage.setItem('token', action.payload.access_token)
+                    state.username = action.payload.username
+                    state.email = action.payload.email
+                    state.createdAt = action.payload.createdAt
+                    state.id = action.payload.id
+                    state.authorizationStatus = AuthorizationEnum.Login
+                    state.isLoading = false
+                }
+            )
+            .addCase(fetchUserInfo.rejected, (state, action) => {
+                if (action.payload) state.error = action.payload
+                localStorage.removeItem('token')
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false
             })

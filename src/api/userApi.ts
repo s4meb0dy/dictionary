@@ -1,3 +1,4 @@
+import { loginResponseType, userInfoResponseType } from './../types/apiTypes';
 import { instance } from './index'
 import { loginDataType, registrationDataType } from './../types/index'
 export const a = 1
@@ -7,7 +8,10 @@ class UserAPI {
         return instance.post<registrationDataType>('/auth/signup', values)
     }
     static login = (values: loginDataType) => {
-        return instance.post<{ access_token: string }>('/auth/login', values)
+        return instance.post<loginResponseType>('/auth/login', values)
+    }
+    static fetchUserInfo = () => {
+        return instance.get<userInfoResponseType>('/user/userinfo', {withCredentials: true})
     }
 }
 
