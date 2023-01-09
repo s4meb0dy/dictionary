@@ -3,11 +3,12 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import AnimatedBg from './components/animations/AnimatedBg'
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
 import LoginPage from './pages/LoginPage'
-import Main from './pages/Main'
+
 import RegisterPage from './pages/RegisterPage'
 import { fetchUserInfo } from './redux/features/userSlice'
 import useMatchMedia from 'use-match-media-hook'
 import { setDeviceType } from './redux/features/appSlice'
+import Main from './pages/Main'
 
 const queries = [
     '(max-width: 639px)',

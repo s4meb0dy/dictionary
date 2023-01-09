@@ -3,6 +3,11 @@ module.exports = {
     content: ['./index.html', './src/**/*.{js,ts,jsx,tsx}'],
     theme: {
         extend: {
+            screens: {
+                mobile: '640px',
+                tablet: '1024px',
+                desktop: '1280px',
+            },
             keyframes: {
                 appearance: {
                     '0%': { opacity: '0' },
@@ -39,6 +44,7 @@ module.exports = {
             },
             boxShadow: {
                 primary: '0 0 15px 0 rgba(0, 0, 0, 0.37)',
+                secondary: '0px 1px 4px rgba(0, 0, 0, 0.27)',
             },
             colors: {
                 primaryBg: '#0D6CBD',
@@ -49,7 +55,6 @@ module.exports = {
                 error: '#FE2836',
                 success: '#1D9745',
             },
-            boxShadow: {},
         },
         fontFamily: {
             main: ['Plus Jakarta Sans', 'sans-serif'],
