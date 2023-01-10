@@ -26,7 +26,7 @@ const sizeStyles = {
 
 const stateStyles = {
     default:
-        'focus:border-[#0086EA] placeholder:text-inputPlaceholder text-inputText',
+        'focus:border-[#0086EA] placeholder:text-inputPlaceholder text-textDark',
     error: 'border-error placeholder:text-error text-error',
     success: 'border-success',
 }

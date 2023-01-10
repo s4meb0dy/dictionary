@@ -9,7 +9,7 @@ const Navbar = () => {
     
 
     return (
-        <div className="bg-secondaryBg w-[80px] h-[600px] shadow-primary fixed top-[40px] left-0 rounded-r-[12px]">
+        <div className="bg-secondaryBg z-50 w-[80px] h-[600px] shadow-primary fixed top-[40px] left-0 rounded-r-[12px]">
             <nav>
                 <ul className='py-[15px]'>
                     <li className="w-full flex flex-col items-center pb-[20px] cursor-pointer">
