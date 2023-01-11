@@ -9,6 +9,7 @@ import { fetchUserInfo } from './redux/features/userSlice'
 import useMatchMedia from 'use-match-media-hook'
 import { setDeviceType } from './redux/features/appSlice'
 import Main from './pages/Main'
+import InfoBlock from './components/InfoBlock'
 
 const queries = [
     '(max-width: 639px)',
@@ -27,13 +28,14 @@ function App() {
 
     React.useEffect(() => {
         const token: string | null = localStorage.getItem('token')
-        console.log(token)
         if (token) dispatch(fetchUserInfo())
     }, [])
 
     return (
         <div className="font-main h-full">
             <AnimatedBg>
+                <InfoBlock />
+
                 <Routes>
                     <Route path="/*" element={<Main />} />
                     <Route path="/login" element={<LoginPage />} />

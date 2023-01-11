@@ -16,13 +16,14 @@ export const login = createAsyncThunk<
     try {
         const response = await UserAPI.login(loginData)
 
-        console.log(response)
-
         return response.data
     } catch (error: any) {
-        const errorMessage: string =
-            error.response.data.message.join('. ') || 'Occurred some error'
-        return thunkAPI.rejectWithValue(errorMessage)
+        // const errorMessage: string =
+        //     error.response.data.message.join('. ') || 'Occurred some error'
+        // console.log(errorMessage)
+        // return thunkAPI.rejectWithValue(errorMessage)
+        
+        return thunkAPI.rejectWithValue(error.response.data.message)
     }
 })
 
@@ -38,9 +39,7 @@ export const registration = createAsyncThunk<
         // return { username, email }
         return
     } catch (error: any) {
-        const errorMessage: string =
-            error.response.data.message.join('. ') || 'Occurred some error'
-        return thunkAPI.rejectWithValue(errorMessage)
+        return thunkAPI.rejectWithValue(error.response.data.message)
     }
 })
 
@@ -54,9 +53,7 @@ export const fetchUserInfo = createAsyncThunk<
 
         return response.data
     } catch (error: any) {
-        const errorMessage: string =
-            error.response.data.message.join('. ') || 'Occurred some error'
-        return thunkAPI.rejectWithValue(errorMessage)
+        return thunkAPI.rejectWithValue(error.response.data.message)
     }
 })
 

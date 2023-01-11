@@ -5,9 +5,10 @@ import TextInput from '../components/InputText'
 import { InputSizeEnum } from '../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
-import { useAppDispatch } from '../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
 import WarningCircleIcon from '../components/icons/WarningCircleIcon'
 import { login } from '../redux/features/userSlice'
+import { openInfoBlock } from '../redux/features/appSlice'
 
 type initialValuesType = {
     password: string
@@ -31,7 +32,14 @@ const LoginPage = () => {
 
     const navigate = useNavigate()
 
+    const error = useAppSelector((state) => state.user.error)
 
+    React.useEffect(() => {
+        if (error)
+            dispatch(
+                openInfoBlock({ type: 'error', text: error, title: 'Error' })
+            )
+    }, [error])
 
     const formik = useFormik({
         initialValues: {
@@ -45,10 +53,8 @@ const LoginPage = () => {
         ) => {
             if (!values.email.includes('@'))
                 setFieldError('email', 'Email field must include @')
-            console.log(values)
             dispatch(login(values)).then((res) => {
-                if(res.meta.requestStatus === 'fulfilled')
-                    navigate('/')
+                if (res.meta.requestStatus === 'fulfilled') navigate('/')
             })
         },
     })

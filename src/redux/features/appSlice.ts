@@ -3,10 +3,14 @@ import { DeviceTypeEnum } from '../../types'
 
 type initialStateType = {
     deviceType: DeviceTypeEnum
+    infoBlockData: null | {type: 'success' | 'error' | 'info', title?: string; text?: string }
+    isInfoBlock: boolean
 }
 
 const initialState: initialStateType = {
     deviceType: DeviceTypeEnum.Mobile,
+    infoBlockData: null,
+    isInfoBlock: false,
 }
 
 const appSlice = createSlice({
@@ -28,9 +32,21 @@ const appSlice = createSlice({
             else if (action.payload.isDesktop)
                 state.deviceType = DeviceTypeEnum.Desktop
         },
+        openInfoBlock: (
+            state,
+            action: PayloadAction<{ title?: string; text?: string, type: 'success' | 'error' | 'info' }>
+        ) => {
+            state.infoBlockData = action.payload
+            state.isInfoBlock = true
+        },
+        closeInfoBlock: (state) => {
+            state.infoBlockData = null
+            state.isInfoBlock = false
+        },
     },
 })
 
-export const { setDeviceType } = appSlice.actions
+export const { setDeviceType, openInfoBlock, closeInfoBlock } =
+    appSlice.actions
 
 export default appSlice.reducer
