@@ -54,7 +54,16 @@ const LoginPage = () => {
             if (!values.email.includes('@'))
                 setFieldError('email', 'Email field must include @')
             dispatch(login(values)).then((res) => {
-                if (res.meta.requestStatus === 'fulfilled') navigate('/')
+                if (res.meta.requestStatus === 'fulfilled') {
+                    dispatch(
+                        openInfoBlock({
+                            type: 'success',
+                            title: 'Success',
+                            text: 'You are logged in',
+                        })
+                    )
+                    navigate('/')
+                }
             })
         },
     })

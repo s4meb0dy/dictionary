@@ -40,7 +40,7 @@ const appSlice = createSlice({
             state.isInfoBlock = true
         },
         closeInfoBlock: (state) => {
-            state.infoBlockData = null
+            // state.infoBlockData = null
             state.isInfoBlock = false
         },
     },

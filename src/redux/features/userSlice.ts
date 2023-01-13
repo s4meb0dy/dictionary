@@ -11,7 +11,7 @@ import { loginResponseType, userInfoResponseType } from './../../types/apiTypes'
 export const login = createAsyncThunk<
     loginResponseType,
     loginDataType,
-    { rejectValue: string }
+    { rejectValue: Array<string> }
 >('user/login', async (loginData, thunkAPI) => {
     try {
         const response = await UserAPI.login(loginData)
@@ -22,7 +22,7 @@ export const login = createAsyncThunk<
         //     error.response.data.message.join('. ') || 'Occurred some error'
         // console.log(errorMessage)
         // return thunkAPI.rejectWithValue(errorMessage)
-        
+
         return thunkAPI.rejectWithValue(error.response.data.message)
     }
 })
@@ -30,7 +30,7 @@ export const login = createAsyncThunk<
 export const registration = createAsyncThunk<
     undefined,
     registrationDataType,
-    { rejectValue: string }
+    { rejectValue: Array<string> }
 >('user/registration', async (registerData, thunkAPI) => {
     try {
         const response = await UserAPI.registration(registerData)
@@ -46,7 +46,7 @@ export const registration = createAsyncThunk<
 export const fetchUserInfo = createAsyncThunk<
     userInfoResponseType,
     undefined,
-    { rejectValue: string }
+    { rejectValue: Array<string> }
 >('user/fetchUserInfo', async (_, thunkAPI) => {
     try {
         const response = await UserAPI.fetchUserInfo()
@@ -96,7 +96,13 @@ const userSlice = createSlice({
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false
             })
-            .addCase(registration.rejected, (state) => {
+            .addCase(registration.rejected, (state, action) => {
+                // console.log(
+                //     'addCase(registration.rejected, (state, action)',
+                //     action.payload
+                // )
+                if (action.payload) state.error = action.payload.join(' | ')
+                
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false
             })
@@ -120,7 +126,7 @@ const userSlice = createSlice({
                 }
             )
             .addCase(login.rejected, (state, action) => {
-                if (action.payload) state.error = action.payload
+                if (action.payload) state.error = action.payload.join(' | ')
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false
             })
@@ -143,7 +149,7 @@ const userSlice = createSlice({
                 }
             )
             .addCase(fetchUserInfo.rejected, (state, action) => {
-                if (action.payload) state.error = action.payload
+                if (action.payload) state.error = action.payload.join(' | ')
                 localStorage.removeItem('token')
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false

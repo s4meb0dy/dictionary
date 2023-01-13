@@ -51,10 +51,16 @@ const InfoBlock: React.FC<InfoBlockProps> = () => {
                 backgroundColor: colorBg,
                 opacity: isActive ? '1' : '0',
                 pointerEvents: isActive ? 'all' : 'none',
+                // transition: 'all 1s'
             }}
         >
             <div className="absolute top-[12px] left-[12px]">
-                <CircleCloseIcon width="20px" height="20px" color="#FE2836" />
+                {
+                    infoBlockData?.type == 'error' && <CircleCloseIcon width="20px" height="20px" color="#FE2836" />
+                }
+                {
+                    infoBlockData?.type == 'success' && <CircleCloseIcon width="20px" height="20px" color="#1D9745" />
+                }         
             </div>
             <div className="absolute top-[12px] right-[12px] cursor-pointer" onClick={closeErrorHandler}>
                 <CloseIcon width="20px" height="20px" color="#616C76" />

@@ -7,7 +7,8 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
 import WarningCircleIcon from '../components/icons/WarningCircleIcon'
 import { registration } from '../redux/features/userSlice'
-import { useAppDispatch } from '../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
+import { openInfoBlock } from '../redux/features/appSlice'
 
 type initialValuesType = {
     email: string
@@ -45,6 +46,15 @@ const RegisterPage = () => {
     const dispatch = useAppDispatch()
     const navigate = useNavigate()
 
+    const error = useAppSelector((state) => state.user.error)
+
+    React.useEffect(() => {
+        if (error)
+            dispatch(
+                openInfoBlock({ type: 'error', text: error, title: 'Error' })
+            )
+    }, [error])
+
     const formik = useFormik({
         initialValues: {
             username: '',
@@ -63,8 +73,16 @@ const RegisterPage = () => {
             }
 
             dispatch(registration(values)).then((res) => {
-                if(res.meta.requestStatus === 'fulfilled')
-                    navigate('/')
+                if (res.meta.requestStatus === 'fulfilled') {
+                    dispatch(
+                        openInfoBlock({
+                            type: 'success',
+                            title: 'Success',
+                            text: 'You are registered',
+                        })
+                    )
+                    navigate('/login')
+                }
             })
             formik.resetForm()
         },
