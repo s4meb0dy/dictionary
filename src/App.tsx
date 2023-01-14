@@ -32,17 +32,18 @@ function App() {
     }, [])
 
     return (
-        <div className="font-main h-full">
-            <AnimatedBg>
-                <InfoBlock />
-
+        <>
+            <div className="font-main h-full w-full relative z-10">
                 <Routes>
                     <Route path="/*" element={<Main />} />
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                 </Routes>
-            </AnimatedBg>
-        </div>
+                
+            </div>
+            <InfoBlock />
+            <AnimatedBg />
+        </>
     )
 }
 

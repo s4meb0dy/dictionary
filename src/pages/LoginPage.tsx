@@ -32,15 +32,6 @@ const LoginPage = () => {
 
     const navigate = useNavigate()
 
-    const error = useAppSelector((state) => state.user.error)
-
-    React.useEffect(() => {
-        if (error)
-            dispatch(
-                openInfoBlock({ type: 'error', text: error, title: 'Error' })
-            )
-    }, [error])
-
     const formik = useFormik({
         initialValues: {
             email: '',

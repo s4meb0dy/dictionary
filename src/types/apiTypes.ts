@@ -14,3 +14,7 @@ export type userInfoResponseType = {
     isConfirmed: boolean
     username: string
 }
+
+export type getDictionaryType = {
+
+}

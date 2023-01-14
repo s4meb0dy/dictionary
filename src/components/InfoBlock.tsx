@@ -46,7 +46,7 @@ const InfoBlock: React.FC<InfoBlockProps> = () => {
 
     return (
         <div
-            className={`fixed bottom-[20px] right-[40px] z-50 text-textDark text-[14px] leading-[20px] rounded-[8px] px-[40px] py-[12px] transition-opacity`}
+            className={`fixed bottom-[20px] right-[40px] z-50 text-textDark text-[14px] leading-[20px] rounded-[8px] px-[40px] py-[12px] transition-opacity select-none`}
             style={{
                 backgroundColor: colorBg,
                 opacity: isActive ? '1' : '0',

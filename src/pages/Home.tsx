@@ -13,8 +13,8 @@ const Home = () => {
     }
 
     return (
-        <div className="relative flex justify-center h-full">
-            <div className="w-[900px] h-full ">
+        <div className="flex justify-center min-h-full w-full">
+            <div className="w-[900px] h-full">
                 <div className="h-[190px] pt-[32px] text-white tracking-wide">
                     <h3 className="font-medium text-[40px] pb-[12px] leading-[50px]">
                         28 words

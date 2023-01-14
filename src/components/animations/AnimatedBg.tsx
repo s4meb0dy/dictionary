@@ -3,11 +3,9 @@ import { useAppSelector } from '../../hooks/reduxHooks'
 import { DeviceTypeEnum } from '../../types'
 import Ball from './Ball'
 
-type AnimatedBg = {
-    children?: React.ReactNode
-}
+type AnimatedBg = {}
 
-const AnimatedBg: React.FC<AnimatedBg> = ({ children }) => {
+const AnimatedBg: React.FC<AnimatedBg> = () => {
     const deviceType = useAppSelector((state) => state.app.deviceType)
 
     const [firstSize, setFirstSize] = React.useState('900px')
@@ -35,38 +33,30 @@ const AnimatedBg: React.FC<AnimatedBg> = ({ children }) => {
     }, [deviceType])
 
     return (
-        <div className="bg-primaryBg w-full h-full overflow-x-hidden relative">
-            <div className="fixed top-0 left-0 w-full h-screen z-10 pointer-events-none">
-                <Ball
-                    width={thirdSize}
-                    height={thirdSize}
-                    styles="absolute bottom-[60%] right-[-15%] animate-swimRB bg-gray/30"
-                />
+        <div className='w-full h-full bg-primaryBg fixed top-0 left-0 -z-10 pointer-events-none'>
+            <Ball
+                width={thirdSize}
+                height={thirdSize}
+                styles="fixed bottom-[60%] right-[-15%] animate-swimRB bg-gray/30"
+            />
 
-                <Ball
-                    width={firstSize}
-                    height={firstSize}
-                    styles="absolute bottom-[60%] right-[-15%] animate-swimLB bg-gray/50"
-                />
+            <Ball
+                width={firstSize}
+                height={firstSize}
+                styles="fixed bottom-[60%] right-[-15%] animate-swimLB bg-gray/50"
+            />
 
-                <Ball
-                    width={firstSize}
-                    height={firstSize}
-                    styles="absolute top-[70%] left-[-10%] animate-swimLU bg-gray/50"
-                />
+            <Ball
+                width={firstSize}
+                height={firstSize}
+                styles="fixed top-[70%] left-[-10%] animate-swimLU bg-gray/50"
+            />
 
-                <Ball
-                    width={secondSize}
-                    height={secondSize}
-                    styles="absolute top-[70%] left-[-10%] animate-swimLB bg-gray/40"
-                />
-            </div>
-            {children && (
-                <div className="relative h-full w-full z-20">{children}</div>
-            )}
-            {/* <div className="absolute top-0 left-0 h-full w-full">
-
-            </div> */}
+            <Ball
+                width={secondSize}
+                height={secondSize}
+                styles="fixed top-[70%] left-[-10%] animate-swimLB bg-gray/40"
+            />
         </div>
     )
 }

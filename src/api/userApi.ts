@@ -5,7 +5,7 @@ export const a = 1
 
 class UserAPI {
     static registration = (values: registrationDataType) => {
-        return instance.post<registrationDataType>('/auth/signup', values)
+        return instance.post<loginResponseType>('/auth/signup', values)
     }
     static login = (values: loginDataType) => {
         return instance.post<loginResponseType>('/auth/login', values)

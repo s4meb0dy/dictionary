@@ -1,3 +1,4 @@
+import { AppDispatch } from './../store'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import UserAPI from '../../api/userApi'
 import {
@@ -7,53 +8,109 @@ import {
 } from './../../types/index'
 
 import { loginResponseType, userInfoResponseType } from './../../types/apiTypes'
+import { openInfoBlock } from './appSlice'
 
 export const login = createAsyncThunk<
     loginResponseType,
     loginDataType,
-    { rejectValue: Array<string> }
+    { rejectValue: string; dispatch: AppDispatch }
 >('user/login', async (loginData, thunkAPI) => {
     try {
         const response = await UserAPI.login(loginData)
 
         return response.data
     } catch (error: any) {
-        // const errorMessage: string =
-        //     error.response.data.message.join('. ') || 'Occurred some error'
-        // console.log(errorMessage)
-        // return thunkAPI.rejectWithValue(errorMessage)
+        const errorMessage: Array<string> = error.response
+            ? error.response.data.message
+            : error.message
 
-        return thunkAPI.rejectWithValue(error.response.data.message)
+        if (Array.isArray(errorMessage)) {
+            thunkAPI.dispatch(
+                openInfoBlock({
+                    title: 'Error',
+                    text: errorMessage.join(' | '),
+                    type: 'error',
+                })
+            )
+            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
+        }
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Error',
+                text: errorMessage,
+                type: 'error',
+            })
+        )
+        return thunkAPI.rejectWithValue(errorMessage)
     }
 })
 
 export const registration = createAsyncThunk<
-    undefined,
+    loginResponseType,
     registrationDataType,
-    { rejectValue: Array<string> }
+    { rejectValue: string; dispatch: AppDispatch }
 >('user/registration', async (registerData, thunkAPI) => {
     try {
         const response = await UserAPI.registration(registerData)
-
-        // console.log(response)
-        // return { username, email }
-        return
+        return response.data
     } catch (error: any) {
-        return thunkAPI.rejectWithValue(error.response.data.message)
+        const errorMessage: Array<string> = error.response
+            ? error.response.data.message
+            : error.message
+
+        if (Array.isArray(errorMessage)) {
+            thunkAPI.dispatch(
+                openInfoBlock({
+                    title: 'Error',
+                    text: errorMessage.join(' | '),
+                    type: 'error',
+                })
+            )
+            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
+        }
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Error',
+                text: errorMessage,
+                type: 'error',
+            })
+        )
+        return thunkAPI.rejectWithValue(errorMessage)
     }
 })
 
 export const fetchUserInfo = createAsyncThunk<
     userInfoResponseType,
     undefined,
-    { rejectValue: Array<string> }
+    { rejectValue: string; dispatch: AppDispatch }
 >('user/fetchUserInfo', async (_, thunkAPI) => {
     try {
         const response = await UserAPI.fetchUserInfo()
 
         return response.data
     } catch (error: any) {
-        return thunkAPI.rejectWithValue(error.response.data.message)
+        const errorMessage: Array<string> = error.response
+            ? error.response.data.message
+            : error.message
+
+        if (Array.isArray(errorMessage)) {
+            thunkAPI.dispatch(
+                openInfoBlock({
+                    title: 'Error',
+                    text: errorMessage.join(' | '),
+                    type: 'error',
+                })
+            )
+            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
+        }
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Error',
+                text: errorMessage,
+                type: 'error',
+            })
+        )
+        return thunkAPI.rejectWithValue(errorMessage)
     }
 })
 
@@ -65,6 +122,7 @@ type initialStateType = {
     error: string | null
     authorizationStatus: AuthorizationEnum
     isLoading: boolean
+    isConfirmed: boolean | null
 }
 
 const initialState: initialStateType = {
@@ -73,6 +131,7 @@ const initialState: initialStateType = {
     email: null,
     createdAt: null,
     error: null,
+    isConfirmed: null,
     authorizationStatus: AuthorizationEnum.Unknown,
     isLoading: false,
 }
@@ -85,24 +144,28 @@ const userSlice = createSlice({
         //---REGISTRATION
         builder
             .addCase(registration.pending, (state) => {
+                localStorage.removeItem('token')
                 state.error = null
                 state.isLoading = true
             })
-            .addCase(registration.fulfilled, (state) => {
+            .addCase(
+                registration.fulfilled,
+                (state, action: PayloadAction<loginResponseType>) => {
+                    localStorage.setItem('token', action.payload.access_token)
+                    state.username = action.payload.username
+                    state.email = action.payload.email
+                    state.createdAt = action.payload.createdAt
+                    state.id = action.payload.id
+                    state.authorizationStatus = AuthorizationEnum.Login
+                    state.isLoading = false
+                }
+            )
+            .addCase(registration.rejected, (state, action) => {
+                if (action.payload) state.error = action.payload
                 state.username = null
                 state.email = null
                 state.createdAt = null
                 state.id = null
-                state.authorizationStatus = AuthorizationEnum.Logout
-                state.isLoading = false
-            })
-            .addCase(registration.rejected, (state, action) => {
-                // console.log(
-                //     'addCase(registration.rejected, (state, action)',
-                //     action.payload
-                // )
-                if (action.payload) state.error = action.payload.join(' | ')
-                
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false
             })
@@ -121,13 +184,19 @@ const userSlice = createSlice({
                     state.email = action.payload.email
                     state.createdAt = action.payload.createdAt
                     state.id = action.payload.id
+                    state.isConfirmed = action.payload.isConfirmed
                     state.authorizationStatus = AuthorizationEnum.Login
                     state.isLoading = false
                 }
             )
             .addCase(login.rejected, (state, action) => {
-                if (action.payload) state.error = action.payload.join(' | ')
+                if (action.payload) state.error = action.payload
                 state.authorizationStatus = AuthorizationEnum.Logout
+                state.username = null
+                state.email = null
+                state.createdAt = null
+                state.id = null
+                state.isLoading = false
                 state.isLoading = false
             })
 
@@ -149,7 +218,7 @@ const userSlice = createSlice({
                 }
             )
             .addCase(fetchUserInfo.rejected, (state, action) => {
-                if (action.payload) state.error = action.payload.join(' | ')
+                if (action.payload) state.error = action.payload
                 localStorage.removeItem('token')
                 state.authorizationStatus = AuthorizationEnum.Logout
                 state.isLoading = false
