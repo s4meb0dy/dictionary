@@ -1,6 +1,9 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { DeviceTypeEnum } from '../../types'
 
+
+
+
 type initialStateType = {
     deviceType: DeviceTypeEnum
     infoBlockData: null | {type: 'success' | 'error' | 'info', title?: string; text?: string }

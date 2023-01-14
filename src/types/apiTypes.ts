@@ -15,6 +15,12 @@ export type userInfoResponseType = {
     username: string
 }
 
-export type getDictionaryType = {
-
-}
+export type getDictionaryType = Array<{
+    id: number
+    name: string
+    createdAt: string
+    isPublic: boolean
+    words: Array<string>
+    learned: number
+    total: number
+}>

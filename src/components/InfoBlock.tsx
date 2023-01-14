@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
 import { closeInfoBlock } from '../redux/features/appSlice'
+import CheckCircleIcon from './icons/CheckCircleIcon'
 import CircleCloseIcon from './icons/CircleCloseIcon'
 import CloseIcon from './icons/CloseIcon'
 
@@ -59,7 +60,7 @@ const InfoBlock: React.FC<InfoBlockProps> = () => {
                     infoBlockData?.type == 'error' && <CircleCloseIcon width="20px" height="20px" color="#FE2836" />
                 }
                 {
-                    infoBlockData?.type == 'success' && <CircleCloseIcon width="20px" height="20px" color="#1D9745" />
+                    infoBlockData?.type == 'success' && <CheckCircleIcon width="20px" height="20px" color="#1D9745" />
                 }         
             </div>
             <div className="absolute top-[12px] right-[12px] cursor-pointer" onClick={closeErrorHandler}>

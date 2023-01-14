@@ -11,8 +11,14 @@ type MyDictionaryProps = {
 }
 
 const MyDictionary: React.FC<MyDictionaryProps> = ({name, words, learnedWords, access, id, onClick}) => {
+
+    const onClickHandler = () => {
+        onClick(id)
+    }
+
+
     return (
-        <div className="h-[160px] w-[410px] bg-white shadow-secondary rounded-[15px] relative flex justify-center items-center mb-[20px] cursor-pointer">
+        <div onClick={onClickHandler} className="h-[160px] w-[410px] bg-white shadow-secondary rounded-[15px] relative flex justify-center items-center mb-[20px] cursor-pointer">
             <span className='absolute top-[7px] left-[7px]'>
                 {access === 'public' ? <Tag name="Public" color="#C89600" outline /> : <Tag name="Private" color="#00AEBF" outline />}
                 
