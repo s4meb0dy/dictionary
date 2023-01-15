@@ -1,6 +1,6 @@
 import React from 'react'
-import { InputSizeEnum } from '../types'
-import WarningCircle from './icons/WarningCircleIcon'
+import { InputSizeEnum } from '../../types'
+import WarningCircle from '../icons/WarningCircleIcon'
 
 type TextInputProps = {
     size: InputSizeEnum
@@ -14,7 +14,6 @@ type TextInputProps = {
     error?: string
     type?: 'text' | 'password' | 'email'
     name: string
-    id: string
 }
 
 const constStyles =
@@ -38,7 +37,6 @@ const TextInput: React.FC<TextInputProps> = ({
     styles = '',
     type = 'text',
     name,
-    id,
     onBlur,
     placeholder = '',
     onChange,
@@ -78,7 +76,7 @@ const TextInput: React.FC<TextInputProps> = ({
             onBlur={onBlur}
             type={type}
             name={name}
-            id={id}
+            id={name}
             formNoValidate
         />
     )

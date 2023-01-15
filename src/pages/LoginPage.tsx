@@ -1,7 +1,7 @@
 import React from 'react'
 import FormContainer from '../components/auth/FormContainer'
 import Button from '../components/Button'
-import TextInput from '../components/InputText'
+import TextInput from '../components/input/InputText'
 import { InputSizeEnum } from '../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
@@ -73,7 +73,6 @@ const LoginPage = () => {
                         <TextInput
                             size={InputSizeEnum.Large}
                             name="email"
-                            id="email"
                             width="400px"
                             placeholder="Email"
                             rightIcon
@@ -103,7 +102,6 @@ const LoginPage = () => {
                         <TextInput
                             size={InputSizeEnum.Large}
                             name="password"
-                            id="password"
                             width="400px"
                             placeholder="Password"
                             onChange={formik.handleChange}

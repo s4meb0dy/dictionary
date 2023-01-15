@@ -11,13 +11,15 @@ const Main = () => {
     return (
         <div className="h-full">
             <Navbar />
-            <Routes>
-                <Route path="/" element={<HomeContainer />} />
-                <Route
-                    path="/create-dictionary"
-                    element={<CreateDictionaryPage />}
-                />
-            </Routes>
+            <div className='w-[900px] h-full mx-auto pt-[40px]'>
+                <Routes>
+                    <Route path="/" element={<HomeContainer />} />
+                    <Route
+                        path="/create-dictionary"
+                        element={<CreateDictionaryPage />}
+                    />
+                </Routes>
+            </div>
         </div>
     )
 }
