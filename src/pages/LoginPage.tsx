@@ -1,7 +1,7 @@
 import React from 'react'
 import FormContainer from '../components/auth/FormContainer'
 import Button from '../components/Button'
-import TextInput from '../components/input/InputText'
+import TextInput from '../components/input/TextInput'
 import { InputSizeEnum } from '../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
@@ -133,7 +133,7 @@ const LoginPage = () => {
                         styles="mb-[20px]"
                         name="Login"
                         type="submit"
-                        size={InputSizeEnum.Medium}
+                        size='medium'
                         // disabled={formik.errors && true}
                     />
                 </form>

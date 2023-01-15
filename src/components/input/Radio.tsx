@@ -6,6 +6,7 @@ type RadioProps = {
     afterLabel?: boolean
     beforeLabel?: boolean
     styles?: string
+    checked?: boolean
 }
 
 const Radio: React.FC<RadioProps> = ({
@@ -15,25 +16,26 @@ const Radio: React.FC<RadioProps> = ({
     afterLabel,
     children,
     styles,
+    checked
 }) => {
     return (
-        <span className={`inline-block flex items-center ${styles && styles}`}>
+        <span className={`flex items-center ${styles && styles}`}>
             {beforeLabel && children && (
-                <label htmlFor={id} className="mr-[7px]">
+                <label htmlFor={id} className="mr-[7px] cursor-pointer">
                     {children}
                 </label>
             )}
-            <div className="border-[2px] rounded-full border-white w-[25px] h-[25px] flex flex-shrink-0 justify-center items-center relative">
+            <div className="border-[2px] rounded-full border-white w-[25px] h-[25px] flex justify-center items-center">
                 <input
                     id={id}
                     name={name}
                     type="radio"
-                   
-                    className="checkbox appearance-none checked:bg-white rounded-full outline-none absolute cursor-pointer w-[19px] h-[19px] top-0 left-0"
+                    checked={checked}
+                    className="checkbox appearance-none transition-colors checked:bg-white rounded-full outline-none cursor-pointer w-[17px] h-[17px]"
                 />
             </div>
             {afterLabel && children && (
-                <label htmlFor={id} className="ml-[7px]">
+                <label htmlFor={id} className="ml-[7px] cursor-pointer">
                     {children}
                 </label>
             )}

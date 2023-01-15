@@ -2,9 +2,10 @@ import React from 'react'
 import { InputSizeEnum } from '../types'
 
 type ButtonProps = {
-    size: InputSizeEnum
+    size:  'small' | 'medium' | 'large'
     name: string
     styles?: string
+    width?: string
     disabled?: boolean
     type?: 'submit' | 'reset' | 'button'
 }
@@ -18,6 +19,7 @@ const Button: React.FC<ButtonProps> = ({
     styles,
     size,
     name,
+    width,
     disabled = false,
     type = 'button',
 }) => {
@@ -25,7 +27,7 @@ const Button: React.FC<ButtonProps> = ({
 
     React.useEffect(() => {
         switch (size) {
-            case InputSizeEnum.Medium:
+            case 'medium':
                 setSizeStyle(sizeStyles.medium)
                 break
         }
@@ -38,6 +40,7 @@ const Button: React.FC<ButtonProps> = ({
             }`}
             type={type}
             disabled={disabled}
+            style={{width: width ? width : ''}}
         >
             {name}
         </button>
