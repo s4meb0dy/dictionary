@@ -72,7 +72,7 @@ const RegisterPage = () => {
                             text: 'You are registered',
                         })
                     )
-                    navigate('/login')
+                    navigate('/')
                 }
             })
             formik.resetForm()

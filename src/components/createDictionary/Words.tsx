@@ -7,8 +7,7 @@ const Words = () => {
         Array<{
             word: string
             translation: string
-            onChangeWordHandler: (e: React.ChangeEvent<any>) => void
-            onChangeTranslationHandler: (e: React.ChangeEvent<any>) => void
+            id: number
         }>
     >([])
 
@@ -18,30 +17,22 @@ const Words = () => {
             {
                 word: '',
                 translation: '',
-                onChangeWordHandler: function (e) {
-                    this.word = e.target.value
-                },
-                onChangeTranslationHandler: function (e) {
-                    this.translation = e.target.value
-                },
+                id: 1,
             },
         ])
     }
+
+    const onChangeValue = (data: {
+        id: number
+        word: string
+        translation: string
+    }) => {}
 
     return (
         <>
             <div className="w-full">
                 {words.length > 0 &&
-                    words.map((item) => (
-                        <Word
-                            wordValue={item.word}
-                            translationValue={item.translation}
-                            onChangeWordHandler={item.onChangeWordHandler}
-                            onChangeTranslationHandler={
-                                item.onChangeTranslationHandler
-                            }
-                        />
-                    ))}
+                    words.map((item) => <Word onChangeValue={onChangeValue} />)}
             </div>
             <div className="w-full bg-secondaryBg shadow-primary rounded-[10px] p-[6px] flex">
                 <Button
