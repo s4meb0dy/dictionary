@@ -134,6 +134,9 @@ const LoginPage = () => {
                         name="Login"
                         type="submit"
                         size='medium'
+                        color='#0086EA'
+                        hoverColor='#53A0FF'
+                        activeColor='#0D6CBD'
                         // disabled={formik.errors && true}
                     />
                 </form>

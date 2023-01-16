@@ -3,8 +3,9 @@ import TextInput from '../components/input/TextInput'
 import Radio from '../components/input/Radio'
 import Tag from '../components/Tag'
 import { InputSizeEnum } from '../types'
-import WordBlock from '../components/createDictionary/WordBlock'
+import Word from '../components/createDictionary/Word'
 import Button from '../components/Button'
+import Words from '../components/createDictionary/Words'
 
 const CreateDictionaryPage: React.FC = () => {
     const [nameValue, setNameValue] = React.useState('')
@@ -37,14 +38,8 @@ const CreateDictionaryPage: React.FC = () => {
                     <Tag name="Private" color="#00AEBF" />
                 </Radio>
             </div>
-            <div className="w-full">
-                <WordBlock />
-                <WordBlock />
-            </div>
-            <div className='w-full bg-secondaryBg shadow-primary rounded-[10px] p-[6px] flex'>
-                <Button styles='flex-auto mr-[6px]' size='large' name='Add' />
-                <Button width='185px' size='large' name='Save' />
-            </div>
+            <Words />
+            
         </div>
     )
 }
