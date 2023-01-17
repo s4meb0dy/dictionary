@@ -6,7 +6,7 @@ type RadioProps = {
     afterLabel?: boolean
     beforeLabel?: boolean
     styles?: string
-    checked?: boolean
+    defaultChecked?: boolean
 }
 
 const Radio: React.FC<RadioProps> = ({
@@ -16,7 +16,7 @@ const Radio: React.FC<RadioProps> = ({
     afterLabel,
     children,
     styles,
-    checked
+    defaultChecked
 }) => {
     return (
         <span className={`flex items-center ${styles && styles}`}>
@@ -30,7 +30,7 @@ const Radio: React.FC<RadioProps> = ({
                     id={id}
                     name={name}
                     type="radio"
-                    checked={checked}
+                    defaultChecked={defaultChecked}
                     className="checkbox appearance-none transition-colors checked:bg-white rounded-full outline-none cursor-pointer w-[17px] h-[17px]"
                 />
             </div>

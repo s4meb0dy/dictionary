@@ -30,7 +30,7 @@ const CreateDictionaryPage: React.FC = () => {
                     name="access-create-dictionary"
                     styles="mr-[13px]"
                     beforeLabel
-                    checked
+                    defaultChecked
                 >
                     <Tag name="Public" color="#C89600" />
                 </Radio>

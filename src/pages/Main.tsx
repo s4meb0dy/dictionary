@@ -1,13 +1,24 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import HomeContainer from '../components/Home/HomeContainer'
 
 import Navbar from '../components/Navbar'
+import { useAppSelector } from '../hooks/reduxHooks'
 import CreateDictionaryPage from './CreateDictionaryPage'
-
+import {AuthorizationEnum} from './../types/index'
 import Home from './HomePage'
 
 const Main = () => {
+
+    const authorizationStatus = useAppSelector(state => state.user.authorizationStatus)
+
+    const navigate = useNavigate()
+
+    React.useLayoutEffect(() => {
+        if(authorizationStatus === AuthorizationEnum.Logout)
+            navigate('/')
+    }, [authorizationStatus])
+
     return (
         <div className="h-full">
             <Navbar />
