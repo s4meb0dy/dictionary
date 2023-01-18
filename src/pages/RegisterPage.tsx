@@ -95,7 +95,6 @@ const RegisterPage = () => {
                             name="username"
                             width="400px"
                             placeholder="Username"
-                            rightIcon
                             onChange={formik.handleChange}
                             value={formik.values.username}
                             onBlur={formik.handleBlur}
@@ -105,19 +104,17 @@ const RegisterPage = () => {
                                     ? formik.errors.username
                                     : undefined
                             }
+                            RightIcon={
+                                formik.touched.username &&
+                                formik.errors.username ? (
+                                    <WarningCircleIcon
+                                        height="24"
+                                        width="24"
+                                        color="#FE2836"
+                                    />
+                                ) : undefined
+                            }
                         />
-                        {formik.touched.username && formik.errors.username && (
-                            <label
-                                htmlFor="username"
-                                className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
-                            >
-                                <WarningCircleIcon
-                                    height="24"
-                                    width="24"
-                                    color="#FE2836"
-                                />
-                            </label>
-                        )}
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
@@ -125,7 +122,6 @@ const RegisterPage = () => {
                             name="email"
                             width="400px"
                             placeholder="Email"
-                            rightIcon
                             onChange={formik.handleChange}
                             value={formik.values.email}
                             onBlur={formik.handleBlur}
@@ -134,19 +130,16 @@ const RegisterPage = () => {
                                     ? formik.errors.email
                                     : undefined
                             }
+                            RightIcon={
+                                formik.touched.email && formik.errors.email ? (
+                                    <WarningCircleIcon
+                                        height="24"
+                                        width="24"
+                                        color="#FE2836"
+                                    />
+                                ) : undefined
+                            }
                         />
-                        {formik.touched.email && formik.errors.email && (
-                            <label
-                                htmlFor="email"
-                                className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
-                            >
-                                <WarningCircleIcon
-                                    height="24"
-                                    width="24"
-                                    color="#FE2836"
-                                />
-                            </label>
-                        )}
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
@@ -154,7 +147,6 @@ const RegisterPage = () => {
                             name="password"
                             width="400px"
                             placeholder="Password"
-                            rightIcon
                             onChange={formik.handleChange}
                             value={formik.values.password}
                             onBlur={formik.handleBlur}
@@ -165,19 +157,17 @@ const RegisterPage = () => {
                                     ? formik.errors.password
                                     : undefined
                             }
+                            RightIcon={
+                                formik.touched.password &&
+                                formik.errors.password ? (
+                                    <WarningCircleIcon
+                                        height="24"
+                                        width="24"
+                                        color="#FE2836"
+                                    />
+                                ) : undefined
+                            }
                         />
-                        {formik.touched.password && formik.errors.password && (
-                            <label
-                                htmlFor="password"
-                                className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
-                            >
-                                <WarningCircleIcon
-                                    height="24"
-                                    width="24"
-                                    color="#FE2836"
-                                />
-                            </label>
-                        )}
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
@@ -185,7 +175,6 @@ const RegisterPage = () => {
                             name="confirmPassword"
                             width="400px"
                             placeholder="Confirm password"
-                            rightIcon
                             onChange={formik.handleChange}
                             value={formik.values.confirmPassword}
                             onBlur={formik.handleBlur}
@@ -196,25 +185,22 @@ const RegisterPage = () => {
                                     ? formik.errors.confirmPassword
                                     : undefined
                             }
-                        />
-                        {formik.touched.confirmPassword &&
-                            formik.errors.confirmPassword && (
-                                <label
-                                    htmlFor="password"
-                                    className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
-                                >
+                            RightIcon={
+                                formik.touched.confirmPassword &&
+                                formik.errors.confirmPassword ? (
                                     <WarningCircleIcon
                                         height="24"
                                         width="24"
                                         color="#FE2836"
                                     />
-                                </label>
-                            )}
+                                ) : undefined
+                            }
+                        />
                     </div>
                     <Button
                         styles="mb-[20px]"
                         name="Create account"
-                        size='medium'
+                        size="medium"
                         type="submit"
                     />
                 </form>

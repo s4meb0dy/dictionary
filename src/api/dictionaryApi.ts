@@ -1,12 +1,26 @@
-import { getDictionaryType, loginResponseType, userInfoResponseType } from '../types/apiTypes';
+import { getMyDictionariesType, getDictionariesType } from '../types/apiTypes'
 import { instance } from './index'
-import { loginDataType, registrationDataType } from '../types/index'
 export const a = 1
 
 class DictionaryAPI {
-
-    static fetchUserInfo = () => {
-        return instance.get<getDictionaryType>('/dictionary', {withCredentials: true})
+    static fetchMyDictionaries = () => {
+        return instance.get<getMyDictionariesType>(`/dictionary`, {
+            withCredentials: true,
+        })
+    }
+    static fetchPublicDictionaries = () => {
+        return instance.get<getDictionariesType>(`/dictionary/public`, {
+            withCredentials: true,
+        })
+    }
+    static postDictionary = (data: {
+        dictionaryName: string
+        isPublic: boolean
+        words: Array<{ name: string; translation: string }>
+    }) => {
+        return instance.post(`/word/dictionary`, data, {
+            withCredentials: true,
+        })
     }
 }
 

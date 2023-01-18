@@ -7,6 +7,7 @@ import { useAppSelector } from '../hooks/reduxHooks'
 import CreateDictionaryPage from './CreateDictionaryPage'
 import {AuthorizationEnum} from './../types/index'
 import Home from './HomePage'
+import AllDictionariesPage from './AllDictionariesPage'
 
 const Main = () => {
 
@@ -28,6 +29,10 @@ const Main = () => {
                     <Route
                         path="/create-dictionary"
                         element={<CreateDictionaryPage />}
+                    />
+                     <Route
+                        path="/dictionaries"
+                        element={<AllDictionariesPage />}
                     />
                 </Routes>
             </div>

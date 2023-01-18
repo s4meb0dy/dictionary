@@ -7,6 +7,8 @@ type RadioProps = {
     beforeLabel?: boolean
     styles?: string
     defaultChecked?: boolean
+    value: boolean
+    onChange: (trueId: string) => void
 }
 
 const Radio: React.FC<RadioProps> = ({
@@ -16,8 +18,14 @@ const Radio: React.FC<RadioProps> = ({
     afterLabel,
     children,
     styles,
-    defaultChecked
+    defaultChecked,
+    value,
+    onChange,
 }) => {
+    const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
+        if (e.target.checked) onChange(id)
+    }
+
     return (
         <span className={`flex items-center ${styles && styles}`}>
             {beforeLabel && children && (
@@ -31,7 +39,9 @@ const Radio: React.FC<RadioProps> = ({
                     name={name}
                     type="radio"
                     defaultChecked={defaultChecked}
+                    checked={value}
                     className="checkbox appearance-none transition-colors checked:bg-white rounded-full outline-none cursor-pointer w-[17px] h-[17px]"
+                    onChange={onChangeHandler}
                 />
             </div>
             {afterLabel && children && (

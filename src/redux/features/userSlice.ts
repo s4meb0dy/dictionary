@@ -17,7 +17,13 @@ export const login = createAsyncThunk<
 >('user/login', async (loginData, thunkAPI) => {
     try {
         const response = await UserAPI.login(loginData)
-
+        thunkAPI.dispatch(
+            openInfoBlock({
+                type: 'success',
+                title: 'Success',
+                text: 'You are logged in',
+            })
+        )
         return response.data
     } catch (error: any) {
         const errorMessage: Array<string> = error.response
@@ -52,6 +58,15 @@ export const registration = createAsyncThunk<
 >('user/registration', async (registerData, thunkAPI) => {
     try {
         const response = await UserAPI.registration(registerData)
+
+        thunkAPI.dispatch(
+            openInfoBlock({
+                type: 'success',
+                title: 'Success',
+                text: 'You are registered',
+            })
+        )
+
         return response.data
     } catch (error: any) {
         const errorMessage: Array<string> = error.response

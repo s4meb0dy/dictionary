@@ -3,54 +3,40 @@ import Button from '../Button'
 import Word from './Word'
 import { nanoid } from 'nanoid'
 
-const Words = () => {
-    const [words, setWords] = React.useState<
-        Array<{
-            word: string
-            translation: string
-            id: string
-        }>
-    >([])
-
-    const onAddWordHandler = () => {
-        setWords((prev) => [
-            ...prev,
-            {
-                word: '',
-                translation: '',
-                id: nanoid(),
-            },
-        ])
-    }
-
-    const onChangeValue = (data: {
+type WordsProps = {
+    onAddWord: () => void
+    words: Array<{
+        word: string
+        translation: string
+        id: string
+    }>
+    onChangeDictionaryDataValue: (data: {
         id: string
         word: string
         translation: string
-    }) => {
-        const prevArr = words
+    }) => void
+    onDeleteDictionary: (id: string) => void 
+    onSave: () => void
+}
 
-        const index = words.findIndex(item => item.id == data.id)
-
-        prevArr[index].translation = data.translation
-        prevArr[index].word = data.word
-
-        setWords(prevArr)
-    }
-
-    const onDeleteHandler = (id: string) => {
-        const index = words.findIndex(item => item.id == id)
-        setWords(prev => prev.filter((item) => item.id != id))
-
-    }
+const Words: React.FC<WordsProps> = ({ onAddWord, words, onChangeDictionaryDataValue, onDeleteDictionary, onSave }) => {
+    
+    
 
     return (
         <>
             <div className="w-full">
                 {words.length > 0 &&
-                    words.map((item) => <Word  key={item.id} id={item.id} onChangeValue={onChangeValue} onDelete={onDeleteHandler} />)}
+                    words.map((item) => (
+                        <Word
+                            key={item.id}
+                            id={item.id}
+                            onChangeValue={onChangeDictionaryDataValue}
+                            onDelete={onDeleteDictionary}
+                        />
+                    ))}
             </div>
-            <div className="w-full bg-secondaryBg shadow-primary rounded-[10px] p-[6px] flex mb-[40px]">
+            <div className="w-full bg-secondaryBg shadow-primary rounded-[10px] p-[6px] flex">
                 <Button
                     styles="flex-auto mr-[6px]"
                     size="large"
@@ -58,7 +44,7 @@ const Words = () => {
                     color="#0086EA"
                     hoverColor="#53A0FF"
                     activeColor="#0D6CBD"
-                    onClick={onAddWordHandler}
+                    onClick={onAddWord}
                 />
                 <Button
                     width="185px"
@@ -68,6 +54,7 @@ const Words = () => {
                     hoverColor="#24b553"
                     activeColor="#157b2f"
                     disabled={words.length === 0}
+                    onClick={onSave}
                 />
             </div>
         </>

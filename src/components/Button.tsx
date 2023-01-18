@@ -47,7 +47,6 @@ const Button: React.FC<ButtonProps> = ({
     }
 
     const toggleActive = () => {
-        console.log(1)
         setIsActive((prev) => !prev)
     }
 

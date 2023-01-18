@@ -1,3 +1,4 @@
+import { Console } from 'console'
 import React from 'react'
 import { InputSizeEnum } from '../../types'
 import WarningCircle from '../icons/WarningCircleIcon'
@@ -7,7 +8,10 @@ type TextInputProps = {
     styles?: string
     width?: string
     placeholder?: string
-    rightIcon?: boolean
+    RightIcon?: JSX.Element
+    LeftIcon?: JSX.Element
+    onClickRightIcon?: (e: React.ChangeEvent<any>) => void 
+    onClickLeftIcon?: (e: React.ChangeEvent<any>) => void 
     onBlur?: (e: React.FocusEvent<any, Element>) => void
     value: string
     onChange: (e: React.ChangeEvent<any>) => void
@@ -17,11 +21,7 @@ type TextInputProps = {
 }
 
 const constStyles =
-    'border-[1px] border-solid outline-none rounded-[8px] text-[14px] flex items-center placeholder:text-[14px] active:shadow-null  transition-colors'
-
-const sizeStyles = {
-    large: 'bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] pl-[16px] pr-[16px]',
-}
+    'border-[1px] border-solid outline-none rounded-[8px] text-[14px] flex items-center placeholder:text-[14px] active:shadow-null transition-colors w-full'
 
 const stateStyles = {
     default:
@@ -31,7 +31,10 @@ const stateStyles = {
 }
 
 const TextInput: React.FC<TextInputProps> = ({
-    rightIcon = false,
+    RightIcon,
+    LeftIcon,
+    onClickRightIcon,
+    onClickLeftIcon,
     size,
     width,
     styles = '',
@@ -52,33 +55,61 @@ const TextInput: React.FC<TextInputProps> = ({
         switch (size) {
             case InputSizeEnum.Large:
                 setSizeStyle(
-                    `bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] pl-[16px] ${
-                        rightIcon ? 'pr-[56px]' : 'pr-[16px]'
-                    }`
+                    `bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] pl-[16px] transition-colors ${
+                        RightIcon ? 'pr-[56px]' : 'pr-[16px]'
+                    } ${LeftIcon ? 'pl-[56px]' : 'pla-[16px]'}`
                 )
                 break
         }
-    }, [size, rightIcon, setSizeStyle])
+    }, [size, RightIcon, LeftIcon, setSizeStyle])
 
     React.useEffect(() => {
         if (error) setStateStyle(stateStyles.error)
         else setStateStyle(stateStyles.default)
-        // console.log(error)
     }, [error])
 
     return (
-        <input
-            className={`${sizeStyle}  ${stateStyle} ${constStyles} ${styles}`}
-            style={{ width }}
-            placeholder={placeholder}
-            value={value}
-            onChange={onChange}
-            onBlur={onBlur}
-            type={type}
-            name={name}
-            id={name}
-            formNoValidate
-        />
+        <div className="relative" style={{ width }}>
+            {LeftIcon && (
+                <label
+                    htmlFor={name}
+                    className={`absolute top-[50%] left-[16px] cursor-pointer transition-all`}
+                    onClick={onClickLeftIcon && onClickLeftIcon}
+                    style={{
+                        transform: `translate(0px, -${
+                            LeftIcon.props?.width / 2
+                        }px)`,
+                    }}
+                >
+                    {LeftIcon}
+                </label>
+            )}
+            <input
+                className={`${sizeStyle}  ${stateStyle} ${constStyles} ${styles}`}
+                placeholder={placeholder}
+                value={value}
+                onChange={onChange}
+                onBlur={onBlur}
+                type={type}
+                name={name}
+                id={name}
+                formNoValidate
+            />
+            {RightIcon && (
+                <label
+                    htmlFor={name}
+                    className={`absolute top-[50%] right-[16px] cursor-pointer transition-all`}
+                    onClick={onClickRightIcon && onClickRightIcon}
+                    style={{
+                        transform: `translate(0px, -${
+                            RightIcon.props?.width / 2
+                        }px)`,
+                    }}
+                >
+                    {RightIcon}
+                </label>
+            )}
+        </div>
     )
 }
 

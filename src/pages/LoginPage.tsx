@@ -46,13 +46,6 @@ const LoginPage = () => {
                 setFieldError('email', 'Email field must include @')
             dispatch(login(values)).then((res) => {
                 if (res.meta.requestStatus === 'fulfilled') {
-                    dispatch(
-                        openInfoBlock({
-                            type: 'success',
-                            title: 'Success',
-                            text: 'You are logged in',
-                        })
-                    )
                     navigate('/')
                 }
             })
@@ -75,7 +68,6 @@ const LoginPage = () => {
                             name="email"
                             width="400px"
                             placeholder="Email"
-                            rightIcon
                             onChange={formik.handleChange}
                             value={formik.values.email}
                             onBlur={formik.handleBlur}
@@ -84,19 +76,16 @@ const LoginPage = () => {
                                     ? formik.errors.email
                                     : undefined
                             }
+                            RightIcon={
+                                formik.touched.email && formik.errors.email ? (
+                                    <WarningCircleIcon
+                                        height="24"
+                                        width="24"
+                                        color="#FE2836"
+                                    />
+                                ) : undefined
+                            }
                         />
-                        {formik.touched.email && formik.errors.email && (
-                            <label
-                                htmlFor="email"
-                                className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
-                            >
-                                <WarningCircleIcon
-                                    height="24"
-                                    width="24"
-                                    color="#FE2836"
-                                />
-                            </label>
-                        )}
                     </div>
                     <div className="mb-[30px] relative">
                         <TextInput
@@ -107,7 +96,6 @@ const LoginPage = () => {
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
                             value={formik.values.password}
-                            rightIcon
                             error={
                                 formik.touched.password &&
                                 formik.errors.password
@@ -115,28 +103,26 @@ const LoginPage = () => {
                                     : undefined
                             }
                             type="password"
+                            RightIcon={
+                                formik.touched.password &&
+                                formik.errors.password ? (
+                                    <WarningCircleIcon
+                                        height="24"
+                                        width="24"
+                                        color="#FE2836"
+                                    />
+                                ) : undefined
+                            }
                         />
-                        {formik.touched.password && formik.errors.password && (
-                            <label
-                                htmlFor="password"
-                                className="absolute top-[50%] -translate-y-[12px] right-[16px] cursor-pointer"
-                            >
-                                <WarningCircleIcon
-                                    height="24"
-                                    width="24"
-                                    color="#FE2836"
-                                />
-                            </label>
-                        )}
                     </div>
                     <Button
                         styles="mb-[20px]"
                         name="Login"
                         type="submit"
-                        size='medium'
-                        color='#0086EA'
-                        hoverColor='#53A0FF'
-                        activeColor='#0D6CBD'
+                        size="medium"
+                        color="#0086EA"
+                        hoverColor="#53A0FF"
+                        activeColor="#0D6CBD"
                         // disabled={formik.errors && true}
                     />
                 </form>
