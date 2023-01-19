@@ -9,6 +9,7 @@ type HeaderBlockProps = {
     access: 'public' | 'private'
     onChangeName: (e: React.ChangeEvent<any>) => void
     nameValue: string
+    errorNameField?: string 
 }
 
 const HeaderBlock: React.FC<HeaderBlockProps> = ({
@@ -16,6 +17,7 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({
     access,
     onChangeName,
     nameValue,
+    errorNameField,
 }) => {
     return (
         <div className="flex flex-col items-center  w-full">
@@ -26,6 +28,7 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({
                 onChange={onChangeName}
                 name="nameDictionary"
                 placeholder="Dictionary name"
+                error={errorNameField}
             />
             <div className="flex items-center pt-[30px] pb-[60px]">
                 <Radio

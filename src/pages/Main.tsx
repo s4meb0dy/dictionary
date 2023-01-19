@@ -5,34 +5,39 @@ import HomeContainer from '../components/Home/HomeContainer'
 import Navbar from '../components/Navbar'
 import { useAppSelector } from '../hooks/reduxHooks'
 import CreateDictionaryPage from './CreateDictionaryPage'
-import {AuthorizationEnum} from './../types/index'
+import { AuthorizationEnum } from './../types/index'
 import Home from './HomePage'
-import AllDictionariesPage from './AllDictionariesPage'
+import AllDictionariesPage from './PublicDictionariesPage'
+import Dictionary from './Dictionary'
 
 const Main = () => {
-
-    const authorizationStatus = useAppSelector(state => state.user.authorizationStatus)
+    const authorizationStatus = useAppSelector(
+        (state) => state.user.authorizationStatus
+    )
 
     const navigate = useNavigate()
 
     React.useLayoutEffect(() => {
-        if(authorizationStatus === AuthorizationEnum.Logout)
-            navigate('/')
+        if (authorizationStatus === AuthorizationEnum.Logout) navigate('/')
     }, [authorizationStatus])
 
     return (
         <div className="h-full">
             <Navbar />
-            <div className='w-[900px] h-full mx-auto pt-[40px]'>
+            <div className="w-[900px] h-full mx-auto pt-[40px]">
                 <Routes>
                     <Route path="/" element={<HomeContainer />} />
                     <Route
                         path="/create-dictionary"
                         element={<CreateDictionaryPage />}
                     />
-                     <Route
+                    <Route
                         path="/dictionaries"
                         element={<AllDictionariesPage />}
+                    />
+                    <Route
+                        path="/dictionary/:id"
+                        element={<Dictionary />}
                     />
                 </Routes>
             </div>

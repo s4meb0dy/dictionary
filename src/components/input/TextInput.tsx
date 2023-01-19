@@ -1,7 +1,7 @@
 import { Console } from 'console'
 import React from 'react'
 import { InputSizeEnum } from '../../types'
-import WarningCircle from '../icons/WarningCircleIcon'
+import WarningCircle from '../../assets/icons/WarningCircleIcon'
 
 type TextInputProps = {
     size: InputSizeEnum
@@ -10,8 +10,8 @@ type TextInputProps = {
     placeholder?: string
     RightIcon?: JSX.Element
     LeftIcon?: JSX.Element
-    onClickRightIcon?: (e: React.ChangeEvent<any>) => void 
-    onClickLeftIcon?: (e: React.ChangeEvent<any>) => void 
+    onClickRightIcon?: (e: React.ChangeEvent<any>) => void
+    onClickLeftIcon?: (e: React.ChangeEvent<any>) => void
     onBlur?: (e: React.FocusEvent<any, Element>) => void
     value: string
     onChange: (e: React.ChangeEvent<any>) => void
@@ -85,7 +85,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 </label>
             )}
             <input
-                className={`${sizeStyle}  ${stateStyle} ${constStyles} ${styles}`}
+                className={`${sizeStyle} ${stateStyle} ${constStyles} ${styles}`}
                 placeholder={placeholder}
                 value={value}
                 onChange={onChange}
@@ -94,6 +94,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 name={name}
                 id={name}
                 formNoValidate
+                style={{borderColor: error ? '#FE2836' : ''}}
             />
             {RightIcon && (
                 <label

@@ -1,9 +1,9 @@
 import React from 'react'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
 import { closeInfoBlock } from '../redux/features/appSlice'
-import CheckCircleIcon from './icons/CheckCircleIcon'
-import CircleCloseIcon from './icons/CircleCloseIcon'
-import CloseIcon from './icons/CloseIcon'
+import CheckCircleIcon from '../assets/icons/CheckCircleIcon'
+import CircleCloseIcon from '../assets/icons/CircleCloseIcon'
+import CloseIcon from '../assets/icons/CloseIcon'
 
 type InfoBlockProps = {}
 
@@ -56,14 +56,25 @@ const InfoBlock: React.FC<InfoBlockProps> = () => {
             }}
         >
             <div className="absolute top-[12px] left-[12px]">
-                {
-                    infoBlockData?.type == 'error' && <CircleCloseIcon width="20px" height="20px" color="#FE2836" />
-                }
-                {
-                    infoBlockData?.type == 'success' && <CheckCircleIcon width="20px" height="20px" color="#1D9745" />
-                }         
+                {infoBlockData?.type == 'error' && (
+                    <CircleCloseIcon
+                        width="20px"
+                        height="20px"
+                        color="#FE2836"
+                    />
+                )}
+                {infoBlockData?.type == 'success' && (
+                    <CheckCircleIcon
+                        width="20px"
+                        height="20px"
+                        color="#1D9745"
+                    />
+                )}
             </div>
-            <div className="absolute top-[12px] right-[12px] cursor-pointer" onClick={closeErrorHandler}>
+            <div
+                className="absolute top-[12px] right-[12px] cursor-pointer"
+                onClick={closeErrorHandler}
+            >
                 <CloseIcon width="20px" height="20px" color="#616C76" />
             </div>
 

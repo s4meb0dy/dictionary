@@ -6,7 +6,7 @@ import { InputSizeEnum } from '../types'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
 import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
-import WarningCircleIcon from '../components/icons/WarningCircleIcon'
+import WarningCircleIcon from '../assets/icons/WarningCircleIcon'
 import { login } from '../redux/features/userSlice'
 import { openInfoBlock } from '../redux/features/appSlice'
 

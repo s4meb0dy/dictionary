@@ -1,10 +1,10 @@
 import React from 'react';
-import Dictionaries from '../components/allDictionaries/Dictionaries';
-import SearchBlock from '../components/allDictionaries/SearchBlock';
+import PublicDictionaries from '../components/publicDictionaries/PublicDictionaries';
+import SearchBlock from '../components/publicDictionaries/SearchBlock';
 import { useAppDispatch } from '../hooks/reduxHooks';
 import { fetchDictionariesByOtherUsers } from '../redux/features/dictionarySlice';
 
-const AllDictionariesPage: React.FC = () => {
+const PublicDictionariesPage: React.FC = () => {
 
     const dispatch = useAppDispatch()
 
@@ -15,9 +15,9 @@ const AllDictionariesPage: React.FC = () => {
     return (
         <div className='pb-[40px] animate-appearance'>
             <SearchBlock />
-            <Dictionaries />
+            <PublicDictionaries />
         </div>
     );
 };
 
-export default AllDictionariesPage;
+export default PublicDictionariesPage;

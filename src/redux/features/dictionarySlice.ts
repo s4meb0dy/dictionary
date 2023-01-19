@@ -188,6 +188,7 @@ const dictionarySlice = createSlice({
                 fetchDictionariesByOtherUsers.fulfilled,
                 (state, action: PayloadAction<getDictionariesType>) => {
                     state.dictionaries = action.payload
+                    state.isLoading = false
                 }
             )
             .addCase(
@@ -202,6 +203,7 @@ const dictionarySlice = createSlice({
             })
             .addCase(createDictionary.fulfilled, (state) => {
                 // state.dictionaries = action.payload
+                state.isLoading = false
             })
             .addCase(createDictionary.rejected, (state, action) => {
                 state.isLoading = false

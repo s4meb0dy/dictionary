@@ -5,6 +5,7 @@ import { nanoid } from 'nanoid'
 import { useAppDispatch } from '../hooks/reduxHooks'
 import { createDictionary } from '../redux/features/dictionarySlice'
 import { useNavigate } from 'react-router-dom'
+import { openInfoBlock } from '../redux/features/appSlice'
 
 const CreateDictionaryPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -12,6 +13,7 @@ const CreateDictionaryPage: React.FC = () => {
     const navigate = useNavigate()
 
     const [nameValue, setNameValue] = React.useState('')
+    const [errorName, setError] = React.useState<string>()
 
     const [access, setAccess] = React.useState<'public' | 'private'>('public')
 
@@ -20,6 +22,7 @@ const CreateDictionaryPage: React.FC = () => {
         else if (trueId === 'private') setAccess(trueId)
     }
     const onChangeNameHandler = (e: React.ChangeEvent<any>) => {
+        setError(undefined)
         setNameValue(e.target.value)
     }
 
@@ -63,6 +66,28 @@ const CreateDictionaryPage: React.FC = () => {
     //---------------------------------------------------------
 
     const onSaveHandler = () => {
+        if (nameValue === '') {
+            setError('Required field')
+            return
+        }
+
+        let isError = false
+
+        words.forEach((item) => {
+            if (item.translation === '' || item.word === '') {
+                dispatch(
+                    openInfoBlock({
+                        type: 'error',
+                        title: 'Error',
+                        text: 'All fields must be filled',
+                    })
+                )
+                isError = true
+            }
+        })
+
+        if(isError) return
+
         const wordsWithoutId: Array<{ name: string; translation: string }> =
             words.map((item) => {
                 return { name: item.word, translation: item.translation }
@@ -88,6 +113,7 @@ const CreateDictionaryPage: React.FC = () => {
                 access={access}
                 onChangeName={onChangeNameHandler}
                 nameValue={nameValue}
+                errorNameField={errorName}
             />
             <Words
                 onSave={onSaveHandler}
