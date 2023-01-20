@@ -20,29 +20,37 @@ export type getMyDictionariesType = Array<{
     name: string
     createdAt: string
     isPublic: boolean
+    learned: number
+    total: number
+    updatedAt: string
+}>
+
+export type getDictionariesType = {
+    limit: number
+    page: number
+    pages: number
+    count: number
+    dictionaries: Array<{
+        id: number
+        createdAt: string
+        learned: number
+        updatedAt: string
+        isPublic: boolean
+        name: string
+        total: number
+    }>
+}
+
+export type getWordsByDictionaryIdType = {
+    count: number
+    limit: number
+    page: number
+    pages: number
     words: Array<{
         id: number
         name: string
         translation: string
-        isLearned: boolean
         createdAt: string
+        isLearned: boolean
     }>
-    learned: number
-    total: number
-}>
-
-export type getDictionariesType = Array<{
-    id: number
-    createdAt: string
-    isPublic: boolean
-    name: string
-    words: [
-        {
-            id: number
-            name: string
-            translation: string
-            isLearned: boolean
-            createdAt: string
-        }
-    ]
-}>
+}

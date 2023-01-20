@@ -1,22 +1,40 @@
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 import { useAppSelector } from '../../hooks/reduxHooks'
+import Tag from '../Tag'
 
-const DictionaryInformation: React.FC = () => {
-    const { isLoading } = useAppSelector((state) => state.dictionary)
+type DictionaryInformationProps = {
+    dictionaryName: string
+    access: string
+}
+
+const DictionaryInformation: React.FC<DictionaryInformationProps> = ({
+    dictionaryName,
+    access,
+}) => {
+    const { isLoading, count, learnedWords } = useAppSelector(
+        (state) => state.word
+    )
 
     return (
         <>
             {!isLoading ? (
                 <>
+                    <span className="absolute top-[15px] right-[15px]">
+                        {access === 'public' ? (
+                            <Tag name="Public" color="#C89600" />
+                        ) : (
+                            <Tag name="Private" color="#00AEBF" />
+                        )}
+                    </span>
                     <h3 className="text-white tracking-wide backdrop:font-medium text-[40px] pb-[12px] leading-[50px]">
-                        28 words
+                        {dictionaryName}
                     </h3>
                     <p className="text-white tracking-wide backdrop:text-[20px] leading-[25px]">
-                        10 studied words
+                        {`${count} words`}
                     </p>
                     <p className="text-white tracking-wide backdrop:text-[18px] leading-[23px]">
-                        3 dictionaries
+                        {`${learnedWords} studied words`}
                     </p>
                 </>
             ) : (

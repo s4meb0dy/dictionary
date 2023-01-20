@@ -4,18 +4,19 @@ import PublicDictionary from './PublicDictionary'
 import PublicDictionaryLoader from './PublicDictionaryLoader'
 
 const PublicDictionaries: React.FC = () => {
-    const { dictionaries, isLoading } = useAppSelector(
+    const { isLoading, dictionaries } = useAppSelector(
         (state) => state.dictionary
     )
 
     return (
         <div className="animate-appearance">
-            {!isLoading && dictionaries.length > 0 &&
-                dictionaries.map((item) => (
+            {!isLoading &&
+                dictionaries.dictionaries.length > 0 &&
+                dictionaries.dictionaries.map((item) => (
                     <PublicDictionary
                         key={item.id}
                         name={item.name}
-                        words={item.words.length}
+                        words={item.total}
                         id={1}
                     />
                 ))}

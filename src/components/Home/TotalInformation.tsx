@@ -2,22 +2,24 @@ import React from 'react'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import ContentLoader from 'react-content-loader'
 
-
 const TotalInformation: React.FC = () => {
     const { isLoading } = useAppSelector((state) => state.dictionary)
+    const { totalDictionaries, totalLearnedWords, totalWords } = useAppSelector(
+        (state) => state.dictionary.myDictionaries
+    )
 
     return (
         <>
             {!isLoading ? (
                 <>
                     <h3 className="text-white tracking-wide backdrop:font-medium text-[40px] pb-[12px] leading-[50px]">
-                        28 words
+                        {`${totalWords} words`}
                     </h3>
                     <p className="text-white tracking-wide backdrop:text-[20px] leading-[25px]">
-                        10 studied words
+                        {`${totalLearnedWords} studied words`}
                     </p>
                     <p className="text-white tracking-wide backdrop:text-[18px] leading-[23px]">
-                        3 dictionaries
+                        {`${totalDictionaries} dictionaries`}
                     </p>
                 </>
             ) : (

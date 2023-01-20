@@ -13,7 +13,6 @@ export const fetchDictionaries = createAsyncThunk<
     { rejectValue: string; dispatch: AppDispatch }
 >('user/fetchDictionaries', async (_, thunkAPI) => {
     try {
-        
         const response = await DictionaryAPI.fetchMyDictionaries()
 
         return response.data
@@ -49,7 +48,6 @@ export const fetchDictionariesByOtherUsers = createAsyncThunk<
     { rejectValue: string; dispatch: AppDispatch }
 >('user/fetchDictionariesByOtherUsers', async (_, thunkAPI) => {
     try {
-
         const response = await DictionaryAPI.fetchPublicDictionaries()
 
         return response.data
@@ -92,7 +90,11 @@ export const createDictionary = createAsyncThunk<
         const response = await DictionaryAPI.postDictionary(data)
 
         thunkAPI.dispatch(
-            openInfoBlock({ title: 'Success', type: 'success', text: 'Dictionary added' })
+            openInfoBlock({
+                title: 'Success',
+                type: 'success',
+                text: 'Dictionary added',
+            })
         )
         console.log(response.data)
     } catch (error: any) {
@@ -122,43 +124,53 @@ export const createDictionary = createAsyncThunk<
 })
 
 type initialStateType = {
-    myDictionaries: Array<{
-        id: number
-        name: string
-        createdAt: string
-        isPublic: boolean
-        words: Array<{
+    myDictionaries: {
+        totalWords: number | null
+        totalDictionaries: number | null
+        totalLearnedWords: number | null
+        myDictionaries: Array<{
             id: number
             name: string
-            translation: string
-            isLearned: boolean
             createdAt: string
+            isPublic: boolean
+            learned: number
+            total: number
+            updatedAt: string
         }>
-        learned: number
-        total: number
-    }>
-    dictionaries: Array<{
-        id: number
-        createdAt: string
-        isPublic: boolean
-        name: string
-        words: [
-            {
-                id: number
-                name: string
-                translation: string
-                isLearned: boolean
-                createdAt: string
-            }
-        ]
-    }>
+    }
+    dictionaries: {
+        limit: number | null
+        page: number | null
+        pages: number | null
+        count: number | null
+        dictionaries: Array<{
+            id: number
+            createdAt: string
+            learned: number
+            updatedAt: string
+            isPublic: boolean
+            name: string
+            total: number
+        }>
+    }
     isLoading: boolean
 }
 
 const initialState: initialStateType = {
-    myDictionaries: [],
+    myDictionaries: {
+        totalWords: null,
+        totalDictionaries: null,
+        totalLearnedWords: null,
+        myDictionaries: [],
+    },
     isLoading: false,
-    dictionaries: [],
+    dictionaries: {
+        limit: null,
+        page: null,
+        pages: null,
+        count: null,
+        dictionaries: [],
+    },
 }
 
 const dictionarySlice = createSlice({
@@ -173,7 +185,18 @@ const dictionarySlice = createSlice({
             .addCase(
                 fetchDictionaries.fulfilled,
                 (state, action: PayloadAction<getMyDictionariesType>) => {
-                    state.myDictionaries = action.payload
+                    let totalWords = 0
+                    let totalLearnedWords = 0
+
+                    action.payload.forEach((item) => {
+                        totalWords += item.total
+                        totalLearnedWords += item.learned
+                    })
+                    state.myDictionaries.myDictionaries = action.payload
+                    state.myDictionaries.totalLearnedWords = totalLearnedWords
+                    state.myDictionaries.totalWords = totalWords
+                    state.myDictionaries.totalDictionaries = action.payload.length
+
                     state.isLoading = false
                 }
             )

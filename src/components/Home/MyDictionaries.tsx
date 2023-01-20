@@ -1,5 +1,5 @@
+import { access } from 'fs'
 import React from 'react'
-
 import { useNavigate } from 'react-router-dom'
 import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { fetchDictionaries } from '../../redux/features/dictionarySlice'
@@ -22,15 +22,19 @@ const MyDictionaries: React.FC = () => {
         navigate('/create-dictionary')
     }
 
-    const openDictionaryHandler = (id: number) => {
-        navigate(`/dictionary/${id}`)
+    const openDictionaryHandler = (data: {
+        id: number
+        name: string
+        access: 'private' | 'public'
+    }) => {
+        navigate(`/dictionary/${data.id}/${data.access}/${data.name}`)
     }
 
     return (
         <div className="flex flex-wrap items-start justify-between">
             {!isLoading &&
-                myDictionaries.length > 0 &&
-                myDictionaries.map((item) => (
+                myDictionaries.myDictionaries.length > 0 &&
+                myDictionaries.myDictionaries.map((item) => (
                     <MyDictionary
                         key={item.id}
                         name={item.name}

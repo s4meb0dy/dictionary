@@ -7,7 +7,7 @@ type HeaderUnderFullPageProps = {
 const HeaderUnderFullPage: React.FC<
     HeaderUnderFullPageProps
 > = ({ children }) => {
-    return <div className="h-[190px]">{children}</div>
+    return <div className="h-[190px] relative">{children}</div>
 }
 
 export default HeaderUnderFullPage

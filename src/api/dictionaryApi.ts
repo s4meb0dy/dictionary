@@ -1,6 +1,5 @@
 import { getMyDictionariesType, getDictionariesType } from '../types/apiTypes'
 import { instance } from './index'
-export const a = 1
 
 class DictionaryAPI {
     static fetchMyDictionaries = () => {
@@ -9,7 +8,7 @@ class DictionaryAPI {
         })
     }
     static fetchPublicDictionaries = () => {
-        return instance.get<getDictionariesType>(`/dictionary/public`, {
+        return instance.get<getDictionariesType>(`/dictionary/public?page=1&limit=10`, {
             withCredentials: true,
         })
     }

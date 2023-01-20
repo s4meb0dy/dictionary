@@ -36,7 +36,7 @@ const Main = () => {
                         element={<AllDictionariesPage />}
                     />
                     <Route
-                        path="/dictionary/:id"
+                        path="/dictionary/:id/:access/:name"
                         element={<Dictionary />}
                     />
                 </Routes>
