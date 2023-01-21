@@ -1,4 +1,5 @@
 import React from 'react'
+import Checkbox from '../input/Checkbox'
 import Status from '../Status'
 
 type WordProps = {
@@ -19,10 +20,20 @@ const Word: React.FC<WordProps> = ({ name, translation, id, isLearned }) => {
                 )}
             </div>
             <div>
-                <p className="text-[24px] leading-[29px] text-black">{name}</p>
-                <p className="text-[20px] leading-[24px] text-black/50">
-                    {translation}
-                </p>
+                <div className='flex items-center'>
+                    <Checkbox
+                        name={`select-word-${id}`}
+                        id={`select-word-${id}`}
+                    />
+                    <div className='pl-[25px]'>
+                        <p className="text-[24px] leading-[29px] text-black">
+                            {name}
+                        </p>
+                        <p className="text-[20px] leading-[24px] text-black/50">
+                            {translation}
+                        </p>
+                    </div>
+                </div>
             </div>
             <div></div>
         </div>
