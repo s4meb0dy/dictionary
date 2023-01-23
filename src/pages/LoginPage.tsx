@@ -64,7 +64,7 @@ const LoginPage = () => {
                 >
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size={InputSizeEnum.Large}
+                            size='large'
                             name="email"
                             width="400px"
                             placeholder="Email"
@@ -89,7 +89,7 @@ const LoginPage = () => {
                     </div>
                     <div className="mb-[30px] relative">
                         <TextInput
-                            size={InputSizeEnum.Large}
+                            size='large'
                             name="password"
                             width="400px"
                             placeholder="Password"

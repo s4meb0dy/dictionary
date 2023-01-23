@@ -1,4 +1,9 @@
-import { getWordsByDictionaryIdType } from '../types/apiTypes'
+import {
+    deleteWordType,
+    getWordsByDictionaryIdType,
+    getWordType,
+    updateWordType,
+} from '../types/apiTypes'
 import { instance } from './index'
 
 class WordAPI {
@@ -9,6 +14,41 @@ class WordAPI {
                 withCredentials: true,
             }
         )
+    }
+    static createWord = (data: {
+        dictionaryId: number
+        name: string
+        translation: string
+    }) => {
+        return instance.post<getWordType>(
+            `/word/dictionary/${data.dictionaryId}`,
+            {
+                name: data.name,
+                translation: data.translation,
+            },
+            {
+                withCredentials: true,
+            }
+        )
+    }
+
+    static updateWord = (data: {
+        wordId: number
+        name: string
+        translation: string
+    }) => {
+        return instance.patch<updateWordType>(
+            `/word/${data.wordId}`,
+            { name: data.name, translation: data.translation },
+            {
+                withCredentials: true,
+            }
+        )
+    }
+    static deleteWord = (wordId: number) => {
+        return instance.delete<deleteWordType>(`/word/${wordId}`, {
+            withCredentials: true,
+        })
     }
 }
 

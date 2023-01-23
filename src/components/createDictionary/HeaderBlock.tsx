@@ -23,7 +23,7 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({
         <div className="flex flex-col items-center  w-full">
             <TextInput
                 width="444px"
-                size={InputSizeEnum.Large}
+                size='large'
                 value={nameValue}
                 onChange={onChangeName}
                 name="nameDictionary"

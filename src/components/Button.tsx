@@ -12,6 +12,8 @@ type ButtonProps = {
     hoverColor?: string
     activeColor?: string
     type?: 'submit' | 'reset' | 'button'
+    RightIcon?: JSX.Element
+    LeftIcon?: JSX.Element
 }
 
 const sizeStyles = {
@@ -30,12 +32,13 @@ const Button: React.FC<ButtonProps> = ({
     hoverColor,
     activeColor,
     type = 'button',
+    RightIcon,
+    LeftIcon,
 }) => {
     const [sizeStyle, setSizeStyle] = React.useState<string>('')
 
     const [isHover, setIsHover] = React.useState(false)
     const [isActive, setIsActive] = React.useState(false)
-
 
     const onEnterHoverHandler = () => {
         setIsHover(true)
@@ -62,7 +65,7 @@ const Button: React.FC<ButtonProps> = ({
         <button
             className={`${sizeStyle} bg-[${color}] active:bg-[${
                 activeColor ? activeColor : color
-            }] rounded-[8px] text-[14px] text-[#fff] leading-[40px] font-[600] transition-colors ${
+            }] rounded-[8px] text-[14px] text-[#fff] leading-[40px] font-[600] transition-all flex justify-center items-center ${
                 styles ? styles : ''
             }`}
             type={type}
@@ -85,7 +88,9 @@ const Button: React.FC<ButtonProps> = ({
             onMouseUp={toggleActive}
             onClick={onClick && onClick}
         >
-            {name}
+            {LeftIcon && LeftIcon}
+            <span className="px-[8px]">{name}</span>
+            {RightIcon && RightIcon}
         </button>
     )
 }

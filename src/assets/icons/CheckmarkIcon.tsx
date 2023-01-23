@@ -1,24 +1,24 @@
 import React from 'react'
 import { IconTypes } from '../../types'
 
-const Checkmark: React.FC<IconTypes> = ({ width, height, color }) => {
+const CheckmarkIcon: React.FC<IconTypes> = ({ width, height, color }) => {
     return (
         <span>
             <svg
                 width={width}
                 height={height}
-                viewBox={`0 0 ${width} ${height}`}
+                viewBox="0 0 32 32"
                 fill={color}
                 xmlns="http://www.w3.org/2000/svg"
             >
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"
-                    d="M11.207 0.707078C11.5975 1.0976 11.5975 1.73077 11.207 2.12129L5.41406 7.91419C5.02354 8.30471 4.39037 8.30471 3.99985 7.91419L0.706956 4.62129C0.316431 4.23077 0.316431 3.5976 0.706956 3.20708C1.09748 2.81655 1.73064 2.81655 2.12117 3.20708L4.70696 5.79286L9.79274 0.707078C10.1833 0.316553 10.8164 0.316554 11.207 0.707078Z"
+                    d="M27.7071 8.29289C28.0976 8.68342 28.0976 9.31658 27.7071 9.70711L13.7071 23.7071C13.3166 24.0976 12.6834 24.0976 12.2929 23.7071L5.29289 16.7071C4.90237 16.3166 4.90237 15.6834 5.29289 15.2929C5.68342 14.9024 6.31658 14.9024 6.70711 15.2929L13 21.5858L26.2929 8.29289C26.6834 7.90237 27.3166 7.90237 27.7071 8.29289Z"
                 />
             </svg>
         </span>
     )
 }
 
-export default Checkmark
+export default CheckmarkIcon

@@ -41,16 +41,30 @@ export type getDictionariesType = {
     }>
 }
 
+export type getWordType = {
+    id: number
+    name: string
+    translation: string
+    createdAt: string
+    isLearned: boolean
+}
+
 export type getWordsByDictionaryIdType = {
     count: number
     limit: number
     page: number
     pages: number
-    words: Array<{
-        id: number
-        name: string
-        translation: string
-        createdAt: string
-        isLearned: boolean
-    }>
+    words: Array<getWordType>
+}
+
+export type updateWordType = {
+    createdAt: string
+    id: number
+    isLearned: boolean
+    name: string
+    translation: string
+}
+
+export type deleteWordType = {
+    success: boolean
 }

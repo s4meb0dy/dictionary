@@ -91,7 +91,7 @@ const RegisterPage = () => {
                 >
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size={InputSizeEnum.Large}
+                            size='large'
                             name="username"
                             width="400px"
                             placeholder="Username"
@@ -118,7 +118,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size={InputSizeEnum.Large}
+                            size='large'
                             name="email"
                             width="400px"
                             placeholder="Email"
@@ -143,7 +143,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size={InputSizeEnum.Large}
+                            size='large'
                             name="password"
                             width="400px"
                             placeholder="Password"
@@ -171,7 +171,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size={InputSizeEnum.Large}
+                            size='large'
                             name="confirmPassword"
                             width="400px"
                             placeholder="Confirm password"

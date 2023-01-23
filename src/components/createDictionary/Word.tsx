@@ -59,7 +59,7 @@ const Word: React.FC<WordProps> = ({ onChangeValue, id, onDelete }) => {
                 name="word-create-dictionary"
                 width="100%"
                 onChange={onChangeWordHandler}
-                size={InputSizeEnum.Large}
+                size='large'
                 styles={'mb-[8px]'}
                 placeholder="Word"
             />
@@ -68,7 +68,7 @@ const Word: React.FC<WordProps> = ({ onChangeValue, id, onDelete }) => {
                 name="translation-create-dictionary"
                 width="100%"
                 onChange={onChangeTranslationHandler}
-                size={InputSizeEnum.Large}
+                size='large'
                 placeholder="Translation"
             />
         </div>

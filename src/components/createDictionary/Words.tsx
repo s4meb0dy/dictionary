@@ -2,6 +2,8 @@ import React from 'react'
 import Button from '../Button'
 import Word from './Word'
 import { nanoid } from 'nanoid'
+import PluseIcon from '../../assets/icons/PluseIcon'
+import CheckCircleIcon from '../../assets/icons/CheckCircleIcon'
 
 type WordsProps = {
     onAddWord: () => void
@@ -15,14 +17,17 @@ type WordsProps = {
         word: string
         translation: string
     }) => void
-    onDeleteDictionary: (id: string) => void 
+    onDeleteDictionary: (id: string) => void
     onSave: () => void
 }
 
-const Words: React.FC<WordsProps> = ({ onAddWord, words, onChangeDictionaryDataValue, onDeleteDictionary, onSave }) => {
-    
-    
-
+const Words: React.FC<WordsProps> = ({
+    onAddWord,
+    words,
+    onChangeDictionaryDataValue,
+    onDeleteDictionary,
+    onSave,
+}) => {
     return (
         <>
             <div className="w-full">
@@ -45,6 +50,9 @@ const Words: React.FC<WordsProps> = ({ onAddWord, words, onChangeDictionaryDataV
                     hoverColor="#53A0FF"
                     activeColor="#0D6CBD"
                     onClick={onAddWord}
+                    RightIcon={
+                        <PluseIcon width="20px" height="20px" color="white" />
+                    }
                 />
                 <Button
                     width="185px"
@@ -55,6 +63,9 @@ const Words: React.FC<WordsProps> = ({ onAddWord, words, onChangeDictionaryDataV
                     activeColor="#157b2f"
                     disabled={words.length === 0}
                     onClick={onSave}
+                    RightIcon={
+                        <CheckCircleIcon width="20px" height="20px" color="white" />
+                    }
                 />
             </div>
         </>

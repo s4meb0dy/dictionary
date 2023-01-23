@@ -4,7 +4,7 @@ import { InputSizeEnum } from '../../types'
 import WarningCircle from '../../assets/icons/WarningCircleIcon'
 
 type TextInputProps = {
-    size: InputSizeEnum
+    size: 'small' | 'medium' | 'large'
     styles?: string
     width?: string
     placeholder?: string
@@ -53,7 +53,7 @@ const TextInput: React.FC<TextInputProps> = ({
 
     React.useEffect(() => {
         switch (size) {
-            case InputSizeEnum.Large:
+            case 'large':
                 setSizeStyle(
                     `bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] pl-[16px] transition-colors ${
                         RightIcon ? 'pr-[56px]' : 'pr-[16px]'

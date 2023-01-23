@@ -1,9 +1,12 @@
-import { getWordsByDictionaryIdType } from './../../types/apiTypes'
+import {
+    getWordsByDictionaryIdType,
+    getWordType,
+    updateWordType,
+} from './../../types/apiTypes'
 import { AppDispatch } from '../store'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { openInfoBlock } from './appSlice'
 import WordAPI from '../../api/wordApi'
-import Words from '../../components/createDictionary/Words'
 
 export const fetchWordsByDictionaryId = createAsyncThunk<
     getWordsByDictionaryIdType,
@@ -16,6 +19,139 @@ export const fetchWordsByDictionaryId = createAsyncThunk<
         })
 
         return response.data
+    } catch (error: any) {
+        const errorMessage: Array<string> = error.response
+            ? error.response.data.message
+            : error.message
+
+        if (Array.isArray(errorMessage)) {
+            thunkAPI.dispatch(
+                openInfoBlock({
+                    title: 'Error',
+                    text: errorMessage.join(' | '),
+                    type: 'error',
+                })
+            )
+            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
+        }
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Error',
+                text: errorMessage,
+                type: 'error',
+            })
+        )
+        return thunkAPI.rejectWithValue(errorMessage)
+    }
+})
+
+export const updateWord = createAsyncThunk<
+    updateWordType,
+    {
+        wordId: number
+        name: string
+        translation: string
+    },
+    { rejectValue: string; dispatch: AppDispatch }
+>('user/updateWord', async (data, thunkAPI) => {
+    try {
+        const response = await WordAPI.updateWord(data)
+
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Success',
+                type: 'success',
+                text: 'Word updated successfully',
+            })
+        )
+
+        return response.data
+    } catch (error: any) {
+        const errorMessage: Array<string> = error.response
+            ? error.response.data.message
+            : error.message
+
+        if (Array.isArray(errorMessage)) {
+            thunkAPI.dispatch(
+                openInfoBlock({
+                    title: 'Error',
+                    text: errorMessage.join(' | '),
+                    type: 'error',
+                })
+            )
+            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
+        }
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Error',
+                text: errorMessage,
+                type: 'error',
+            })
+        )
+        return thunkAPI.rejectWithValue(errorMessage)
+    }
+})
+
+export const addWord = createAsyncThunk<
+    getWordType,
+    { dictionaryId: number; name: string; translation: string },
+    { rejectValue: string; dispatch: AppDispatch }
+>('user/addWord', async (data, thunkAPI) => {
+    try {
+        const response = await WordAPI.createWord(data)
+
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Success',
+                type: 'success',
+                text: 'Word added successfully',
+            })
+        )
+
+        return response.data
+    } catch (error: any) {
+        const errorMessage: Array<string> = error.response
+            ? error.response.data.message
+            : error.message
+
+        if (Array.isArray(errorMessage)) {
+            thunkAPI.dispatch(
+                openInfoBlock({
+                    title: 'Error',
+                    text: errorMessage.join(' | '),
+                    type: 'error',
+                })
+            )
+            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
+        }
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Error',
+                text: errorMessage,
+                type: 'error',
+            })
+        )
+        return thunkAPI.rejectWithValue(errorMessage)
+    }
+})
+
+export const deleteWord = createAsyncThunk<
+    { wordId: number; success: boolean },
+    number,
+    { rejectValue: string; dispatch: AppDispatch }
+>('user/deleteWord', async (wordId, thunkAPI) => {
+    try {
+        const response = await WordAPI.deleteWord(wordId)
+
+        thunkAPI.dispatch(
+            openInfoBlock({
+                title: 'Success',
+                type: 'success',
+                text: 'Word deleted successfully',
+            })
+        )
+
+        return { wordId, success: response?.data?.success }
     } catch (error: any) {
         const errorMessage: Array<string> = error.response
             ? error.response.data.message
@@ -71,7 +207,17 @@ const initialState: initialStateType = {
 const wordSlice = createSlice({
     name: 'wordSlice',
     initialState,
-    reducers: {},
+    reducers: {
+        clearWords: (state) => {
+            state.count = null
+            state.learnedWords = null
+            state.limit = null
+            state.page = null
+            state.pages = null
+            state.words = []
+            state.isLoading = false
+        },
+    },
     extraReducers: (builder) => {
         builder
             .addCase(fetchWordsByDictionaryId.pending, (state) => {
@@ -97,8 +243,54 @@ const wordSlice = createSlice({
             .addCase(fetchWordsByDictionaryId.rejected, (state, action) => {
                 state.isLoading = false
             })
+            //--------------------------
+            .addCase(updateWord.pending, (state) => {})
+            .addCase(
+                updateWord.fulfilled,
+                (state, action: PayloadAction<updateWordType>) => {
+                    const indexOfWord = state.words.findIndex(
+                        (item) => item.id === action.payload.id
+                    )
+
+                    state.words[indexOfWord].createdAt =
+                        action.payload.createdAt
+                    state.words[indexOfWord].name = action.payload.name
+                    state.words[indexOfWord].translation =
+                        action.payload.translation
+                    state.words[indexOfWord].isLearned =
+                        action.payload.isLearned
+                }
+            )
+            .addCase(updateWord.rejected, (state, action) => {})
+            //--------------------------
+            .addCase(addWord.pending, (state) => {})
+            .addCase(
+                addWord.fulfilled,
+                (state, action: PayloadAction<getWordType>) => {
+                    state.words.push(action.payload)
+                }
+            )
+            .addCase(addWord.rejected, (state, action) => {})
+            //--------------------------
+            .addCase(deleteWord.pending, (state) => {})
+            .addCase(
+                deleteWord.fulfilled,
+                (
+                    state,
+                    action: PayloadAction<{ wordId: number; success: boolean }>
+                ) => {
+                    if (action.payload.success) {
+                        state.words = state.words.filter(
+                            (item) => item.id != action.payload.wordId
+                        )
+                    }
+                }
+            )
+            .addCase(deleteWord.rejected, (state, action) => {})
         //--------------------------
     },
 })
+
+export const { clearWords } = wordSlice.actions
 
 export default wordSlice.reducer
