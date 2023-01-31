@@ -2,6 +2,7 @@ import React from 'react'
 
 import { useAppSelector } from '../../hooks/reduxHooks'
 import Word from './Word'
+import WordsLoader from './WordsLoader'
 
 type WordsProps = {
     dictionaryId: number
@@ -9,6 +10,7 @@ type WordsProps = {
 
 const Words: React.FC<WordsProps> = ({ dictionaryId }) => {
     const words = useAppSelector((state) => state.word.words)
+    const isLoading = useAppSelector((state) => state.word.isLoading)
 
     const [selectedWords, setSelectedWords] = React.useState<Array<number>>([])
 
@@ -26,7 +28,8 @@ const Words: React.FC<WordsProps> = ({ dictionaryId }) => {
 
     return (
         <div>
-            {words.length > 0 &&
+            {!isLoading &&
+                words.length > 0 &&
                 words.map((item) => (
                     <Word
                         key={item.id}
@@ -38,6 +41,7 @@ const Words: React.FC<WordsProps> = ({ dictionaryId }) => {
                         isChecked={selectedWords.includes(item.id)}
                     />
                 ))}
+            {isLoading && <WordsLoader number={3} />}
         </div>
     )
 }

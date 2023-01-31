@@ -24,7 +24,7 @@ const Main = () => {
     return (
         <div className="h-full">
             <Navbar />
-            <div className="w-[900px] h-full mx-auto pt-[40px]">
+            <div className="w-[900px] h-full mx-auto pt-[40px] ">
                 <Routes>
                     <Route path="/" element={<HomeContainer />} />
                     <Route

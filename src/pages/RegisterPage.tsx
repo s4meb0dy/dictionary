@@ -63,19 +63,24 @@ const RegisterPage = () => {
                 return
             }
 
-            dispatch(registration(values)).then((res) => {
-                if (res.meta.requestStatus === 'fulfilled') {
-                    dispatch(
-                        openInfoBlock({
-                            type: 'success',
-                            title: 'Success',
-                            text: 'You are registered',
-                        })
-                    )
-                    navigate('/')
-                }
-            })
-            formik.resetForm()
+            dispatch(registration(values))
+                .then((res) => {
+                    if (res.meta.requestStatus === 'fulfilled') {
+                        dispatch(
+                            openInfoBlock({
+                                type: 'success',
+                                title: 'Success',
+                                text: 'You are registered',
+                            })
+                        )
+                        formik.resetForm()
+                        // console.log('1')
+                        navigate('/')
+                    }
+                })
+                .catch(() => {
+                    formik.resetForm()
+                })
         },
     })
 
@@ -91,7 +96,7 @@ const RegisterPage = () => {
                 >
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size='large'
+                            size="large"
                             name="username"
                             width="400px"
                             placeholder="Username"
@@ -118,7 +123,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size='large'
+                            size="large"
                             name="email"
                             width="400px"
                             placeholder="Email"
@@ -143,7 +148,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size='large'
+                            size="large"
                             name="password"
                             width="400px"
                             placeholder="Password"
@@ -171,7 +176,7 @@ const RegisterPage = () => {
                     </div>
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size='large'
+                            size="large"
                             name="confirmPassword"
                             width="400px"
                             placeholder="Confirm password"

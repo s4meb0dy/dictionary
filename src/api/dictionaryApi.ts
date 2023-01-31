@@ -1,4 +1,4 @@
-import { getMyDictionariesType, getDictionariesType } from '../types/apiTypes'
+import { getMyDictionariesType, getDictionariesType, createDictionaryType } from '../types/apiTypes'
 import { instance } from './index'
 
 class DictionaryAPI {
@@ -7,17 +7,20 @@ class DictionaryAPI {
             withCredentials: true,
         })
     }
-    static fetchPublicDictionaries = () => {
-        return instance.get<getDictionariesType>(`/dictionary/public?page=1&limit=10`, {
-            withCredentials: true,
-        })
+    static fetchPublicDictionaries = (page: number, limit: number) => {
+        return instance.get<getDictionariesType>(
+            `/dictionary/public?page=${page}&limit=${limit}`,
+            {
+                withCredentials: true,
+            }
+        )
     }
-    static postDictionary = (data: {
+    static createDictionary = (data: {
         dictionaryName: string
         isPublic: boolean
         words: Array<{ name: string; translation: string }>
     }) => {
-        return instance.post(`/word/dictionary`, data, {
+        return instance.post<createDictionaryType>(`/word/dictionary`, data, {
             withCredentials: true,
         })
     }

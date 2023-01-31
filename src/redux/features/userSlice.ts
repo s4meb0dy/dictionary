@@ -9,6 +9,7 @@ import {
 
 import { loginResponseType, userInfoResponseType } from './../../types/apiTypes'
 import { openInfoBlock } from './appSlice'
+import { errorHandling } from '../services'
 
 export const login = createAsyncThunk<
     loginResponseType,
@@ -26,20 +27,8 @@ export const login = createAsyncThunk<
         )
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -69,20 +58,8 @@ export const registration = createAsyncThunk<
 
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -104,20 +81,8 @@ export const fetchUserInfo = createAsyncThunk<
 
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -166,6 +131,7 @@ const userSlice = createSlice({
             .addCase(
                 registration.fulfilled,
                 (state, action: PayloadAction<loginResponseType>) => {
+                    console.log(action.payload)
                     localStorage.setItem('token', action.payload.access_token)
                     state.username = action.payload.username
                     state.email = action.payload.email

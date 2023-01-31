@@ -123,7 +123,7 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
                     hoverColor="#53A0FF"
                     activeColor="#0D6CBD"
                     onClick={onOpenHandler}
-                    RightIcon={<PluseIcon width='20px' height='20px' color='white' />}
+                    RightIcon={isOpen ? undefined : <PluseIcon width='20px' height='20px' color='white' />}
                 />
             </div>
         </div>

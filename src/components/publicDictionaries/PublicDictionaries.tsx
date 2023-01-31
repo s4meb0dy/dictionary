@@ -1,5 +1,6 @@
 import React from 'react'
-import { useAppSelector } from '../../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { fetchDictionariesByOtherUsers } from '../../redux/features/dictionarySlice'
 import PublicDictionary from './PublicDictionary'
 import PublicDictionaryLoader from './PublicDictionaryLoader'
 
@@ -7,6 +8,35 @@ const PublicDictionaries: React.FC = () => {
     const { isLoading, dictionaries } = useAppSelector(
         (state) => state.dictionary
     )
+    const dispatch = useAppDispatch()
+    const [fetching, setFetching] = React.useState<boolean>(false)
+
+    const scrollHandler = React.useCallback((e: any) => {
+        if (
+            e.target.documentElement.scrollHeight -
+                (e.target.documentElement.scrollTop + window.innerHeight) <
+            100
+        )
+            setFetching(true)
+    }, [])
+
+    React.useEffect(() => {
+        if (fetching)
+            dispatch(fetchDictionariesByOtherUsers()).finally(() => {
+                setFetching(false)
+            })
+    }, [fetching])
+
+    React.useEffect(() => {
+        window.scrollTo(0, 0)
+        dispatch(fetchDictionariesByOtherUsers())
+
+        document.addEventListener('scroll', scrollHandler)
+
+        return () => {
+            document.removeEventListener('scroll', scrollHandler)
+        }
+    }, [])
 
     return (
         <div className="animate-appearance">

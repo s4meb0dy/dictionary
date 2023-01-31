@@ -8,9 +8,7 @@ const PublicDictionariesPage: React.FC = () => {
 
     const dispatch = useAppDispatch()
 
-    React.useEffect(() => {
-        dispatch(fetchDictionariesByOtherUsers())
-    }, [])
+
 
     return (
         <div className='pb-[40px] animate-appearance'>

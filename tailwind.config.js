@@ -60,5 +60,5 @@ module.exports = {
             main: ['Plus Jakarta Sans', 'sans-serif'],
         },
     },
-    plugins: [],
+    plugins: [require('tailwind-scrollbar')({ nocompatible: true })],
 }

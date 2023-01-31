@@ -1,11 +1,13 @@
-import { AppDispatch } from './../store'
+import { AppDispatch, RootState } from './../store'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import {
     getMyDictionariesType,
     getDictionariesType,
+    createDictionaryType,
 } from '../../types/apiTypes'
 import DictionaryAPI from '../../api/dictionaryApi'
 import { openInfoBlock } from './appSlice'
+import { errorHandling } from '../services'
 
 export const fetchDictionaries = createAsyncThunk<
     getMyDictionariesType,
@@ -17,20 +19,8 @@ export const fetchDictionaries = createAsyncThunk<
 
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -45,27 +35,25 @@ export const fetchDictionaries = createAsyncThunk<
 export const fetchDictionariesByOtherUsers = createAsyncThunk<
     getDictionariesType,
     undefined,
-    { rejectValue: string; dispatch: AppDispatch }
+    { rejectValue: string; dispatch: AppDispatch; state: RootState }
 >('user/fetchDictionariesByOtherUsers', async (_, thunkAPI) => {
     try {
-        const response = await DictionaryAPI.fetchPublicDictionaries()
+        const page = thunkAPI.getState().dictionary.dictionaries.page
+        const pages = thunkAPI.getState().dictionary.dictionaries.pages
+        const limit = thunkAPI.getState().dictionary.dictionaries.limit
+
+        if (pages === page - 1)
+            return thunkAPI.rejectWithValue('All pages are loaded')
+
+        const response = await DictionaryAPI.fetchPublicDictionaries(
+            page,
+            limit
+        )
 
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -78,7 +66,7 @@ export const fetchDictionariesByOtherUsers = createAsyncThunk<
 })
 
 export const createDictionary = createAsyncThunk<
-    undefined,
+    createDictionaryType,
     {
         dictionaryName: string
         isPublic: boolean
@@ -87,7 +75,7 @@ export const createDictionary = createAsyncThunk<
     { rejectValue: string; dispatch: AppDispatch }
 >('user/createDictionary', async (data, thunkAPI) => {
     try {
-        const response = await DictionaryAPI.postDictionary(data)
+        const response = await DictionaryAPI.createDictionary(data)
 
         thunkAPI.dispatch(
             openInfoBlock({
@@ -96,22 +84,10 @@ export const createDictionary = createAsyncThunk<
                 text: 'Dictionary added',
             })
         )
-        console.log(response.data)
+        return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -125,9 +101,9 @@ export const createDictionary = createAsyncThunk<
 
 type initialStateType = {
     myDictionaries: {
-        totalWords: number | null
-        totalDictionaries: number | null
-        totalLearnedWords: number | null
+        totalWords: number
+        totalDictionaries: number
+        totalLearnedWords: number
         myDictionaries: Array<{
             id: number
             name: string
@@ -139,8 +115,8 @@ type initialStateType = {
         }>
     }
     dictionaries: {
-        limit: number | null
-        page: number | null
+        limit: number
+        page: number
         pages: number | null
         count: number | null
         dictionaries: Array<{
@@ -158,15 +134,15 @@ type initialStateType = {
 
 const initialState: initialStateType = {
     myDictionaries: {
-        totalWords: null,
-        totalDictionaries: null,
-        totalLearnedWords: null,
+        totalWords: 0,
+        totalDictionaries: 0,
+        totalLearnedWords: 0,
         myDictionaries: [],
     },
     isLoading: false,
     dictionaries: {
-        limit: null,
-        page: null,
+        limit: 10,
+        page: 1,
         pages: null,
         count: null,
         dictionaries: [],
@@ -180,7 +156,8 @@ const dictionarySlice = createSlice({
     extraReducers: (builder) => {
         builder
             .addCase(fetchDictionaries.pending, (state) => {
-                state.isLoading = true
+                if (state.myDictionaries.myDictionaries.length === 0)
+                    state.isLoading = true
             })
             .addCase(
                 fetchDictionaries.fulfilled,
@@ -195,7 +172,8 @@ const dictionarySlice = createSlice({
                     state.myDictionaries.myDictionaries = action.payload
                     state.myDictionaries.totalLearnedWords = totalLearnedWords
                     state.myDictionaries.totalWords = totalWords
-                    state.myDictionaries.totalDictionaries = action.payload.length
+                    state.myDictionaries.totalDictionaries =
+                        action.payload.length
 
                     state.isLoading = false
                 }
@@ -205,12 +183,23 @@ const dictionarySlice = createSlice({
             })
             //--------------------------
             .addCase(fetchDictionariesByOtherUsers.pending, (state) => {
-                state.isLoading = true
+                if (state.dictionaries.dictionaries.length === 0)
+                    state.isLoading = true
             })
             .addCase(
                 fetchDictionariesByOtherUsers.fulfilled,
                 (state, action: PayloadAction<getDictionariesType>) => {
-                    state.dictionaries = action.payload
+                    if (action.payload.pages >= action.payload.page)
+                        state.dictionaries.page = action.payload.page + 1
+                    else state.dictionaries.page = action.payload.page
+
+                    state.dictionaries.dictionaries.push(
+                        ...action.payload.dictionaries
+                    )
+                    state.dictionaries.limit = action.payload.limit
+                    state.dictionaries.count = action.payload.count
+                    state.dictionaries.pages = action.payload.pages
+
                     state.isLoading = false
                 }
             )
@@ -224,10 +213,25 @@ const dictionarySlice = createSlice({
             .addCase(createDictionary.pending, (state) => {
                 state.isLoading = true
             })
-            .addCase(createDictionary.fulfilled, (state) => {
-                // state.dictionaries = action.payload
-                state.isLoading = false
-            })
+            .addCase(
+                createDictionary.fulfilled,
+                (state, action: PayloadAction<createDictionaryType>) => {
+                    
+                    state.myDictionaries.myDictionaries.unshift({
+                        id: action.payload.id,
+                        name: action.payload.name,
+                        createdAt: action.payload.createdAt,
+                        isPublic: action.payload.isPublic,
+                        learned: 0,
+                        total: 0,
+                        updatedAt: action.payload.updatedAt,
+                    })
+                    // state.myDictionaries.totalWords += action.payload.length
+                    state.myDictionaries.totalDictionaries += 1
+
+                    state.isLoading = false
+                }
+            )
             .addCase(createDictionary.rejected, (state, action) => {
                 state.isLoading = false
             })

@@ -1,12 +1,9 @@
-import {
-    getWordsByDictionaryIdType,
-    getWordType,
-    updateWordType,
-} from './../../types/apiTypes'
+import { getWordsByDictionaryIdType, wordType } from './../../types/apiTypes'
 import { AppDispatch } from '../store'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { openInfoBlock } from './appSlice'
 import WordAPI from '../../api/wordApi'
+import { errorHandling } from '../services'
 
 export const fetchWordsByDictionaryId = createAsyncThunk<
     getWordsByDictionaryIdType,
@@ -20,20 +17,8 @@ export const fetchWordsByDictionaryId = createAsyncThunk<
 
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -46,7 +31,7 @@ export const fetchWordsByDictionaryId = createAsyncThunk<
 })
 
 export const updateWord = createAsyncThunk<
-    updateWordType,
+    wordType,
     {
         wordId: number
         name: string
@@ -67,20 +52,8 @@ export const updateWord = createAsyncThunk<
 
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -93,7 +66,7 @@ export const updateWord = createAsyncThunk<
 })
 
 export const addWord = createAsyncThunk<
-    getWordType,
+    wordType,
     { dictionaryId: number; name: string; translation: string },
     { rejectValue: string; dispatch: AppDispatch }
 >('user/addWord', async (data, thunkAPI) => {
@@ -110,20 +83,8 @@ export const addWord = createAsyncThunk<
 
         return response.data
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -153,20 +114,8 @@ export const deleteWord = createAsyncThunk<
 
         return { wordId, success: response?.data?.success }
     } catch (error: any) {
-        const errorMessage: Array<string> = error.response
-            ? error.response.data.message
-            : error.message
+        const errorMessage = errorHandling(error)
 
-        if (Array.isArray(errorMessage)) {
-            thunkAPI.dispatch(
-                openInfoBlock({
-                    title: 'Error',
-                    text: errorMessage.join(' | '),
-                    type: 'error',
-                })
-            )
-            return thunkAPI.rejectWithValue(errorMessage.join(' | '))
-        }
         thunkAPI.dispatch(
             openInfoBlock({
                 title: 'Error',
@@ -247,7 +196,7 @@ const wordSlice = createSlice({
             .addCase(updateWord.pending, (state) => {})
             .addCase(
                 updateWord.fulfilled,
-                (state, action: PayloadAction<updateWordType>) => {
+                (state, action: PayloadAction<wordType>) => {
                     const indexOfWord = state.words.findIndex(
                         (item) => item.id === action.payload.id
                     )
@@ -266,7 +215,7 @@ const wordSlice = createSlice({
             .addCase(addWord.pending, (state) => {})
             .addCase(
                 addWord.fulfilled,
-                (state, action: PayloadAction<getWordType>) => {
+                (state, action: PayloadAction<wordType>) => {
                     state.words.push(action.payload)
                 }
             )

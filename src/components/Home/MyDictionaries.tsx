@@ -16,6 +16,7 @@ const MyDictionaries: React.FC = () => {
 
     React.useEffect(() => {
         dispatch(fetchDictionaries())
+        window.scrollTo(0, 0)
     }, [])
 
     const addDictionaryHandler = () => {
@@ -45,7 +46,9 @@ const MyDictionaries: React.FC = () => {
                         access={item.isPublic ? 'public' : 'private'}
                     />
                 ))}
-            {isLoading && <MyDictionaryLoader number={6} />}
+            {myDictionaries.myDictionaries.length === 0 && isLoading && (
+                <MyDictionaryLoader number={6} />
+            )}
             {!isLoading && <AddDictionary onClick={addDictionaryHandler} />}
         </div>
     )
