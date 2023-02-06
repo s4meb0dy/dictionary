@@ -1,14 +1,13 @@
 import React from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import HomeContainer from '../components/Home/HomeContainer'
-
 import Navbar from '../components/Navbar'
 import { useAppSelector } from '../hooks/reduxHooks'
 import CreateDictionaryPage from './CreateDictionaryPage'
 import { AuthorizationEnum } from './../types/index'
-import Home from './HomePage'
 import AllDictionariesPage from './PublicDictionariesPage'
-import Dictionary from './Dictionary'
+import DictionaryPage from './DictionaryPage'
+import PublicDictionaryPage from './PublicDictionaryPage'
 
 const Main = () => {
     const authorizationStatus = useAppSelector(
@@ -36,8 +35,12 @@ const Main = () => {
                         element={<AllDictionariesPage />}
                     />
                     <Route
-                        path="/dictionary/:id/:access/:name"
-                        element={<Dictionary />}
+                        path="/my-dictionary/:id/:access/:name"
+                        element={<DictionaryPage />}
+                    />
+                    <Route
+                        path="/dictionary/:id"
+                        element={<PublicDictionaryPage />}
                     />
                 </Routes>
             </div>

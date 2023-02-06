@@ -1,19 +1,20 @@
+import {
+    getMyDictionariesResponseType,
+    getAllPublicDictionariesResponseType,
+    createDictionaryResponseType,
+    createDictionaryRequestType,
+} from './../../types/apiTypes/dictionaryAPITypes'
 import { AppDispatch, RootState } from './../store'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
-import {
-    getMyDictionariesType,
-    getDictionariesType,
-    createDictionaryType,
-} from '../../types/apiTypes'
 import DictionaryAPI from '../../api/dictionaryApi'
 import { openInfoBlock } from './appSlice'
 import { errorHandling } from '../services'
 
-export const fetchDictionaries = createAsyncThunk<
-    getMyDictionariesType,
+export const fetchMyDictionaries = createAsyncThunk<
+    getMyDictionariesResponseType,
     undefined,
     { rejectValue: string; dispatch: AppDispatch }
->('user/fetchDictionaries', async (_, thunkAPI) => {
+>('user/fetchMyDictionaries', async (_, thunkAPI) => {
     try {
         const response = await DictionaryAPI.fetchMyDictionaries()
 
@@ -32,23 +33,23 @@ export const fetchDictionaries = createAsyncThunk<
     }
 })
 
-export const fetchDictionariesByOtherUsers = createAsyncThunk<
-    getDictionariesType,
+export const fetchAllPublicDictionaries = createAsyncThunk<
+    getAllPublicDictionariesResponseType,
     undefined,
     { rejectValue: string; dispatch: AppDispatch; state: RootState }
->('user/fetchDictionariesByOtherUsers', async (_, thunkAPI) => {
+>('user/fetchAllPublicDictionaries', async (_, thunkAPI) => {
     try {
-        const page = thunkAPI.getState().dictionary.dictionaries.page
-        const pages = thunkAPI.getState().dictionary.dictionaries.pages
-        const limit = thunkAPI.getState().dictionary.dictionaries.limit
+        const page = thunkAPI.getState().dictionary.allPublicDictionaries.page
+        const pages = thunkAPI.getState().dictionary.allPublicDictionaries.pages
+        const limit = thunkAPI.getState().dictionary.allPublicDictionaries.limit
 
-        if (pages === page - 1)
+        if (pages && pages < page)
             return thunkAPI.rejectWithValue('All pages are loaded')
 
-        const response = await DictionaryAPI.fetchPublicDictionaries(
+        const response = await DictionaryAPI.fetchPublicDictionaries({
             page,
-            limit
-        )
+            limit,
+        })
 
         return response.data
     } catch (error: any) {
@@ -66,12 +67,8 @@ export const fetchDictionariesByOtherUsers = createAsyncThunk<
 })
 
 export const createDictionary = createAsyncThunk<
-    createDictionaryType,
-    {
-        dictionaryName: string
-        isPublic: boolean
-        words: Array<{ name: string; translation: string }>
-    },
+    createDictionaryResponseType,
+    createDictionaryRequestType,
     { rejectValue: string; dispatch: AppDispatch }
 >('user/createDictionary', async (data, thunkAPI) => {
     try {
@@ -84,6 +81,7 @@ export const createDictionary = createAsyncThunk<
                 text: 'Dictionary added',
             })
         )
+
         return response.data
     } catch (error: any) {
         const errorMessage = errorHandling(error)
@@ -104,7 +102,8 @@ type initialStateType = {
         totalWords: number
         totalDictionaries: number
         totalLearnedWords: number
-        myDictionaries: Array<{
+        error: string | null
+        dictionaries: Array<{
             id: number
             name: string
             createdAt: string
@@ -114,11 +113,12 @@ type initialStateType = {
             updatedAt: string
         }>
     }
-    dictionaries: {
+    allPublicDictionaries: {
         limit: number
         page: number
         pages: number | null
         count: number | null
+        error: string | null
         dictionaries: Array<{
             id: number
             createdAt: string
@@ -137,16 +137,18 @@ const initialState: initialStateType = {
         totalWords: 0,
         totalDictionaries: 0,
         totalLearnedWords: 0,
-        myDictionaries: [],
+        dictionaries: [],
+        error: null,
     },
-    isLoading: false,
-    dictionaries: {
+    allPublicDictionaries: {
         limit: 10,
         page: 1,
         pages: null,
         count: null,
         dictionaries: [],
+        error: null,
     },
+    isLoading: false,
 }
 
 const dictionarySlice = createSlice({
@@ -155,13 +157,16 @@ const dictionarySlice = createSlice({
     reducers: {},
     extraReducers: (builder) => {
         builder
-            .addCase(fetchDictionaries.pending, (state) => {
-                if (state.myDictionaries.myDictionaries.length === 0)
+            .addCase(fetchMyDictionaries.pending, (state) => {
+                if (state.myDictionaries.dictionaries.length === 0)
                     state.isLoading = true
             })
             .addCase(
-                fetchDictionaries.fulfilled,
-                (state, action: PayloadAction<getMyDictionariesType>) => {
+                fetchMyDictionaries.fulfilled,
+                (
+                    state,
+                    action: PayloadAction<getMyDictionariesResponseType>
+                ) => {
                     let totalWords = 0
                     let totalLearnedWords = 0
 
@@ -169,7 +174,7 @@ const dictionarySlice = createSlice({
                         totalWords += item.total
                         totalLearnedWords += item.learned
                     })
-                    state.myDictionaries.myDictionaries = action.payload
+                    state.myDictionaries.dictionaries = action.payload
                     state.myDictionaries.totalLearnedWords = totalLearnedWords
                     state.myDictionaries.totalWords = totalWords
                     state.myDictionaries.totalDictionaries =
@@ -178,55 +183,58 @@ const dictionarySlice = createSlice({
                     state.isLoading = false
                 }
             )
-            .addCase(fetchDictionaries.rejected, (state, action) => {
+            .addCase(fetchMyDictionaries.rejected, (state, action) => {
                 state.isLoading = false
+                if (action.payload) state.myDictionaries.error = action.payload
             })
             //--------------------------
-            .addCase(fetchDictionariesByOtherUsers.pending, (state) => {
-                if (state.dictionaries.dictionaries.length === 0)
+            .addCase(fetchAllPublicDictionaries.pending, (state) => {
+                if (state.allPublicDictionaries.dictionaries.length === 0)
                     state.isLoading = true
             })
             .addCase(
-                fetchDictionariesByOtherUsers.fulfilled,
-                (state, action: PayloadAction<getDictionariesType>) => {
-                    if (action.payload.pages >= action.payload.page)
-                        state.dictionaries.page = action.payload.page + 1
-                    else state.dictionaries.page = action.payload.page
+                fetchAllPublicDictionaries.fulfilled,
+                (
+                    state,
+                    action: PayloadAction<getAllPublicDictionariesResponseType>
+                ) => {
+                    state.allPublicDictionaries.page = action.payload.page + 1
 
-                    state.dictionaries.dictionaries.push(
+                    state.allPublicDictionaries.dictionaries.push(
                         ...action.payload.dictionaries
                     )
-                    state.dictionaries.limit = action.payload.limit
-                    state.dictionaries.count = action.payload.count
-                    state.dictionaries.pages = action.payload.pages
+                    state.allPublicDictionaries.limit = action.payload.limit
+                    state.allPublicDictionaries.count = action.payload.count
+                    state.allPublicDictionaries.pages = action.payload.pages
 
                     state.isLoading = false
                 }
             )
-            .addCase(
-                fetchDictionariesByOtherUsers.rejected,
-                (state, action) => {
-                    state.isLoading = false
-                }
-            )
+            .addCase(fetchAllPublicDictionaries.rejected, (state, action) => {
+                state.isLoading = false
+                if (action.payload)
+                    state.allPublicDictionaries.error = action.payload
+            })
             //--------------------------
             .addCase(createDictionary.pending, (state) => {
                 state.isLoading = true
             })
             .addCase(
                 createDictionary.fulfilled,
-                (state, action: PayloadAction<createDictionaryType>) => {
-                    
-                    state.myDictionaries.myDictionaries.unshift({
+                (
+                    state,
+                    action: PayloadAction<createDictionaryResponseType>
+                ) => {
+                    state.myDictionaries.dictionaries.unshift({
                         id: action.payload.id,
                         name: action.payload.name,
                         createdAt: action.payload.createdAt,
                         isPublic: action.payload.isPublic,
-                        learned: 0,
-                        total: 0,
+                        learned: action.payload.learned,
+                        total: action.payload.total,
                         updatedAt: action.payload.updatedAt,
                     })
-                    // state.myDictionaries.totalWords += action.payload.length
+                    state.myDictionaries.totalWords += action.payload.total
                     state.myDictionaries.totalDictionaries += 1
 
                     state.isLoading = false

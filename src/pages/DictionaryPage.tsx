@@ -8,18 +8,20 @@ import HeaderUnderFullPage from '../components/pageContainers/HeaderUnderFullPag
 import { useAppDispatch } from '../hooks/reduxHooks'
 import {
     clearWords,
-    fetchWordsByDictionaryId,
+    deleteWordsToStudy,
+    fetchWordsFromDictionary,
 } from '../redux/features/wordSlice'
 
-const Dictionary: React.FC = () => {
+const DictionaryPage: React.FC = () => {
     const { id, name, access } = useParams()
 
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        if (id) dispatch(fetchWordsByDictionaryId({ dictionaryId: Number(id) }))
+        if (id) dispatch(fetchWordsFromDictionary(Number(id)))
         return () => {
             dispatch(clearWords())
+            dispatch(deleteWordsToStudy([]))
         }
     }, [])
 
@@ -45,4 +47,4 @@ const Dictionary: React.FC = () => {
     )
 }
 
-export default Dictionary
+export default DictionaryPage

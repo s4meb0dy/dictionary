@@ -1,28 +1,34 @@
-import { getMyDictionariesType, getDictionariesType, createDictionaryType } from '../types/apiTypes'
+import {
+    getMyDictionariesResponseType,
+    getAllPublicDictionariesResponseType,
+    createDictionaryResponseType,
+    createDictionaryRequestType,
+    getAllPublicDictionariesRequestType
+} from './../types/apiTypes/dictionaryAPITypes'
 import { instance } from './index'
 
 class DictionaryAPI {
     static fetchMyDictionaries = () => {
-        return instance.get<getMyDictionariesType>(`/dictionary`, {
+        return instance.get<getMyDictionariesResponseType>(`/dictionary`, {
             withCredentials: true,
         })
     }
-    static fetchPublicDictionaries = (page: number, limit: number) => {
-        return instance.get<getDictionariesType>(
-            `/dictionary/public?page=${page}&limit=${limit}`,
+    static fetchPublicDictionaries = (data: getAllPublicDictionariesRequestType) => {
+        return instance.get<getAllPublicDictionariesResponseType>(
+            `/dictionary/public?page=${data.page}&limit=${data.limit}`,
             {
                 withCredentials: true,
             }
         )
     }
-    static createDictionary = (data: {
-        dictionaryName: string
-        isPublic: boolean
-        words: Array<{ name: string; translation: string }>
-    }) => {
-        return instance.post<createDictionaryType>(`/word/dictionary`, data, {
-            withCredentials: true,
-        })
+    static createDictionary = (data: createDictionaryRequestType) => {
+        return instance.post<createDictionaryResponseType>(
+            `/word/dictionary`,
+            data,
+            {
+                withCredentials: true,
+            }
+        )
     }
 }
 

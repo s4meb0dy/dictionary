@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconTypes } from '../../types'
+import { IconTypes } from '../../types/assetsTypes'
 
 const WarningCircleIcon: React.FC<IconTypes> = ({ height, width, color }) => {
     return (

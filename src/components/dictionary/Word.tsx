@@ -97,6 +97,7 @@ const Word: React.FC<WordProps> = ({
     const onDeleteWordHandler = () => {
         dispatch(deleteWord(id))
         setIsEditWord((prev) => !prev)
+        onSelectWord({ wordId: id, isChecked: false })
     }
 
     return (
@@ -145,7 +146,7 @@ const Word: React.FC<WordProps> = ({
                     <>
                         <div
                             onClick={onDeleteWordHandler}
-                            className="absolute bottom-[100px] right-[13px] cursor-pointer animate-appearance"
+                            className="absolute bottom-[75px] right-[13px] cursor-pointer animate-appearance"
                         >
                             <TrashIcon
                                 width="30px"
@@ -155,7 +156,7 @@ const Word: React.FC<WordProps> = ({
                         </div>
                         <div
                             onClick={onSaveChangesHandler}
-                            className="absolute bottom-[37px] right-[13px] cursor-pointer animate-appearance"
+                            className="absolute bottom-[24px] right-[13px] cursor-pointer animate-appearance"
                         >
                             <SaveIcon
                                 width="30px"

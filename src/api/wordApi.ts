@@ -1,24 +1,27 @@
 import {
-    deleteWordType,
-    getWordsByDictionaryIdType,
+    getWordsFromDictionaryResponseType,
     wordType,
-} from '../types/apiTypes'
+    createWordRequestType,
+    deleteWordResponseType,
+    deleteWordRequestType,
+    updateWordRequestType,
+    getWordsFromDictionaryRequestType
+} from './../types/apiTypes/wordAPITypes'
+
 import { instance } from './index'
 
 class WordAPI {
-    static fetchWordsByDictionaryId = (params: { dictionaryId: number }) => {
-        return instance.get<getWordsByDictionaryIdType>(
-            `/word/dictionary/${params.dictionaryId}?page=1&limit=10`,
+    static fetchWordsFromDictionary = (
+        data: getWordsFromDictionaryRequestType
+    ) => {
+        return instance.get<getWordsFromDictionaryResponseType>(
+            `/word/dictionary/${data.dictionaryId}?page=${data.page}&limit=${data.limit}`,
             {
                 withCredentials: true,
             }
         )
     }
-    static createWord = (data: {
-        dictionaryId: number
-        name: string
-        translation: string
-    }) => {
+    static createWord = (data: createWordRequestType) => {
         return instance.post<wordType>(
             `/word/dictionary/${data.dictionaryId}`,
             {
@@ -30,12 +33,7 @@ class WordAPI {
             }
         )
     }
-
-    static updateWord = (data: {
-        wordId: number
-        name: string
-        translation: string
-    }) => {
+    static updateWord = (data: updateWordRequestType) => {
         return instance.patch<wordType>(
             `/word/${data.wordId}`,
             { name: data.name, translation: data.translation },
@@ -44,8 +42,8 @@ class WordAPI {
             }
         )
     }
-    static deleteWord = (wordId: number) => {
-        return instance.delete<deleteWordType>(`/word/${wordId}`, {
+    static deleteWord = (data: deleteWordRequestType) => {
+        return instance.delete<deleteWordResponseType>(`/word/${data.wordId}`, {
             withCredentials: true,
         })
     }

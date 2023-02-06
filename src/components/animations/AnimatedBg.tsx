@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../hooks/reduxHooks'
-import { DeviceTypeEnum } from '../../types'
+
 import Ball from './Ball'
 
 type AnimatedBg = {}
@@ -14,17 +14,17 @@ const AnimatedBg: React.FC<AnimatedBg> = () => {
 
     React.useEffect(() => {
         switch (deviceType) {
-            case DeviceTypeEnum.Mobile:
+            case 'Mobile':
                 setFirstSize('300px')
                 setSecondSize('305px')
                 setThirdSize('310px')
                 break
-            case DeviceTypeEnum.Tablet:
+            case 'Tablet':
                 setFirstSize('700px')
                 setSecondSize('705px')
                 setThirdSize('710px')
                 break
-            case DeviceTypeEnum.Desktop:
+            case 'Desktop':
                 setFirstSize('900px')
                 setSecondSize('905px')
                 setThirdSize('910px')
@@ -33,7 +33,7 @@ const AnimatedBg: React.FC<AnimatedBg> = () => {
     }, [deviceType])
 
     return (
-        <div className='w-full h-full bg-primaryBg fixed top-0 left-0 -z-10 pointer-events-none'>
+        <div className="w-full h-full bg-primaryBg fixed top-0 left-0 -z-10 pointer-events-none">
             <Ball
                 width={thirdSize}
                 height={thirdSize}

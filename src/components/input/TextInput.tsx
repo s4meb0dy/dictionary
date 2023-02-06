@@ -1,7 +1,6 @@
-import { Console } from 'console'
 import React from 'react'
-import { InputSizeEnum } from '../../types'
-import WarningCircle from '../../assets/icons/WarningCircleIcon'
+
+
 
 type TextInputProps = {
     size: 'small' | 'medium' | 'large'

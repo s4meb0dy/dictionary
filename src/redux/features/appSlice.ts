@@ -1,17 +1,17 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { DeviceTypeEnum } from '../../types'
-
-
-
 
 type initialStateType = {
-    deviceType: DeviceTypeEnum
-    infoBlockData: null | {type: 'success' | 'error' | 'info', title?: string; text?: string }
+    deviceType: 'Desktop' | 'Tablet' | 'Mobile'
+    infoBlockData: null | {
+        type: 'success' | 'error' | 'info'
+        title?: string
+        text?: string
+    }
     isInfoBlock: boolean
 }
 
 const initialState: initialStateType = {
-    deviceType: DeviceTypeEnum.Mobile,
+    deviceType: 'Mobile',
     infoBlockData: null,
     isInfoBlock: false,
 }
@@ -28,16 +28,17 @@ const appSlice = createSlice({
                 isDesktop: boolean
             }>
         ) => {
-            if (action.payload.isMobile)
-                state.deviceType = DeviceTypeEnum.Mobile
-            else if (action.payload.isTablet)
-                state.deviceType = DeviceTypeEnum.Tablet
-            else if (action.payload.isDesktop)
-                state.deviceType = DeviceTypeEnum.Desktop
+            if (action.payload.isMobile) state.deviceType = 'Mobile'
+            else if (action.payload.isTablet) state.deviceType = 'Tablet'
+            else if (action.payload.isDesktop) state.deviceType = 'Desktop'
         },
         openInfoBlock: (
             state,
-            action: PayloadAction<{ title?: string; text?: string, type: 'success' | 'error' | 'info' }>
+            action: PayloadAction<{
+                title?: string
+                text?: string
+                type: 'success' | 'error' | 'info'
+            }>
         ) => {
             state.infoBlockData = action.payload
             state.isInfoBlock = true
@@ -49,7 +50,6 @@ const appSlice = createSlice({
     },
 })
 
-export const { setDeviceType, openInfoBlock, closeInfoBlock } =
-    appSlice.actions
+export const { setDeviceType, openInfoBlock, closeInfoBlock } = appSlice.actions
 
 export default appSlice.reducer

@@ -1,5 +1,4 @@
 import React from 'react'
-import { InputSizeEnum } from '../../types'
 import Radio from '../input/Radio'
 import TextInput from '../input/TextInput'
 import Tag from '../Tag'

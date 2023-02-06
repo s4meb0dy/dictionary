@@ -1,18 +1,32 @@
-import { getWordsByDictionaryIdType, wordType } from './../../types/apiTypes'
+import { createWordRequestType } from './../../types/apiTypes/wordAPITypes'
+import { RootState } from './../store'
 import { AppDispatch } from '../store'
 import { createSlice, createAsyncThunk, PayloadAction } from '@reduxjs/toolkit'
 import { openInfoBlock } from './appSlice'
 import WordAPI from '../../api/wordApi'
 import { errorHandling } from '../services'
+import {
+    getWordsFromDictionaryResponseType,
+    wordType,
+} from '../../types/apiTypes/wordAPITypes'
 
-export const fetchWordsByDictionaryId = createAsyncThunk<
-    getWordsByDictionaryIdType,
-    { dictionaryId: number },
-    { rejectValue: string; dispatch: AppDispatch }
->('user/fetchWordsByDictionaryId', async (data, thunkAPI) => {
+export const fetchWordsFromDictionary = createAsyncThunk<
+    getWordsFromDictionaryResponseType,
+    number,
+    { rejectValue: string; dispatch: AppDispatch; state: RootState }
+>('user/fetchWordsByDictionaryId', async (dictionaryId, thunkAPI) => {
     try {
-        const response = await WordAPI.fetchWordsByDictionaryId({
-            dictionaryId: data.dictionaryId,
+        const page = thunkAPI.getState().word.page
+        const pages = thunkAPI.getState().word.pages
+        const limit = thunkAPI.getState().word.limit
+
+        if (pages && pages < page)
+            return thunkAPI.rejectWithValue('All pages are loaded')
+
+        const response = await WordAPI.fetchWordsFromDictionary({
+            dictionaryId,
+            page,
+            limit,
         })
 
         return response.data
@@ -67,7 +81,7 @@ export const updateWord = createAsyncThunk<
 
 export const addWord = createAsyncThunk<
     wordType,
-    { dictionaryId: number; name: string; translation: string },
+    createWordRequestType,
     { rejectValue: string; dispatch: AppDispatch }
 >('user/addWord', async (data, thunkAPI) => {
     try {
@@ -102,7 +116,7 @@ export const deleteWord = createAsyncThunk<
     { rejectValue: string; dispatch: AppDispatch }
 >('user/deleteWord', async (wordId, thunkAPI) => {
     try {
-        const response = await WordAPI.deleteWord(wordId)
+        const response = await WordAPI.deleteWord({ wordId })
 
         thunkAPI.dispatch(
             openInfoBlock({
@@ -128,28 +142,24 @@ export const deleteWord = createAsyncThunk<
 })
 
 type initialStateType = {
-    count: number | null
-    learnedWords: number | null
-    limit: number | null
-    page: number | null
+    count: number
+    learned: number | null
+    limit: number
+    page: number
     pages: number | null
-    words: Array<{
-        id: number
-        name: string
-        translation: string
-        createdAt: string
-        isLearned: boolean
-    }>
+    words: Array<wordType>
+    idOfWordsToStudy: Array<number>
     isLoading: boolean
 }
 
 const initialState: initialStateType = {
-    count: null,
-    learnedWords: null,
-    limit: null,
-    page: null,
+    count: 0,
+    learned: null,
+    limit: 10,
+    page: 1,
     pages: null,
     words: [],
+    idOfWordsToStudy: [],
     isLoading: false,
 }
 
@@ -158,24 +168,46 @@ const wordSlice = createSlice({
     initialState,
     reducers: {
         clearWords: (state) => {
-            state.count = null
-            state.learnedWords = null
-            state.limit = null
-            state.page = null
+            state.count = 0
+            state.learned = null
+            state.limit = 10
+            state.page = 1
             state.pages = null
             state.words = []
             state.isLoading = false
         },
+        addWordsToStudy: (state, action: PayloadAction<Array<number>>) => {
+            state.idOfWordsToStudy.push(...action.payload)
+        },
+        deleteWordsToStudy: (state, action: PayloadAction<Array<number>>) => {
+            if (action.payload.length === 0) {
+                state.idOfWordsToStudy = []
+                return
+            }
+            state.idOfWordsToStudy = state.idOfWordsToStudy.filter(
+                (item) => !action.payload.includes(item)
+            )
+        },
     },
     extraReducers: (builder) => {
         builder
-            .addCase(fetchWordsByDictionaryId.pending, (state) => {
+            .addCase(fetchWordsFromDictionary.pending, (state) => {
                 state.isLoading = true
             })
             .addCase(
-                fetchWordsByDictionaryId.fulfilled,
-                (state, action: PayloadAction<getWordsByDictionaryIdType>) => {
+                fetchWordsFromDictionary.fulfilled,
+                (
+                    state,
+                    action: PayloadAction<getWordsFromDictionaryResponseType>
+                ) => {
                     let learnedWords = 0
+
+                    state.page = action.payload.page + 1
+
+                    state.words.push(...action.payload.words)
+                    state.limit = action.payload.limit
+                    state.count = action.payload.count
+                    state.pages = action.payload.pages
 
                     action.payload.words.forEach((item) => {
                         if (item.isLearned) learnedWords++
@@ -185,11 +217,11 @@ const wordSlice = createSlice({
                     state.page = action.payload.page
                     state.pages = action.payload.pages
                     state.words = action.payload.words
-                    state.learnedWords = learnedWords
+                    state.learned = learnedWords
                     state.isLoading = false
                 }
             )
-            .addCase(fetchWordsByDictionaryId.rejected, (state, action) => {
+            .addCase(fetchWordsFromDictionary.rejected, (state, action) => {
                 state.isLoading = false
             })
             //--------------------------
@@ -217,6 +249,8 @@ const wordSlice = createSlice({
                 addWord.fulfilled,
                 (state, action: PayloadAction<wordType>) => {
                     state.words.push(action.payload)
+                    if (state.count) state.count += 1
+                    else state.count = 1
                 }
             )
             .addCase(addWord.rejected, (state, action) => {})
@@ -232,6 +266,8 @@ const wordSlice = createSlice({
                         state.words = state.words.filter(
                             (item) => item.id != action.payload.wordId
                         )
+                        if (state.count) state.count -= 1
+                        else state.count = 0
                     }
                 }
             )
@@ -240,6 +276,7 @@ const wordSlice = createSlice({
     },
 })
 
-export const { clearWords } = wordSlice.actions
+export const { clearWords, addWordsToStudy, deleteWordsToStudy } =
+    wordSlice.actions
 
 export default wordSlice.reducer

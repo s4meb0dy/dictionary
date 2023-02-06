@@ -1,5 +1,4 @@
 import React from 'react'
-import { InputSizeEnum } from '../types'
 
 type ButtonProps = {
     onClick?: () => void

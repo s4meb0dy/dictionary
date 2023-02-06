@@ -1,5 +1,4 @@
 import React from 'react'
-import { InputSizeEnum } from '../../types'
 import CloseIcon from '../../assets/icons/CloseIcon'
 import TextInput from '../input/TextInput'
 

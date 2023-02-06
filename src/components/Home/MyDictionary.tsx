@@ -1,4 +1,5 @@
 import React from 'react'
+import { useNavigate } from 'react-router-dom'
 import Tag from '../Tag'
 
 type MyDictionaryProps = {
@@ -7,7 +8,7 @@ type MyDictionaryProps = {
     learnedWords: number
     access: 'private' | 'public'
     id: number
-    onClick: (data: {id: number, name: string, access: 'private' | 'public'}) => void
+ 
 }
 
 const MyDictionary: React.FC<MyDictionaryProps> = ({
@@ -16,10 +17,13 @@ const MyDictionary: React.FC<MyDictionaryProps> = ({
     learnedWords,
     access,
     id,
-    onClick,
 }) => {
+    const navigate = useNavigate()
+
     const onClickHandler = () => {
-        onClick({ id, name, access })
+        navigate(`/my-dictionary/${id}/${access}/${name}`)
+
+        // onClick({ id, name, access })
     }
 
     return (

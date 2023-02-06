@@ -1,5 +1,6 @@
 import React from 'react'
 import PluseIcon from '../../assets/icons/PluseIcon'
+import Preloader from '../../assets/Preloader'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import { addWord } from '../../redux/features/wordSlice'
 import Button from '../Button'
@@ -21,6 +22,7 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
     }>({ wordError: undefined, translationError: undefined })
 
     const [isOpen, setIsOpen] = React.useState<boolean>(false)
+    const [isLoading, setIsLoading] = React.useState<boolean>(false)
 
     const onChangeWordValueHandler = (e: React.ChangeEvent<any>) => {
         setWordValue(e.target.value)
@@ -37,6 +39,11 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
 
     const onOpenHandler = () => {
         setIsOpen((prev) => !prev)
+    }
+
+    const reset = () => {
+        setWordValue('')
+        setTranslationValue('')
     }
 
     const onSaveHandler = () => {
@@ -64,22 +71,27 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
 
         if (isError) return
 
+        setIsLoading(true)
+
         dispatch(
             addWord({
                 dictionaryId,
                 name: wordValue,
                 translation: translationValue,
             })
-        )
-        setIsOpen(false)
-        setWordValue('')
-        setTranslationValue('')
+        ).then((res) => {
+            setIsOpen(false)
+            setIsLoading(false)
+            reset()
+        })
     }
 
     return (
-        <div>
+        <div className="relative">
             <div
-                className="bg-white overflow-hidden shadow-secondary rounded-[25px] transition-[height]"
+                className={`bg-white overflow-hidden shadow-secondary rounded-[25px] transition-all relative  ${
+                    isLoading && 'blur-[2px] pointer-events-none'
+                }`}
                 style={{ height: isOpen ? '229px' : '0px' }}
             >
                 <div className="bg-white p-[24px] rounded-[25px] flex flex-col items-center ">
@@ -123,9 +135,18 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
                     hoverColor="#53A0FF"
                     activeColor="#0D6CBD"
                     onClick={onOpenHandler}
-                    RightIcon={isOpen ? undefined : <PluseIcon width='20px' height='20px' color='white' />}
+                    RightIcon={
+                        isOpen ? undefined : (
+                            <PluseIcon
+                                width="20px"
+                                height="20px"
+                                color="white"
+                            />
+                        )
+                    }
                 />
             </div>
+            {/* {isLoading && <Preloader />} */}
         </div>
     )
 }

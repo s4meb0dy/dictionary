@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconTypes } from '../../types'
+import { IconTypes } from '../../types/assetsTypes'
 
 const SaveIcon: React.FC<IconTypes> = ({ width, height, color }) => {
     return (

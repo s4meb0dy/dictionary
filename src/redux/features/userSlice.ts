@@ -1,19 +1,20 @@
 import { AppDispatch } from './../store'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import UserAPI from '../../api/userApi'
-import {
-    AuthorizationEnum,
-    loginDataType,
-    registrationDataType,
-} from './../../types/index'
-
-import { loginResponseType, userInfoResponseType } from './../../types/apiTypes'
+import { AuthorizationEnum } from './../../types/index'
 import { openInfoBlock } from './appSlice'
 import { errorHandling } from '../services'
+import {
+    loginUserResponseType,
+    loginUserRequestType,
+    registerUserResponseType,
+    registerUserRequestType,
+    infoUserResponseType,
+} from '../../types/apiTypes/userAPITypes'
 
 export const login = createAsyncThunk<
-    loginResponseType,
-    loginDataType,
+    loginUserResponseType,
+    loginUserRequestType,
     { rejectValue: string; dispatch: AppDispatch }
 >('user/login', async (loginData, thunkAPI) => {
     try {
@@ -41,8 +42,8 @@ export const login = createAsyncThunk<
 })
 
 export const registration = createAsyncThunk<
-    loginResponseType,
-    registrationDataType,
+    registerUserResponseType,
+    registerUserRequestType,
     { rejectValue: string; dispatch: AppDispatch }
 >('user/registration', async (registerData, thunkAPI) => {
     try {
@@ -72,7 +73,7 @@ export const registration = createAsyncThunk<
 })
 
 export const fetchUserInfo = createAsyncThunk<
-    userInfoResponseType,
+    infoUserResponseType,
     undefined,
     { rejectValue: string; dispatch: AppDispatch }
 >('user/fetchUserInfo', async (_, thunkAPI) => {
@@ -102,7 +103,6 @@ type initialStateType = {
     error: string | null
     authorizationStatus: AuthorizationEnum
     isLoading: boolean
-    isConfirmed: boolean | null
 }
 
 const initialState: initialStateType = {
@@ -111,7 +111,6 @@ const initialState: initialStateType = {
     email: null,
     createdAt: null,
     error: null,
-    isConfirmed: null,
     authorizationStatus: AuthorizationEnum.Unknown,
     isLoading: false,
 }
@@ -130,7 +129,7 @@ const userSlice = createSlice({
             })
             .addCase(
                 registration.fulfilled,
-                (state, action: PayloadAction<loginResponseType>) => {
+                (state, action: PayloadAction<registerUserResponseType>) => {
                     console.log(action.payload)
                     localStorage.setItem('token', action.payload.access_token)
                     state.username = action.payload.username
@@ -159,13 +158,12 @@ const userSlice = createSlice({
             })
             .addCase(
                 login.fulfilled,
-                (state, action: PayloadAction<loginResponseType>) => {
+                (state, action: PayloadAction<loginUserResponseType>) => {
                     localStorage.setItem('token', action.payload.access_token)
                     state.username = action.payload.username
                     state.email = action.payload.email
                     state.createdAt = action.payload.createdAt
                     state.id = action.payload.id
-                    state.isConfirmed = action.payload.isConfirmed
                     state.authorizationStatus = AuthorizationEnum.Login
                     state.isLoading = false
                 }
@@ -188,7 +186,7 @@ const userSlice = createSlice({
             })
             .addCase(
                 fetchUserInfo.fulfilled,
-                (state, action: PayloadAction<userInfoResponseType>) => {
+                (state, action: PayloadAction<infoUserResponseType>) => {
                     // localStorage.setItem('token', action.payload.access_token)
                     state.username = action.payload.username
                     state.email = action.payload.email
