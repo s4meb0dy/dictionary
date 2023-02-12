@@ -21,7 +21,14 @@ const WordsLoader: React.FC<WordsLoaderProps> = ({ number = 1 }) => {
                     className="mb-[10px]"
                     key={index}
                 >
-                    <rect x="0" y="0" rx="25" ry="25" width="840" height="101" />
+                    <rect
+                        x="0"
+                        y="0"
+                        rx="25"
+                        ry="25"
+                        width="840"
+                        height="101"
+                    />
                 </ContentLoader>
             ))}
         </>

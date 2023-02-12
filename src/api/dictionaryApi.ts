@@ -3,7 +3,7 @@ import {
     getAllPublicDictionariesResponseType,
     createDictionaryResponseType,
     createDictionaryRequestType,
-    getAllPublicDictionariesRequestType
+    getAllPublicDictionariesRequestType,
 } from './../types/apiTypes/dictionaryAPITypes'
 import { instance } from './index'
 
@@ -13,7 +13,9 @@ class DictionaryAPI {
             withCredentials: true,
         })
     }
-    static fetchPublicDictionaries = (data: getAllPublicDictionariesRequestType) => {
+    static fetchPublicDictionaries = (
+        data: getAllPublicDictionariesRequestType
+    ) => {
         return instance.get<getAllPublicDictionariesResponseType>(
             `/dictionary/public?page=${data.page}&limit=${data.limit}`,
             {

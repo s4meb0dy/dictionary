@@ -18,8 +18,6 @@ const HomeIcon: React.FC<IconTypes> = ({ width, height, color }) => {
                     fill={color}
                 />
             </svg>
-
-            
         </span>
     )
 }

@@ -21,7 +21,7 @@ const MyDictionaryLoader: React.FC<MyDictionaryLoaderProps> = ({
                     backgroundColor="#fff"
                     foregroundColor="#f3f3f3"
                     key={index}
-                    style={{marginBottom: '20px'}}
+                    style={{ marginBottom: '20px' }}
                 >
                     <rect
                         x="0"

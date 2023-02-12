@@ -5,7 +5,7 @@ import {
     deleteWordResponseType,
     deleteWordRequestType,
     updateWordRequestType,
-    getWordsFromDictionaryRequestType
+    getWordsFromDictionaryRequestType,
 } from './../types/apiTypes/wordAPITypes'
 
 import { instance } from './index'

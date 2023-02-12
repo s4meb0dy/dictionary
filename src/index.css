@@ -7,7 +7,6 @@ html {
     overflow-x: hidden;
 }
 
-
 #root {
     height: 100%;
 }
@@ -20,7 +19,6 @@ body {
     scrollbar-color: white transparent;
 }
 
-
 body::-webkit-scrollbar {
     width: 8px;
 }
@@ -29,8 +27,8 @@ body::-webkit-scrollbar * {
     background: transparent;
 }
 
-body::-webkit-scrollbar-thumb {    
-    background-color: white; 
-    border-radius: 15px; 
-    border: 3px solid transparent; 
+body::-webkit-scrollbar-thumb {
+    background-color: white;
+    border-radius: 15px;
+    border: 3px solid transparent;
 }

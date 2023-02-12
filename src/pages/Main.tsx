@@ -3,11 +3,11 @@ import { Route, Routes, useNavigate } from 'react-router-dom'
 import HomeContainer from '../components/Home/HomeContainer'
 import Navbar from '../components/Navbar'
 import { useAppSelector } from '../hooks/reduxHooks'
-import CreateDictionaryPage from './CreateDictionaryPage'
+import CreateDictionaryPage from './myDictionary/CreateDictionaryPage'
 import { AuthorizationEnum } from './../types/index'
-import AllDictionariesPage from './PublicDictionariesPage'
-import DictionaryPage from './DictionaryPage'
-import PublicDictionaryPage from './PublicDictionaryPage'
+import AllDictionariesPage from './publicDictionary/PublicDictionariesPage'
+import DictionaryPage from './myDictionary/DictionaryPage'
+import PublicDictionaryPage from './publicDictionary/PublicDictionaryPage'
 
 const Main = () => {
     const authorizationStatus = useAppSelector(

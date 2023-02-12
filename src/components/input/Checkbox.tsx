@@ -8,15 +8,23 @@ type CheckboxProps = {
     isChecked: boolean
 }
 
-const Checkbox: React.FC<CheckboxProps> = ({ id, name, styles, onSelect, isChecked }) => {
-    
+const Checkbox: React.FC<CheckboxProps> = ({
+    id,
+    name,
+    styles,
+    onSelect,
+    isChecked,
+}) => {
     const onChangeHandler = (e: React.ChangeEvent<HTMLInputElement>) => {
         onSelect(e.target.checked)
     }
 
     return (
         <span className={`flex items-center ${styles && styles}`}>
-            <label htmlFor={id} className="cursor-pointer relative w-[25px] h-[25px]">
+            <label
+                htmlFor={id}
+                className="cursor-pointer relative w-[25px] h-[25px]"
+            >
                 <input
                     id={id}
                     name={name}

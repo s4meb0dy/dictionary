@@ -1,14 +1,14 @@
 import React from 'react'
 import Radio from '../input/Radio'
 import TextInput from '../input/TextInput'
-import Tag from '../Tag'
+import Tag from '../input/Tag'
 
 type HeaderBlockProps = {
     onChangeAccess: (trueId: string) => void
     access: 'public' | 'private'
     onChangeName: (e: React.ChangeEvent<any>) => void
     nameValue: string
-    errorNameField?: string 
+    errorNameField?: string
 }
 
 const HeaderBlock: React.FC<HeaderBlockProps> = ({
@@ -22,7 +22,7 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({
         <div className="flex flex-col items-center  w-full">
             <TextInput
                 width="444px"
-                size='large'
+                size="large"
                 value={nameValue}
                 onChange={onChangeName}
                 name="nameDictionary"

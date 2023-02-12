@@ -25,7 +25,7 @@ const useLazyLoading = () => {
         }
     }, [])
 
-    return {fetching, loaded}
+    return { fetching, loaded }
 }
 
 export default useLazyLoading

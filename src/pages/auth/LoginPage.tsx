@@ -1,13 +1,13 @@
 import React from 'react'
-import FormContainer from '../components/auth/FormContainer'
-import Button from '../components/Button'
-import TextInput from '../components/input/TextInput'
+import FormContainer from '../../components/auth/FormContainer'
+import Button from '../../components/input/Button'
+import TextInput from '../../components/input/TextInput'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
-import WarningCircleIcon from '../assets/icons/WarningCircleIcon'
-import { login } from '../redux/features/userSlice'
-import { openInfoBlock } from '../redux/features/appSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import WarningCircleIcon from '../../assets/icons/WarningCircleIcon'
+import { login } from '../../redux/features/userSlice'
+import { openInfoBlock } from '../../redux/features/appSlice'
 
 type initialValuesType = {
     password: string
@@ -63,7 +63,7 @@ const LoginPage = () => {
                 >
                     <div className="mb-[15px] relative">
                         <TextInput
-                            size='large'
+                            size="large"
                             name="email"
                             width="400px"
                             placeholder="Email"
@@ -88,7 +88,7 @@ const LoginPage = () => {
                     </div>
                     <div className="mb-[30px] relative">
                         <TextInput
-                            size='large'
+                            size="large"
                             name="password"
                             width="400px"
                             placeholder="Password"

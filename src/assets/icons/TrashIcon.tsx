@@ -4,11 +4,7 @@ import { IconTypes } from '../../types/assetsTypes'
 const TrashIcon: React.FC<IconTypes> = ({ height, width, color }) => {
     return (
         <span>
-            <svg
-                width={width} height={height}
-                viewBox="0 0 30 30"
-                fill={color}
-            >
+            <svg width={width} height={height} viewBox="0 0 30 30" fill={color}>
                 <path
                     fillRule="evenodd"
                     clipRule="evenodd"

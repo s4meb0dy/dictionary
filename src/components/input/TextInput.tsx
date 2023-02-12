@@ -1,7 +1,5 @@
 import React from 'react'
 
-
-
 type TextInputProps = {
     size: 'small' | 'medium' | 'large'
     styles?: string
@@ -93,7 +91,7 @@ const TextInput: React.FC<TextInputProps> = ({
                 name={name}
                 id={name}
                 formNoValidate
-                style={{borderColor: error ? '#FE2836' : ''}}
+                style={{ borderColor: error ? '#FE2836' : '' }}
             />
             {RightIcon && (
                 <label

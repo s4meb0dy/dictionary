@@ -2,9 +2,9 @@ import React from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import AnimatedBg from './components/animations/AnimatedBg'
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
-import LoginPage from './pages/LoginPage'
+import LoginPage from './pages/auth/LoginPage'
 
-import RegisterPage from './pages/RegisterPage'
+import RegisterPage from './pages/auth/RegisterPage'
 import { fetchUserInfo } from './redux/features/userSlice'
 import useMatchMedia from 'use-match-media-hook'
 import { setDeviceType } from './redux/features/appSlice'
@@ -39,7 +39,6 @@ function App() {
                     <Route path="/login" element={<LoginPage />} />
                     <Route path="/register" element={<RegisterPage />} />
                 </Routes>
-                
             </div>
             <InfoBlock />
             <AnimatedBg />

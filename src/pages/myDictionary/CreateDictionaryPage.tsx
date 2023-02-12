@@ -1,11 +1,11 @@
 import React from 'react'
-import HeaderBlock from '../components/createDictionary/HeaderBlock'
-import Words from '../components/createDictionary/Words'
+import HeaderBlock from '../../components/createDictionary/HeaderBlock'
+import Words from '../../components/createDictionary/Words'
 import { nanoid } from 'nanoid'
-import { useAppDispatch } from '../hooks/reduxHooks'
-import { createDictionary } from '../redux/features/dictionarySlice'
+import { useAppDispatch } from '../../hooks/reduxHooks'
+import { createDictionary } from '../../redux/features/dictionarySlice'
 import { useNavigate } from 'react-router-dom'
-import { openInfoBlock } from '../redux/features/appSlice'
+import { openInfoBlock } from '../../redux/features/appSlice'
 
 const CreateDictionaryPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -86,7 +86,7 @@ const CreateDictionaryPage: React.FC = () => {
             }
         })
 
-        if(isError) return
+        if (isError) return
 
         const wordsWithoutId: Array<{ name: string; translation: string }> =
             words.map((item) => {

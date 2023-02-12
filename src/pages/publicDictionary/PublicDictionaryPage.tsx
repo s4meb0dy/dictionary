@@ -1,12 +1,12 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import FullPageWhiteContainer from '../components/pageContainers/FullPageWhiteContainer'
-import HeaderUnderFullPage from '../components/pageContainers/HeaderUnderFullPage'
-import { useAppDispatch } from '../hooks/reduxHooks'
+import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
+import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
+import { useAppDispatch } from '../../hooks/reduxHooks'
 import {
     clearWords,
     fetchWordsFromDictionary,
-} from '../redux/features/wordSlice'
+} from '../../redux/features/wordSlice'
 
 type PublicDictionaryPageProps = {}
 
@@ -16,7 +16,7 @@ const PublicDictionaryPage: React.FC<PublicDictionaryPageProps> = () => {
     const dispatch = useAppDispatch()
 
     React.useEffect(() => {
-        if (id) dispatch(fetchWordsFromDictionary(Number(id)))
+        if (id) dispatch(fetchWordsFromDictionary(+id))
         return () => {
             dispatch(clearWords())
         }

@@ -1,8 +1,8 @@
 import React from 'react'
-import TotalInformation from '../components/Home/TotalInformation'
-import MyDictionaries from '../components/Home/MyDictionaries'
-import FullPageWhiteContainer from '../components/pageContainers/FullPageWhiteContainer'
-import HeaderUnderFullPage from '../components/pageContainers/HeaderUnderFullPage'
+import TotalInformation from '../../components/Home/TotalInformation'
+import MyDictionaries from '../../components/Home/MyDictionaries'
+import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
+import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
 
 const HomePage = () => {
     return (

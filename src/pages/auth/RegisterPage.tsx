@@ -1,13 +1,13 @@
 import React from 'react'
-import FormContainer from '../components/auth/FormContainer'
-import Button from '../components/Button'
-import TextInput from '../components/input/TextInput'
+import FormContainer from '../../components/auth/FormContainer'
+import Button from '../../components/input/Button'
+import TextInput from '../../components/input/TextInput'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
-import WarningCircleIcon from '../assets/icons/WarningCircleIcon'
-import { registration } from '../redux/features/userSlice'
-import { useAppDispatch, useAppSelector } from '../hooks/reduxHooks'
-import { openInfoBlock } from '../redux/features/appSlice'
+import WarningCircleIcon from '../../assets/icons/WarningCircleIcon'
+import { registration } from '../../redux/features/userSlice'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { openInfoBlock } from '../../redux/features/appSlice'
 
 type initialValuesType = {
     email: string

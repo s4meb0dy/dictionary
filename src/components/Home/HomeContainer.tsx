@@ -1,6 +1,6 @@
 import React from 'react'
 import { useAppSelector } from '../../hooks/reduxHooks'
-import Home from '../../pages/HomePage'
+import Home from '../../pages/home/HomePage'
 import { AuthorizationEnum } from '../../types'
 
 type HomeContainerProps = {}

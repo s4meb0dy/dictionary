@@ -5,7 +5,9 @@ type PublicDictionaryLoaderProps = {
     number?: number
 }
 
-const PublicDictionaryLoader: React.FC<PublicDictionaryLoaderProps> = ({ number = 1 }) => {
+const PublicDictionaryLoader: React.FC<PublicDictionaryLoaderProps> = ({
+    number = 1,
+}) => {
     const count = Array(number).fill('1')
 
     return (
@@ -18,7 +20,7 @@ const PublicDictionaryLoader: React.FC<PublicDictionaryLoaderProps> = ({ number 
                     viewBox="0 0 900 87"
                     backgroundColor="#257bc4"
                     foregroundColor="#0D6CBD"
-                    className='mt-[13px]'
+                    className="mt-[13px]"
                     key={index}
                 >
                     <rect x="0" y="0" rx="20" ry="20" width="900" height="87" />

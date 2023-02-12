@@ -1,6 +1,6 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
-import Tag from '../Tag'
+import Tag from '../input/Tag'
 
 type MyDictionaryProps = {
     name: string
@@ -8,7 +8,6 @@ type MyDictionaryProps = {
     learnedWords: number
     access: 'private' | 'public'
     id: number
- 
 }
 
 const MyDictionary: React.FC<MyDictionaryProps> = ({

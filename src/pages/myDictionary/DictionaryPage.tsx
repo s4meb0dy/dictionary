@@ -1,16 +1,16 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import AddWord from '../components/dictionary/AddWord'
-import DictionaryInformation from '../components/dictionary/DictionaryInformation'
-import Words from '../components/dictionary/Words'
-import FullPageWhiteContainer from '../components/pageContainers/FullPageWhiteContainer'
-import HeaderUnderFullPage from '../components/pageContainers/HeaderUnderFullPage'
-import { useAppDispatch } from '../hooks/reduxHooks'
+import AddWord from '../../components/dictionary/AddWord'
+import DictionaryInformation from '../../components/dictionary/DictionaryInformation'
+import Words from '../../components/dictionary/Words'
+import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
+import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
+import { useAppDispatch } from '../../hooks/reduxHooks'
 import {
     clearWords,
     deleteWordsToStudy,
     fetchWordsFromDictionary,
-} from '../redux/features/wordSlice'
+} from '../../redux/features/wordSlice'
 
 const DictionaryPage: React.FC = () => {
     const { id, name, access } = useParams()

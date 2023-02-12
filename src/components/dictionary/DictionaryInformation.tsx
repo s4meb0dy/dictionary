@@ -1,8 +1,8 @@
 import React from 'react'
 import ContentLoader from 'react-content-loader'
 import { useAppSelector } from '../../hooks/reduxHooks'
-import Button from '../Button'
-import Tag from '../Tag'
+import Button from '../input/Button'
+import Tag from '../input/Tag'
 
 type DictionaryInformationProps = {
     dictionaryName: string

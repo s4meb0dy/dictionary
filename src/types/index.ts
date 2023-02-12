@@ -6,5 +6,3 @@ export enum AuthorizationEnum {
     Logout = 1,
     Unknown = 2,
 }
-
-

@@ -1,5 +1,5 @@
 import React from 'react'
-import Button from '../Button'
+import Button from '../input/Button'
 import Word from './Word'
 import { nanoid } from 'nanoid'
 import PluseIcon from '../../assets/icons/PluseIcon'
@@ -64,7 +64,11 @@ const Words: React.FC<WordsProps> = ({
                     disabled={words.length === 0}
                     onClick={onSave}
                     RightIcon={
-                        <CheckCircleIcon width="20px" height="20px" color="white" />
+                        <CheckCircleIcon
+                            width="20px"
+                            height="20px"
+                            color="white"
+                        />
                     }
                 />
             </div>

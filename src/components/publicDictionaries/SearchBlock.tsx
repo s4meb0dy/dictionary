@@ -17,7 +17,7 @@ const SearchBlock: React.FC = () => {
     return (
         <div className="pb-[22px]">
             <TextInput
-                size='large'
+                size="large"
                 width="100%"
                 onChange={onChangeValue}
                 value={value}

@@ -21,7 +21,6 @@ const Words: React.FC<WordsProps> = ({ dictionaryId }) => {
     )
     const dispatch = useAppDispatch()
 
-
     const onSelectWordHandler = (data: {
         wordId: number
         isChecked: boolean

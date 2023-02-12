@@ -9,8 +9,8 @@ const store = configureStore({
     reducer: {
         user: userSlice,
         app: appSlice,
-        dictionary: dictionarySlice, 
-        word: wordSlice
+        dictionary: dictionarySlice,
+        word: wordSlice,
     },
 })
 export type RootState = ReturnType<typeof store.getState>

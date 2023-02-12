@@ -3,7 +3,7 @@ import PluseIcon from '../../assets/icons/PluseIcon'
 import Preloader from '../../assets/Preloader'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import { addWord } from '../../redux/features/wordSlice'
-import Button from '../Button'
+import Button from '../input/Button'
 import TextInput from '../input/TextInput'
 
 type AddWordProps = {
