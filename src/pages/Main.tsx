@@ -1,7 +1,7 @@
 import React from 'react'
 import { Route, Routes, useNavigate } from 'react-router-dom'
 import HomeContainer from '../components/Home/HomeContainer'
-import Navbar from '../components/Navbar'
+import Navbar from '../components/navigation/Navbar'
 import { useAppSelector } from '../hooks/reduxHooks'
 import CreateDictionaryPage from './myDictionary/CreateDictionaryPage'
 import { AuthorizationEnum } from './../types/index'

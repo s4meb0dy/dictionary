@@ -1,15 +1,14 @@
 import React from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import AnimatedBg from './components/animations/AnimatedBg'
-import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
-import LoginPage from './pages/auth/LoginPage'
-
-import RegisterPage from './pages/auth/RegisterPage'
-import { fetchUserInfo } from './redux/features/userSlice'
 import useMatchMedia from 'use-match-media-hook'
 import { setDeviceType } from './redux/features/appSlice'
 import Main from './pages/Main'
-import InfoBlock from './components/InfoBlock'
+import InfoBlock from './components/modalWindows/InfoBlock'
+import { userApi } from './redux/services/userApi'
+import { useAppDispatch } from './hooks/reduxHooks'
+import LoginPage from './pages/auth/LoginPage'
+import RegisterPage from './pages/auth/RegisterPage'
 
 const queries = [
     '(max-width: 639px)',
@@ -20,16 +19,13 @@ const queries = [
 function App() {
     const dispatch = useAppDispatch()
 
+    userApi.useGetUserInfoQuery()
+
     const [isMobile, isTablet, isDesktop] = useMatchMedia(queries)
 
     React.useLayoutEffect(() => {
         dispatch(setDeviceType({ isMobile, isTablet, isDesktop }))
     }, [isMobile, isTablet, isDesktop])
-
-    React.useEffect(() => {
-        const token: string | null = localStorage.getItem('token')
-        if (token) dispatch(fetchUserInfo())
-    }, [])
 
     return (
         <>

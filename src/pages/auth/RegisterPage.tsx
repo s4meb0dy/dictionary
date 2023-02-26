@@ -1,13 +1,16 @@
 import React from 'react'
+
 import FormContainer from '../../components/auth/FormContainer'
 import Button from '../../components/input/Button'
 import TextInput from '../../components/input/TextInput'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
 import WarningCircleIcon from '../../assets/icons/WarningCircleIcon'
-import { registration } from '../../redux/features/userSlice'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
+import { useAppDispatch } from '../../hooks/reduxHooks'
 import { openInfoBlock } from '../../redux/features/appSlice'
+import { userApi } from '../../redux/services'
+import useErrorHandler from '../../hooks/useErrorHandler'
+
 
 type initialValuesType = {
     email: string
@@ -42,8 +45,31 @@ const validate: (values: initialValuesType) => object = (values) => {
 }
 
 const RegisterPage = () => {
-    const dispatch = useAppDispatch()
     const navigate = useNavigate()
+
+    const [registration, { isSuccess, error }] =
+        userApi.useRegistrationMutation()
+
+    const dispatch = useAppDispatch()
+
+    React.useEffect(() => {
+        if (isSuccess) {
+            dispatch(
+                openInfoBlock({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'The account is registered ',
+                })
+            )
+            navigate('/')
+        }
+    }, [isSuccess])
+
+    React.useEffect(() => {
+        isSuccess && navigate('/')
+    }, [isSuccess])
+
+    useErrorHandler(error as string)
 
     const formik = useFormik({
         initialValues: {
@@ -62,24 +88,9 @@ const RegisterPage = () => {
                 return
             }
 
-            dispatch(registration(values))
-                .then((res) => {
-                    if (res.meta.requestStatus === 'fulfilled') {
-                        dispatch(
-                            openInfoBlock({
-                                type: 'success',
-                                title: 'Success',
-                                text: 'You are registered',
-                            })
-                        )
-                        formik.resetForm()
-                        // console.log('1')
-                        navigate('/')
-                    }
-                })
-                .catch(() => {
-                    formik.resetForm()
-                })
+            registration(values).catch(() => {
+                formik.resetForm()
+            })
         },
     })
 

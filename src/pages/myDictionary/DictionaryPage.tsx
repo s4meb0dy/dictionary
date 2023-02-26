@@ -1,26 +1,41 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import AddWord from '../../components/dictionary/AddWord'
-import DictionaryInformation from '../../components/dictionary/DictionaryInformation'
-import Words from '../../components/dictionary/Words'
+
+import AddWord from '../../components/myDictionaries/myDictionary/AddWord'
+import DictionaryInformation from '../../components/myDictionaries/myDictionary/DictionaryInformation'
+import Words from '../../components/myDictionaries/myDictionary/Words'
 import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
 import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
 import { useAppDispatch } from '../../hooks/reduxHooks'
-import {
-    clearWords,
-    deleteWordsToStudy,
-    fetchWordsFromDictionary,
-} from '../../redux/features/wordSlice'
+import useErrorHandler from '../../hooks/useErrorHandler'
+import { deleteWordsToStudy, setTotalInformationAboutDictionary } from '../../redux/features'
+
+import { dictionaryApi } from '../../redux/services/dictionaryApi'
 
 const DictionaryPage: React.FC = () => {
     const { id, name, access } = useParams()
 
     const dispatch = useAppDispatch()
 
+    const [page, setPage] = React.useState(1)
+
+    const { data, error, isLoading } =
+        dictionaryApi.useGetWordsFromMyDictionaryQuery(
+            { page, dictionaryId: Number(id) },
+            {
+                // refetchOnMountOrArgChange: true,
+            }
+        )
+
     React.useEffect(() => {
-        if (id) dispatch(fetchWordsFromDictionary(Number(id)))
+        if (data) dispatch(setTotalInformationAboutDictionary(data))
+    }, [data])
+
+    useErrorHandler(error as string)
+
+    React.useEffect(() => {
         return () => {
-            dispatch(clearWords())
+            // dispatch(clearWords())
             dispatch(deleteWordsToStudy([]))
         }
     }, [])
@@ -32,13 +47,18 @@ const DictionaryPage: React.FC = () => {
                     <DictionaryInformation
                         dictionaryName={name}
                         access={access}
+                        isLoading={isLoading}
                     />
                 )}
             </HeaderUnderFullPage>
             <FullPageWhiteContainer>
                 {id && (
                     <>
-                        <Words dictionaryId={Number(id)} />
+                        <Words
+                            dictionaryId={Number(id)}
+                            words={data?.words}
+                            isLoading={isLoading}
+                        />
                         <AddWord dictionaryId={Number(id)} />
                     </>
                 )}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconTypes } from '../../types/assetsTypes'
+import { IconTypes } from '../../types/models'
 
 const PencilIcon: React.FC<IconTypes> = ({ width, height, color }) => {
     return (

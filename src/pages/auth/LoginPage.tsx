@@ -1,13 +1,16 @@
 import React from 'react'
-import FormContainer from '../../components/auth/FormContainer'
-import Button from '../../components/input/Button'
-import TextInput from '../../components/input/TextInput'
+
+import FormContainer from './../../components/auth/FormContainer'
+import Button from './../../components/input/Button'
+import TextInput from './../../components/input/TextInput'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
-import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
-import WarningCircleIcon from '../../assets/icons/WarningCircleIcon'
-import { login } from '../../redux/features/userSlice'
-import { openInfoBlock } from '../../redux/features/appSlice'
+import WarningCircleIcon from './../../assets/icons/WarningCircleIcon'
+import { userApi } from './../../redux/services/userApi'
+import useErrorHandler from './../../hooks/useErrorHandler'
+import { useAppDispatch } from './../../hooks/reduxHooks'
+import { openInfoBlock } from './../../redux/features/appSlice'
+
 
 type initialValuesType = {
     password: string
@@ -27,9 +30,26 @@ const validate: (values: initialValuesType) => object = (values) => {
 }
 
 const LoginPage = () => {
+    const [login, { isSuccess, error }] = userApi.useLoginMutation()
+
     const dispatch = useAppDispatch()
 
+    React.useEffect(() => {
+        if (isSuccess) {
+            dispatch(
+                openInfoBlock({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'You are logged in',
+                })
+            )
+            navigate('/')
+        }
+    }, [isSuccess])
+
     const navigate = useNavigate()
+
+    useErrorHandler(error as string)
 
     const formik = useFormik({
         initialValues: {
@@ -43,10 +63,10 @@ const LoginPage = () => {
         ) => {
             if (!values.email.includes('@'))
                 setFieldError('email', 'Email field must include @')
-            dispatch(login(values)).then((res) => {
-                if (res.meta.requestStatus === 'fulfilled') {
-                    navigate('/')
-                }
+
+            login({
+                email: values.email,
+                password: values.password,
             })
         },
     })

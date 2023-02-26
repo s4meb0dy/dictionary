@@ -1,0 +1,5 @@
+export * from './IDictionary'
+export * from './IUser'
+export * from './IError'
+export * from './IWord'
+export * from './IIcon'

@@ -1,6 +1,6 @@
 import React from 'react'
-import PublicDictionaries from '../../components/publicDictionaries/PublicDictionaries'
-import SearchBlock from '../../components/publicDictionaries/SearchBlock'
+import PublicDictionaries from '../../components/publicDictionaris/publicDictionaries/PublicDictionaries'
+import SearchBlock from '../../components/publicDictionaris/publicDictionaries/SearchBlock'
 
 const PublicDictionariesPage: React.FC = () => {
     return (

@@ -1,5 +1,5 @@
 import React from 'react'
-import { IconTypes } from '../../types/assetsTypes'
+import { IconTypes } from '../../types/models'
 
 const HomeIcon: React.FC<IconTypes> = ({ width, height, color }) => {
     return (

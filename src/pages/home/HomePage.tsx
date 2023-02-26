@@ -1,6 +1,7 @@
 import React from 'react'
-import TotalInformation from '../../components/Home/TotalInformation'
-import MyDictionaries from '../../components/Home/MyDictionaries'
+
+import TotalInformation from '../../components/myDictionaries/myDictionaries/TotalInformation'
+import MyDictionaries from '../../components/myDictionaries/myDictionaries/MyDictionaries'
 import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
 import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
 

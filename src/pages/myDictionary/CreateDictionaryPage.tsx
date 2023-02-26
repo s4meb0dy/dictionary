@@ -1,16 +1,27 @@
 import React from 'react'
-import HeaderBlock from '../../components/createDictionary/HeaderBlock'
-import Words from '../../components/createDictionary/Words'
+
+import HeaderBlock from '../../components/myDictionaries/createDictionary/HeaderBlock'
+import Words from '../../components/myDictionaries/createDictionary/Words'
 import { nanoid } from 'nanoid'
 import { useAppDispatch } from '../../hooks/reduxHooks'
-import { createDictionary } from '../../redux/features/dictionarySlice'
 import { useNavigate } from 'react-router-dom'
 import { openInfoBlock } from '../../redux/features/appSlice'
+import { dictionaryApi } from '../../redux/services/dictionaryApi'
+import useErrorHandler from '../../hooks/useErrorHandler'
 
 const CreateDictionaryPage: React.FC = () => {
     const dispatch = useAppDispatch()
 
+    const [createDictionary, { isLoading, error, isSuccess }] =
+        dictionaryApi.useCreateDictionaryMutation()
+
     const navigate = useNavigate()
+
+    useErrorHandler(error as string)
+
+    React.useEffect(() => {
+        if (isSuccess) navigate('/')
+    }, [isSuccess])
 
     const [nameValue, setNameValue] = React.useState('')
     const [errorName, setError] = React.useState<string>()
@@ -35,6 +46,7 @@ const CreateDictionaryPage: React.FC = () => {
             id: string
         }>
     >([{ word: '', translation: '', id: nanoid() }])
+
     const onAddWordHandler = () => {
         setWords((prev) => [
             ...prev,
@@ -45,6 +57,7 @@ const CreateDictionaryPage: React.FC = () => {
             },
         ])
     }
+
     const onChangeDictionaryDataValueHandler = (data: {
         id: string
         word: string
@@ -59,6 +72,7 @@ const CreateDictionaryPage: React.FC = () => {
 
         setWords(prevArr)
     }
+
     const onDeleteDictionaryHandler = (id: string) => {
         setWords((prev) => prev.filter((item) => item.id != id))
     }
@@ -93,17 +107,22 @@ const CreateDictionaryPage: React.FC = () => {
                 return { name: item.word, translation: item.translation }
             })
 
-        dispatch(
-            createDictionary({
-                dictionaryName: nameValue,
-                words: wordsWithoutId,
-                isPublic: access === 'public',
-            })
-        ).then((res) => {
-            if (res.meta.requestStatus === 'fulfilled') {
-                navigate('/')
-            }
+        createDictionary({
+            dictionaryName: nameValue,
+            words: wordsWithoutId,
+            isPublic: access === 'public',
         })
+        // dispatch(
+        //     createDictionary({
+        //         dictionaryName: nameValue,
+        //         words: wordsWithoutId,
+        //         isPublic: access === 'public',
+        //     })
+        // ).then((res) => {
+        //     if (res.meta.requestStatus === 'fulfilled') {
+        //         navigate('/')
+        //     }
+        // })
     }
 
     return (
