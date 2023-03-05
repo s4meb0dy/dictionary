@@ -1,6 +1,7 @@
 import React from 'react'
 import { useAppSelector } from '../../hooks/reduxHooks'
-import Home from '../../pages/home/HomePage'
+import HomePage from '../../pages/home/HomePage'
+import MyDictionariesPage from '../../pages/myDictionary/MyDictionariesPage'
 import { AuthorizationEnum } from '../../types'
 
 type HomeContainerProps = {}
@@ -10,8 +11,8 @@ const HomeContainer: React.FC<HomeContainerProps> = () => {
         (state) => state.user.authorizationStatus
     )
 
-    if (authorizationStatus === AuthorizationEnum.Login) return <Home />
-    else return <div>page fot not authorized</div>
+    if (authorizationStatus === AuthorizationEnum.Login) return <MyDictionariesPage />
+    else return <HomePage />
 }
 
 export default HomeContainer

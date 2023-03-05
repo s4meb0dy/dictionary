@@ -11,7 +11,7 @@ const PublicDictionary: React.FC<SearchBlockProps> = ({ name, words, id }) => {
     const navigate = useNavigate()
 
     const onOpenDictionary = () => {
-        navigate(`/dictionary/${id}`)
+        navigate(`/dictionary/${id}/${name}`)
     }
 
     return (

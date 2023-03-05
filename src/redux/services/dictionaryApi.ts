@@ -24,7 +24,7 @@ export const dictionaryApi = createApi({
             return headers
         },
     }),
-    tagTypes: ['MyDictionary', 'MyWord'],
+    tagTypes: ['MyDictionary', 'MyWord', '1'],
     endpoints: (builder) => ({
         //----------------Dictionary------------------
         getMyDictionaries: builder.query<IDictionary[], void>({
@@ -81,7 +81,25 @@ export const dictionaryApi = createApi({
             query: (page) => ({
                 url: `/dictionary/public?page=${page}&limit=10`,
             }),
+
             // keepUnusedDataFor: 5 * 60 * 1000,
+        }),
+        copyDictionary: builder.mutation<undefined, number>({
+            query: (dictionaryId) => ({
+                url: `/word/copy/${dictionaryId}`,
+                method: 'GET',
+            }),
+            invalidatesTags: [{ type: 'MyDictionary', id: 'LIST' }],
+            transformErrorResponse: (
+                response: {
+                    status: number
+                    data: IError
+                },
+                meta,
+                arg
+            ) => {
+                return transformErrorFromApi(response.data.message)
+            },
         }),
         //----------------WORDS------------------
         getWordsFromMyDictionary: builder.query<

@@ -2,7 +2,7 @@ import React from 'react'
 import { useParams } from 'react-router-dom'
 
 import AddWord from '../../components/myDictionaries/myDictionary/AddWord'
-import DictionaryInformation from '../../components/myDictionaries/myDictionary/DictionaryInformation'
+import MyDictionaryInformation from '../../components/myDictionaries/myDictionary/MyDictionaryInformation'
 import Words from '../../components/myDictionaries/myDictionary/Words'
 import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
 import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
@@ -22,9 +22,6 @@ const DictionaryPage: React.FC = () => {
     const { data, error, isLoading } =
         dictionaryApi.useGetWordsFromMyDictionaryQuery(
             { page, dictionaryId: Number(id) },
-            {
-                // refetchOnMountOrArgChange: true,
-            }
         )
 
     React.useEffect(() => {
@@ -44,7 +41,7 @@ const DictionaryPage: React.FC = () => {
         <div className="h-full w-full animate-appearance">
             <HeaderUnderFullPage>
                 {id && name && access && (
-                    <DictionaryInformation
+                    <MyDictionaryInformation
                         dictionaryName={name}
                         access={access}
                         isLoading={isLoading}

@@ -19,6 +19,10 @@ const queries = [
 function App() {
     const dispatch = useAppDispatch()
 
+
+    
+
+
     userApi.useGetUserInfoQuery()
 
     const [isMobile, isTablet, isDesktop] = useMatchMedia(queries)
@@ -26,6 +30,8 @@ function App() {
     React.useLayoutEffect(() => {
         dispatch(setDeviceType({ isMobile, isTablet, isDesktop }))
     }, [isMobile, isTablet, isDesktop])
+
+    
 
     return (
         <>

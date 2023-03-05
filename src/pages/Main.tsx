@@ -1,45 +1,52 @@
 import React from 'react'
-import { Route, Routes, useNavigate } from 'react-router-dom'
+import { Route, Routes } from 'react-router-dom'
 import HomeContainer from '../components/Home/HomeContainer'
 import Navbar from '../components/navigation/Navbar'
 import { useAppSelector } from '../hooks/reduxHooks'
 import CreateDictionaryPage from './myDictionary/CreateDictionaryPage'
 import { AuthorizationEnum } from './../types/index'
-import AllDictionariesPage from './publicDictionary/PublicDictionariesPage'
-import DictionaryPage from './myDictionary/DictionaryPage'
+import PublicDictionariesPage from './publicDictionary/PublicDictionariesPage'
+import DictionaryPage from './myDictionary/MyDictionaryPage'
 import PublicDictionaryPage from './publicDictionary/PublicDictionaryPage'
+import withAuth from '../hoc/withAuth'
+
+
+
+
+const CreateDictionaryPageContainer = withAuth(CreateDictionaryPage)
+const DictionaryPageContainer = withAuth(DictionaryPage)
+// const HomePageContainer = withRedirectToMain(MyDictionariesPage, HomePage)
+
 
 const Main = () => {
     const authorizationStatus = useAppSelector(
         (state) => state.user.authorizationStatus
     )
 
-    const navigate = useNavigate()
-
-    React.useLayoutEffect(() => {
-        if (authorizationStatus === AuthorizationEnum.Logout) navigate('/')
-    }, [authorizationStatus])
 
     return (
         <div className="h-full">
-            <Navbar />
+            {authorizationStatus === AuthorizationEnum.Login && <Navbar />}
+    
+
             <div className="w-[900px] h-full mx-auto pt-[40px] ">
                 <Routes>
                     <Route path="/" element={<HomeContainer />} />
                     <Route
                         path="/create-dictionary"
-                        element={<CreateDictionaryPage />}
+                        element={<CreateDictionaryPageContainer />}
                     />
+
                     <Route
                         path="/dictionaries"
-                        element={<AllDictionariesPage />}
+                        element={<PublicDictionariesPage />}
                     />
                     <Route
                         path="/my-dictionary/:id/:access/:name"
-                        element={<DictionaryPage />}
+                        element={<DictionaryPageContainer />}
                     />
                     <Route
-                        path="/dictionary/:id"
+                        path="/dictionary/:id/:name"
                         element={<PublicDictionaryPage />}
                     />
                 </Routes>
