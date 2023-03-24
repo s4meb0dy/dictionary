@@ -1,9 +1,9 @@
 import React from 'react'
-import { IconTypes } from '../../types/models'
+import { IIcon } from '../../types/models'
 
-const PluseIcon: React.FC<IconTypes> = ({ width, height, color }) => {
+const PluseIcon: React.FC<IIcon> = ({ width, height, color, onClick }) => {
     return (
-        <span>
+        <span onClick={onClick}>
             <svg
                 width={width}
                 height={height}

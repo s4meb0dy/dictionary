@@ -21,13 +21,12 @@ const initialState: initialStateType = {
 const dictionarySlice = createSlice({
     name: 'dictionarySlice',
     initialState,
-    reducers: {
-        
-    },
+    reducers: {},
     extraReducers: (builder) => {
         builder.addMatcher(
             dictionaryApi.endpoints.getMyDictionaries.matchFulfilled,
             (state, action: PayloadAction<IDictionary[]>) => {
+                console.log('pick')
                 let totalWords = 0
                 let totalLearnedWords = 0
 
@@ -46,6 +45,5 @@ const dictionarySlice = createSlice({
         )
     },
 })
-
 
 export default dictionarySlice.reducer

@@ -1,13 +1,12 @@
 import React from 'react'
-import PublicDictionaries from '../../components/publicDictionaris/publicDictionaries/PublicDictionaries'
-import SearchBlock from '../../components/publicDictionaris/publicDictionaries/SearchBlock'
+import PublicDictionaries from '../../components/publicDictionaries/publicDictionaries/PublicDictionaries'
+
 
 const PublicDictionariesPage: React.FC = () => {
     return (
-        <div className="pb-[40px] animate-appearance">
-            <SearchBlock />
+        <main className="w-full max-w-[920px] px-[10px] h-full mx-auto pt-[40px] animate-appearance">
             <PublicDictionaries />
-        </div>
+        </main>
     )
 }
 

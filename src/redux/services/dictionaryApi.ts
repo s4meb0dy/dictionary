@@ -76,10 +76,12 @@ export const dictionaryApi = createApi({
         }),
         getAllPublicDictionaries: builder.query<
             IGetAllPublicDictionariesResponse,
-            number
+            { page: number; name: string }
         >({
-            query: (page) => ({
-                url: `/dictionary/public?page=${page}&limit=10`,
+            query: (data) => ({
+                url: `/dictionary/public?page=${data.page}&limit=10${
+                    data.name && `&name=${data.name}`
+                }`,
             }),
 
             // keepUnusedDataFor: 5 * 60 * 1000,

@@ -3,6 +3,7 @@ import { useAppSelector } from '../../hooks/reduxHooks'
 import HomePage from '../../pages/home/HomePage'
 import MyDictionariesPage from '../../pages/myDictionary/MyDictionariesPage'
 import { AuthorizationEnum } from '../../types'
+import Navbar from '../navigation/Navbar'
 
 type HomeContainerProps = {}
 
@@ -11,7 +12,13 @@ const HomeContainer: React.FC<HomeContainerProps> = () => {
         (state) => state.user.authorizationStatus
     )
 
-    if (authorizationStatus === AuthorizationEnum.Login) return <MyDictionariesPage />
+    if (authorizationStatus === AuthorizationEnum.Login)
+        return (
+            <>
+                <Navbar />
+                <MyDictionariesPage />
+            </>
+        )
     else return <HomePage />
 }
 

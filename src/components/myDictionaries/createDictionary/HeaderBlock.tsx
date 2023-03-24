@@ -1,4 +1,5 @@
 import React from 'react'
+import { useAppSelector } from '../../../hooks/reduxHooks'
 import Tag from '../../info/Tag'
 import Radio from '../../input/Radio'
 import TextInput from '../../input/TextInput'
@@ -18,18 +19,20 @@ const HeaderBlock: React.FC<HeaderBlockProps> = ({
     nameValue,
     errorNameField,
 }) => {
+    const deviceType = useAppSelector((state) => state.app.deviceType)
+
     return (
-        <div className="flex flex-col items-center  w-full">
+        <div className="m-auto w-full max-w-[444px] flex flex-col items-center">
             <TextInput
-                width="444px"
-                size="large"
+                width="100%"
+                size={deviceType === 'Mobile' ? 'medium' : 'large'}
                 value={nameValue}
                 onChange={onChangeName}
                 name="nameDictionary"
                 placeholder="Dictionary name"
                 error={errorNameField}
             />
-            <div className="flex items-center pt-[30px] pb-[60px]">
+            <div className="flex items-center py-[20px] pb-[30px] sm:pt-[30px] sm:pb-[60px]">
                 <Radio
                     id="public"
                     name="access-create-dictionary"

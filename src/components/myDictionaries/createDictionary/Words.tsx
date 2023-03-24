@@ -5,6 +5,7 @@ import Word from './Word'
 import { nanoid } from 'nanoid'
 import PluseIcon from '../../../assets/icons/PluseIcon'
 import CheckCircleIcon from '../../../assets/icons/CheckCircleIcon'
+import { useAppSelector } from '../../../hooks/reduxHooks'
 
 type WordsProps = {
     onAddWord: () => void
@@ -29,9 +30,10 @@ const Words: React.FC<WordsProps> = ({
     onDeleteDictionary,
     onSave,
 }) => {
+    const { colors, deviceType } = useAppSelector((state) => state.app)
     return (
-        <>
-            <div className="w-full">
+        <div className="pb-[80px] sm:pb-[20px]">
+            <ul className="w-full">
                 {words.length > 0 &&
                     words.map((item) => (
                         <Word
@@ -41,12 +43,14 @@ const Words: React.FC<WordsProps> = ({
                             onDelete={onDeleteDictionary}
                         />
                     ))}
-            </div>
-            <div className="w-full bg-secondaryBg shadow-primary rounded-[10px] p-[6px] flex">
+            </ul>
+            <div
+                style={{ backgroundColor: colors.secondaryColor }}
+                className="w-full bg-secondaryBg rounded-[10px] p-[6px] flex"
+            >
                 <Button
                     styles="flex-auto mr-[6px]"
-                    size="large"
-                    name="Add"
+                    size={deviceType === 'Mobile' ? 'small' : 'medium'}
                     color="#0086EA"
                     hoverColor="#53A0FF"
                     activeColor="#0D6CBD"
@@ -54,11 +58,12 @@ const Words: React.FC<WordsProps> = ({
                     RightIcon={
                         <PluseIcon width="20px" height="20px" color="white" />
                     }
-                />
+                >
+                    Add
+                </Button>
                 <Button
                     width="185px"
-                    size="large"
-                    name="Save"
+                    size={deviceType === 'Mobile' ? 'small' : 'medium'}
                     color="#1D9745"
                     hoverColor="#24b553"
                     activeColor="#157b2f"
@@ -71,9 +76,11 @@ const Words: React.FC<WordsProps> = ({
                             color="white"
                         />
                     }
-                />
+                >
+                    Save
+                </Button>
             </div>
-        </>
+        </div>
     )
 }
 

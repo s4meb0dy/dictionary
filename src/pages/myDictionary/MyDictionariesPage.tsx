@@ -1,15 +1,15 @@
 import React from 'react'
 
-import TotalInformation from '../../components/myDictionaries/myDictionaries/TotalInformation'
+import MyDictionariesHeader from '../../components/myDictionaries/myDictionaries/MyDictionariesHeader'
 import MyDictionaries from '../../components/myDictionaries/myDictionaries/MyDictionaries'
 import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
 import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
 
 const MyDictionariesPage = () => {
     return (
-        <div className="h-full w-full animate-appearance">
+        <div className="w-full max-w-[900px] h-full mx-auto pt-[40px] animate-appearance">
             <HeaderUnderFullPage>
-                <TotalInformation />
+                <MyDictionariesHeader />
             </HeaderUnderFullPage>
             <FullPageWhiteContainer>
                 <MyDictionaries />

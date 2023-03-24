@@ -1,4 +1,5 @@
 import React from 'react'
+import { useAppSelector } from '../../hooks/reduxHooks'
 
 type FormContainerProps = {
     children: React.ReactNode
@@ -6,9 +7,13 @@ type FormContainerProps = {
 }
 
 const FormContainer: React.FC<FormContainerProps> = ({ children, styles }) => {
+    const secondaryColor = useAppSelector(
+        (state) => state.app.colors.secondaryColor
+    )
     return (
         <div
-            className={`animate-appearance inline-block p-[40px] bg-secondaryBg rounded-[35px] shadow-primary ${
+            style={{ backgroundColor: secondaryColor }}
+            className={`max-w-[400px] sm:max-w-[480px] w-full animate-appearance inline-block px-[23px] py-[30px] sm:p-[40px] rounded-[35px] shadow-primary ${
                 styles ? styles : ''
             }`}
         >

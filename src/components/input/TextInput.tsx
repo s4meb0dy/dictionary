@@ -1,7 +1,7 @@
 import React from 'react'
 
 type TextInputProps = {
-    size: 'small' | 'medium' | 'large'
+    size?: 'small' | 'medium' | 'large'
     styles?: string
     width?: string
     placeholder?: string
@@ -10,8 +10,8 @@ type TextInputProps = {
     onClickRightIcon?: (e: React.ChangeEvent<any>) => void
     onClickLeftIcon?: (e: React.ChangeEvent<any>) => void
     onBlur?: (e: React.FocusEvent<any, Element>) => void
-    value: string
-    onChange: (e: React.ChangeEvent<any>) => void
+    value?: string
+    onChange?: (e: React.ChangeEvent<any>) => void
     error?: string
     type?: 'text' | 'password' | 'email'
     name: string
@@ -32,7 +32,7 @@ const TextInput: React.FC<TextInputProps> = ({
     LeftIcon,
     onClickRightIcon,
     onClickLeftIcon,
-    size,
+    size = 'medium',
     width,
     styles = '',
     type = 'text',
@@ -40,19 +40,30 @@ const TextInput: React.FC<TextInputProps> = ({
     onBlur,
     placeholder = '',
     onChange,
-    value,
+    value = '',
     error,
 }) => {
-    const [sizeStyle, setSizeStyle] = React.useState<string>('')
+
+    const [sizeStyle, setSizeStyle] = React.useState<string>(
+        'bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] pl-[16px] transition-colors'
+    )
     const [stateStyle, setStateStyle] = React.useState<string>(
         stateStyles.default
     )
 
     React.useEffect(() => {
+    
         switch (size) {
             case 'large':
                 setSizeStyle(
                     `bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[59px] pl-[16px] transition-colors ${
+                        RightIcon ? 'pr-[56px]' : 'pr-[16px]'
+                    } ${LeftIcon ? 'pl-[56px]' : 'pla-[16px]'}`
+                )
+                break
+            case 'medium':
+                setSizeStyle(
+                    `bg-[#FFFFFF] border-[1px] border-[#CDD5DE] h-[45px] pl-[16px] transition-colors ${
                         RightIcon ? 'pr-[56px]' : 'pr-[16px]'
                     } ${LeftIcon ? 'pl-[56px]' : 'pla-[16px]'}`
                 )

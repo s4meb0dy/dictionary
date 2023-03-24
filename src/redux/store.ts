@@ -6,6 +6,7 @@ import dictionarySlice from './features/dictionarySlice'
 import userSlice from './features/userSlice'
 import wordSlice from './features/wordSlice'
 import { dictionaryApi } from './services/dictionaryApi'
+import studySlice from './features/studySlice'
 
 const store = configureStore({
     reducer: {
@@ -15,6 +16,7 @@ const store = configureStore({
         app: appSlice,
         dictionary: dictionarySlice,
         word: wordSlice,
+        study: studySlice
     },
     middleware: (getDefaultMiddleware) =>
         getDefaultMiddleware().concat([

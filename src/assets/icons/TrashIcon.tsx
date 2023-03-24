@@ -1,9 +1,9 @@
 import React from 'react'
-import { IconTypes } from '../../types/models'
+import { IIcon } from '../../types/models'
 
-const TrashIcon: React.FC<IconTypes> = ({ height, width, color }) => {
+const TrashIcon: React.FC<IIcon> = ({ height, width, color, onClick }) => {
     return (
-        <span>
+        <span onClick={onClick}>
             <svg width={width} height={height} viewBox="0 0 30 30" fill={color}>
                 <path
                     fillRule="evenodd"

@@ -1,5 +1,6 @@
 import React from 'react'
 import CloseIcon from '../../../assets/icons/CloseIcon'
+import { useAppSelector } from '../../../hooks/reduxHooks'
 import TextInput from '../../input/TextInput'
 
 type WordProps = {
@@ -13,6 +14,7 @@ type WordProps = {
 }
 
 const Word: React.FC<WordProps> = ({ onChangeValue, id, onDelete }) => {
+    const { colors, deviceType } = useAppSelector((state) => state.app)
     const [wordValue, setWordValue] = React.useState('')
     const [translationValue, setTranslationValue] = React.useState('')
 
@@ -41,24 +43,31 @@ const Word: React.FC<WordProps> = ({ onChangeValue, id, onDelete }) => {
     const onLeaveHoverHandler = () => setIsHoverCloseBtn(false)
 
     return (
-        <div className="p-[30px] mb-[30px] bg-secondaryBg shadow-primary rounded-[25px] relative animate-appearance">
+        <li
+            style={{ backgroundColor: colors.secondaryColor }}
+            className=" p-[15px] sm:p-[30px] mb-[15px] sm:mb-[30px] shadow-primary rounded-[15px] sm:rounded-[25px] relative animate-appearance"
+        >
             <div
                 onMouseEnter={onEnterHoverHandler}
                 onMouseLeave={onLeaveHoverHandler}
                 onClick={onDeleteHandler}
-                className="absolute w-[44px] h-[44px] border-2 border-[#0D6CBD] top-[-20px] right-[-10px] rounded-full p-[2px] cursor-pointer flex justify-center items-center transition-colors"
+                className="absolute w-[30px] h-[30px] sm:w-[44px] sm:h-[44px] border-2 border-[#0D6CBD] top-[-15px] right-[-8px] sm:top-[-20px] sm:right-[-10px] rounded-full p-[2px] cursor-pointer flex justify-center items-center transition-colors"
                 style={{
                     backgroundColor: isHoverCloseBtn ? '#ce4a4a' : '#C33636',
                 }}
             >
-                <CloseIcon color="white" width="30px" height="30px" />
+                <CloseIcon
+                    color="white"
+                    width={deviceType === 'Mobile' ? '20px' : '30px'}
+                    height={deviceType === 'Mobile' ? '20px' : '30px'}
+                />
             </div>
             <TextInput
                 value={wordValue}
                 name="word-create-dictionary"
                 width="100%"
                 onChange={onChangeWordHandler}
-                size="large"
+                size={deviceType === 'Mobile' ? 'medium' : 'large'}
                 styles={'mb-[8px]'}
                 placeholder="Word"
             />
@@ -67,10 +76,10 @@ const Word: React.FC<WordProps> = ({ onChangeValue, id, onDelete }) => {
                 name="translation-create-dictionary"
                 width="100%"
                 onChange={onChangeTranslationHandler}
-                size="large"
+                size={deviceType === 'Mobile' ? 'medium' : 'large'}
                 placeholder="Translation"
             />
-        </div>
+        </li>
     )
 }
 

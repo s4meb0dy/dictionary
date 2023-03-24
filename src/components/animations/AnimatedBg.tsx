@@ -7,6 +7,9 @@ type AnimatedBg = {}
 
 const AnimatedBg: React.FC<AnimatedBg> = () => {
     const deviceType = useAppSelector((state) => state.app.deviceType)
+    const backgroundColor = useAppSelector(
+        (state) => state.app.colors.primaryColor
+    )
 
     const [firstSize, setFirstSize] = React.useState('900px')
     const [secondSize, setSecondSize] = React.useState('905px')
@@ -33,7 +36,10 @@ const AnimatedBg: React.FC<AnimatedBg> = () => {
     }, [deviceType])
 
     return (
-        <div className="w-full h-full bg-primaryBg fixed top-0 left-0 -z-10 pointer-events-none">
+        <div
+            style={{ backgroundColor: backgroundColor }}
+            className={`w-full h-full fixed top-0 left-0 -z-10 pointer-events-none transition-colors duration-300`}
+        >
             <Ball
                 width={thirdSize}
                 height={thirdSize}

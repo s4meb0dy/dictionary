@@ -1,5 +1,6 @@
-export type IconTypes = {
+export interface IIcon {
     height: string
     width: string
-    color: string
+    color?: string
+    onClick?: () => void
 }

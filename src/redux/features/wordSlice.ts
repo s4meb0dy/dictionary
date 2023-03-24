@@ -1,5 +1,7 @@
-import { IGetWordsFromDictionaryResponse } from './../../types/models/IWord'
-import { dictionaryApi } from './../services/dictionaryApi'
+import {
+    IGetWordsFromDictionaryResponse,
+    IWord,
+} from './../../types/models/IWord'
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type initialStateType = {
@@ -8,10 +10,6 @@ type initialStateType = {
         totalWords: number
         totalLearnedWords: number
     }
-    // totalInformationAboutPublicDictionary: {
-    //     totalWords: number
-    //     totalLearnedWords: number
-    // }
 }
 
 const initialState: initialStateType = {
@@ -19,7 +17,6 @@ const initialState: initialStateType = {
         totalWords: 0,
         totalLearnedWords: 0,
     },
-
     idOfWordsToStudy: [],
 }
 
@@ -27,19 +24,7 @@ const wordSlice = createSlice({
     name: 'wordSlice',
     initialState,
     reducers: {
-        addWordsToStudy: (state, action: PayloadAction<Array<number>>) => {
-            state.idOfWordsToStudy.push(...action.payload)
-        },
-        deleteWordsToStudy: (state, action: PayloadAction<Array<number>>) => {
-            if (action.payload.length === 0) {
-                state.idOfWordsToStudy = []
-                return
-            }
-            state.idOfWordsToStudy = state.idOfWordsToStudy.filter(
-                (item) => !action.payload.includes(item)
-            )
-        },
-        setTotalInformationAboutDictionary: (
+        setTotalInformationAboutMyDictionary: (
             state,
             action: PayloadAction<IGetWordsFromDictionaryResponse>
         ) => {
@@ -51,12 +36,11 @@ const wordSlice = createSlice({
             })
         },
     },
+    
 })
 
 export const {
-    addWordsToStudy,
-    deleteWordsToStudy,
-    setTotalInformationAboutDictionary,
+    setTotalInformationAboutMyDictionary,
 } = wordSlice.actions
 
 export default wordSlice.reducer

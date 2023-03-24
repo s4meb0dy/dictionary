@@ -1,9 +1,9 @@
 import React from 'react'
-import { IconTypes } from '../../types/models'
+import { IIcon } from '../../types/models'
 
-const ArrowBackIcon: React.FC<IconTypes> = ({ width, height, color }) => {
+const ArrowBackIcon: React.FC<IIcon> = ({ width, height, color, onClick }) => {
     return (
-        <span>
+        <span onClick={onClick}>
             <svg
                 width={width}
                 height={height}

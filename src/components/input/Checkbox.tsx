@@ -1,5 +1,6 @@
 import React from 'react'
 import CheckmarkIcon from '../../assets/icons/CheckmarkIcon'
+
 type CheckboxProps = {
     id: string
     name: string
@@ -23,7 +24,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
         <span className={`flex items-center ${styles && styles}`}>
             <label
                 htmlFor={id}
-                className="cursor-pointer relative w-[25px] h-[25px]"
+                className="cursor-pointer relative p-[10px] w-[45px] h-[45px]"
             >
                 <input
                     id={id}
@@ -38,7 +39,7 @@ const Checkbox: React.FC<CheckboxProps> = ({
                     }}
                 />
                 <div
-                    className="w-full h-full absolute top-[50%] left-[50%] -translate-x-[12.5px] -translate-y-[12px] transition"
+                    className="w-[25px] h-[25px] absolute top-[50%] left-[50%] -translate-x-[12.5px] -translate-y-[12px] transition"
                     style={{ opacity: isChecked ? '1' : '0' }}
                 >
                     <CheckmarkIcon width="25px" height="24px" color="white" />

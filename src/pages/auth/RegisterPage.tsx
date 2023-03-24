@@ -6,11 +6,10 @@ import TextInput from '../../components/input/TextInput'
 import { Link, useNavigate } from 'react-router-dom'
 import { useFormik, FormikHelpers } from 'formik'
 import WarningCircleIcon from '../../assets/icons/WarningCircleIcon'
-import { useAppDispatch } from '../../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { openInfoBlock } from '../../redux/features/appSlice'
 import { userApi } from '../../redux/services'
 import useErrorHandler from '../../hooks/useErrorHandler'
-
 
 type initialValuesType = {
     email: string
@@ -51,6 +50,8 @@ const RegisterPage = () => {
         userApi.useRegistrationMutation()
 
     const dispatch = useAppDispatch()
+
+    const deviceType = useAppSelector((state) => state.app.deviceType)
 
     React.useEffect(() => {
         if (isSuccess) {
@@ -97,18 +98,18 @@ const RegisterPage = () => {
     return (
         <div className="min-h-full flex justify-center items-center p-[15px]">
             <FormContainer styles="flex flex-col items-center animate-appearance">
-                <h2 className="font-medium text-[40px] tracking-tight pb-[25px]">
+                <h2 className="text-center font-medium text-[32px] sm:text-[40px] tracking-tight pb-[25px]">
                     Create An Account
                 </h2>
                 <form
-                    className="flex flex-col items-center"
+                    className="w-full flex flex-col items-center"
                     onSubmit={formik.handleSubmit}
                 >
-                    <div className="mb-[15px] relative">
+                    <div className="w-full mb-[15px] relative">
                         <TextInput
-                            size="large"
+                            size={deviceType === 'Mobile' ? 'medium' : 'large'}
                             name="username"
-                            width="400px"
+                            width="100%"
                             placeholder="Username"
                             onChange={formik.handleChange}
                             value={formik.values.username}
@@ -131,11 +132,11 @@ const RegisterPage = () => {
                             }
                         />
                     </div>
-                    <div className="mb-[15px] relative">
+                    <div className="w-full mb-[15px] relative">
                         <TextInput
-                            size="large"
+                            size={deviceType === 'Mobile' ? 'medium' : 'large'}
                             name="email"
-                            width="400px"
+                            width="100%"
                             placeholder="Email"
                             onChange={formik.handleChange}
                             value={formik.values.email}
@@ -156,11 +157,11 @@ const RegisterPage = () => {
                             }
                         />
                     </div>
-                    <div className="mb-[15px] relative">
+                    <div className="w-full mb-[15px] relative">
                         <TextInput
-                            size="large"
+                            size={deviceType === 'Mobile' ? 'medium' : 'large'}
                             name="password"
-                            width="400px"
+                            width="100%"
                             placeholder="Password"
                             onChange={formik.handleChange}
                             value={formik.values.password}
@@ -184,11 +185,11 @@ const RegisterPage = () => {
                             }
                         />
                     </div>
-                    <div className="mb-[15px] relative">
+                    <div className="w-full mb-[20px] sm:mb-[30px] relative">
                         <TextInput
-                            size="large"
+                            size={deviceType === 'Mobile' ? 'medium' : 'large'}
                             name="confirmPassword"
-                            width="400px"
+                            width="100%"
                             placeholder="Confirm password"
                             onChange={formik.handleChange}
                             value={formik.values.confirmPassword}
@@ -213,13 +214,13 @@ const RegisterPage = () => {
                         />
                     </div>
                     <Button
-                        styles="mb-[20px]"
-                        name="Create account"
-                        size="medium"
+                        size={deviceType === 'Mobile' ? 'small' : 'medium'}
                         type="submit"
-                    />
+                    >
+                        Create account
+                    </Button>
                 </form>
-                <p className="text-black/40">
+                <p className="text-black/40 text-[12px] sm:text-[16px]  mt-[15px] sm:mt-[20px]">
                     {'Already Have An Account? '}
                     <Link className="underline" to="/login">
                         Login

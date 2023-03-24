@@ -1,12 +1,13 @@
 import React from 'react'
 
 import PluseIcon from '../../../assets/icons/PluseIcon'
-import { useAppDispatch } from '../../../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks'
 import useErrorHandler from '../../../hooks/useErrorHandler'
 import { openInfoBlock } from '../../../redux/features/appSlice'
 import { dictionaryApi } from '../../../redux/services/dictionaryApi'
 import Button from '../../input/Button'
 import TextInput from '../../input/TextInput'
+import LearnWordsBtn from './LearnWordsBtn'
 
 type AddWordProps = {
     dictionaryId: number
@@ -17,6 +18,8 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
 
     const [createWord, { isLoading, error, isSuccess: isSuccessCreate }] =
         dictionaryApi.useCreateWordMutation()
+
+    const deviceType = useAppSelector((state) => state.app.deviceType)
 
     React.useEffect(() => {
         if (isSuccessCreate) {
@@ -106,16 +109,16 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
     return (
         <div className="relative">
             <div
-                className={`bg-white overflow-hidden shadow-secondary rounded-[25px] transition-all relative  ${
+                className={`bg-white overflow-hidden shadow-secondary rounded-[15px] sm:rounded-[25px] transition-all relative mb-[10px] ${
                     isLoading && 'blur-[2px] pointer-events-none'
                 }`}
-                style={{ height: isOpen ? '229px' : '0px' }}
+                style={{ height: isOpen ? deviceType === 'Mobile' ? '168px' : '229px'  : '0px' }}
             >
-                <div className="bg-white p-[24px] rounded-[25px] flex flex-col items-center ">
+                <div className="bg-white p-[10px] sm:p-[24px] flex flex-col items-center ">
                     <TextInput
                         value={wordValue}
                         name="word-add-word-dictionary"
-                        size="large"
+                        size={deviceType === 'Mobile' ? 'medium' : 'large'}
                         onChange={onChangeWordValueHandler}
                         styles="mb-[8px]"
                         placeholder="Word"
@@ -125,7 +128,7 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
                     <TextInput
                         value={translationValue}
                         name="translation-add-word-dictionary"
-                        size="large"
+                        size={deviceType === 'Mobile' ? 'medium' : 'large'}
                         onChange={onChangeTranslationValueHandler}
                         placeholder="Translation"
                         width="100%"
@@ -133,20 +136,20 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
                     />
                     <Button
                         width="185px"
-                        size="large"
-                        name="Save"
+                        size={deviceType === 'Mobile' ? 'small' : 'medium'}
                         color="#1D9745"
                         hoverColor="#24b553"
                         activeColor="#157b2f"
                         onClick={onSaveHandler}
                         styles="mt-[15px]"
-                    />
+                    >
+                        Save
+                    </Button>
                 </div>
             </div>
-            <div className="pt-[15px] flex justify-center">
+            <div className="pt-[5px] sm:pt-[15px] flex justify-center">
                 <Button
-                    size="medium"
-                    name={isOpen ? 'Close' : 'Add word'}
+                    size={deviceType === 'Mobile' ? 'small' : 'medium'}
                     width="441px"
                     color="#0086EA"
                     hoverColor="#53A0FF"
@@ -161,9 +164,11 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
                             />
                         )
                     }
-                />
+                >
+                    {isOpen ? 'Close' : 'Add word'}
+                </Button>
+                <LearnWordsBtn />
             </div>
-            {/* {isLoading && <Preloader />} */}
         </div>
     )
 }

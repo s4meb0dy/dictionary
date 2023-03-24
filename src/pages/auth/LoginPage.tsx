@@ -8,9 +8,8 @@ import { useFormik, FormikHelpers } from 'formik'
 import WarningCircleIcon from './../../assets/icons/WarningCircleIcon'
 import { userApi } from './../../redux/services/userApi'
 import useErrorHandler from './../../hooks/useErrorHandler'
-import { useAppDispatch } from './../../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from './../../hooks/reduxHooks'
 import { openInfoBlock } from './../../redux/features/appSlice'
-
 
 type initialValuesType = {
     password: string
@@ -33,6 +32,8 @@ const LoginPage = () => {
     const [login, { isSuccess, error }] = userApi.useLoginMutation()
 
     const dispatch = useAppDispatch()
+
+    const deviceType = useAppSelector((state) => state.app.deviceType)
 
     React.useEffect(() => {
         if (isSuccess) {
@@ -72,20 +73,20 @@ const LoginPage = () => {
     })
 
     return (
-        <div className="min-h-full flex justify-center items-center p-[15px]">
+        <div className="min-h-full flex justify-center items-center p-[8px]">
             <FormContainer styles="flex flex-col items-center ">
-                <h2 className="font-medium text-[40px] tracking-tight pb-[25px]">
+                <h2 className="font-medium text-[32px] sm:text-[40px] tracking-tight pb-[25px]">
                     Login
                 </h2>
                 <form
-                    className="flex flex-col items-center"
+                    className="flex flex-col items-center w-full"
                     onSubmit={formik.handleSubmit}
                 >
-                    <div className="mb-[15px] relative">
+                    <div className="w-full mb-[15px] relative">
                         <TextInput
-                            size="large"
+                            size={deviceType === 'Mobile' ? 'medium' : 'large'}
                             name="email"
-                            width="400px"
+                            width="100%"
                             placeholder="Email"
                             onChange={formik.handleChange}
                             value={formik.values.email}
@@ -106,11 +107,11 @@ const LoginPage = () => {
                             }
                         />
                     </div>
-                    <div className="mb-[30px] relative">
+                    <div className="w-full mb-[20px] sm:mb-[30px] relative">
                         <TextInput
-                            size="large"
+                            size={deviceType === 'Mobile' ? 'medium' : 'large'}
                             name="password"
-                            width="400px"
+                            width="100%"
                             placeholder="Password"
                             onChange={formik.handleChange}
                             onBlur={formik.handleBlur}
@@ -135,17 +136,18 @@ const LoginPage = () => {
                         />
                     </div>
                     <Button
-                        styles="mb-[20px]"
-                        name="Login"
+                        styles=""
                         type="submit"
-                        size="medium"
+                        size={deviceType === 'Mobile' ? 'small' : 'medium'}
                         color="#0086EA"
                         hoverColor="#53A0FF"
                         activeColor="#0D6CBD"
                         // disabled={formik.errors && true}
-                    />
+                    >
+                        Login
+                    </Button>
                 </form>
-                <p className="text-black/40">
+                <p className="text-black/40 text-[12px] sm:text-[16px] mt-[15px] sm:mt-[20px]">
                     {'Have you had not an account yet? '}
                     <Link className="underline" to="/register">
                         Sign In

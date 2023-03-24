@@ -1,9 +1,9 @@
 import React from 'react'
-import { IconTypes } from '../../types/models'
+import { IIcon } from '../../types/models'
 
-const WarningCircleIcon: React.FC<IconTypes> = ({ height, width, color }) => {
+const WarningCircleIcon: React.FC<IIcon> = ({ height, width, color, onClick }) => {
     return (
-        <span>
+        <span onClick={onClick}>
             <svg
                 width={width}
                 height={height}

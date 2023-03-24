@@ -1,54 +1,49 @@
+import { current } from '@reduxjs/toolkit'
 import React from 'react'
-
 import { useAppDispatch, useAppSelector } from '../../../hooks/reduxHooks'
-import {
-    addWordsToStudy,
-    deleteWordsToStudy,
-} from '../../../redux/features/wordSlice'
+import { addWordToStudy, deleteWordToStudy } from '../../../redux/features'
 import { IWord } from '../../../types/models'
 import Word from './Word'
 import WordsLoader from './WordsLoader'
 
 type WordsProps = {
     dictionaryId: number
-    words: IWord[] | undefined
+    words: IWord[]
     isLoading: boolean
 }
 
 const Words: React.FC<WordsProps> = ({ dictionaryId, words, isLoading }) => {
-    const idOfWordsToStudy = useAppSelector(
-        (state) => state.word.idOfWordsToStudy
-    )
+    const wordsToStudy = useAppSelector((state) => state.study.wordsToStudy)
     const dispatch = useAppDispatch()
 
-    const onSelectWordHandler = (data: {
-        wordId: number
-        isChecked: boolean
-    }) => {
-        if (data.isChecked) {
-            dispatch(addWordsToStudy([data.wordId]))
-        } else if (!data.isChecked) {
-            dispatch(deleteWordsToStudy([data.wordId]))
+    const onSelectWordHandler = (word: IWord, isChecked: boolean) => {
+        if (isChecked) {
+            dispatch(addWordToStudy(word))
+        } else if (!isChecked) {
+            dispatch(deleteWordToStudy(word))
         }
     }
 
     return (
-        <div>
-            {!isLoading &&
-                words &&
-                words.map((item) => (
-                    <Word
-                        key={item.id}
-                        name={item.name}
-                        translation={item.translation}
-                        id={item.id}
-                        isLearned={item.isLearned}
-                        onSelectWord={onSelectWordHandler}
-                        isChecked={idOfWordsToStudy.includes(item.id)}
-                    />
-                ))}
-            {isLoading && <WordsLoader number={3} />}
-        </div>
+        <li>
+            {!isLoading ? (
+                words.map((item) => {
+                    return (
+                        <div className="" key={item.id}>
+                            <Word
+                                word={item}
+                                onSelectWord={onSelectWordHandler}
+                                isChecked={wordsToStudy.some(
+                                    (word) => word.id === item.id
+                                )}
+                            />
+                        </div>
+                    )
+                })
+            ) : (
+                <WordsLoader number={10} />
+            )}
+        </li>
     )
 }
 

@@ -40,15 +40,14 @@ module.exports = {
                 swimLB: 'swimLB 7s ease-in-out infinite',
                 swimRU: 'swimRU 6s ease-in-out infinite',
                 swimLU: 'swimLU 7s ease-in-out infinite',
-                // test: "test 7s ease-in-out infinite",
             },
             boxShadow: {
                 primary: '0 0 15px 0 rgba(0, 0, 0, 0.37)',
                 secondary: '0px 1px 4px rgba(0, 0, 0, 0.27)',
             },
             colors: {
-                primaryBg: '#0D6CBD',
-                secondaryBg: '#F6F7F8',
+                // primaryBg: 'var(--primary-color)',
+                // secondaryBg: 'var( --secondary-color)',
                 gray: '#D9D9D9',
                 inputPlaceholder: '#8FA0AF',
                 textDark: '#0E1114',

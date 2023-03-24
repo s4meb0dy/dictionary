@@ -27,7 +27,7 @@ const MyDictionaries: React.FC = () => {
     }
 
     return (
-        <div className="flex flex-wrap items-start justify-between">
+        <main className="flex flex-wrap items-start justify-between">
             {!isLoading &&
                 myDictionaries &&
                 myDictionaries.map((item) => (
@@ -44,7 +44,7 @@ const MyDictionaries: React.FC = () => {
                 <MyDictionaryLoader number={6} />
             )}
             {!isLoading && <AddDictionary onClick={addDictionaryHandler} />}
-        </div>
+        </main>
     )
 }
 

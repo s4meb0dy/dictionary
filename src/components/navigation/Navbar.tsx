@@ -1,63 +1,88 @@
 import React from 'react'
 import HomeIcon from '../../assets/icons/HomeIcon'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom'
-import UsersIcon from '../../assets/icons/UsersIcon'
+import { useLocation, useNavigate } from 'react-router-dom'
 import FolderPlusIcon from '../../assets/icons/FolderPlusIcon'
 import FolderUserIcon from '../../assets/icons/FolderUserIcon'
+import { useAppSelector } from '../../hooks/reduxHooks'
+import ArrowCircleLeftIcon from '../../assets/icons/ArrowCircleLeftIcon'
+import classNames from 'classnames'
 
 const Navbar = () => {
     const { pathname } = useLocation()
     const navigate = useNavigate()
 
-    const onNavigateHandler = (link: string) => {
-        navigate(link)
+    const { colors, deviceType } = useAppSelector((state) => state.app)
+
+    const goToPrevPage = () => {
+        if (pathname !== '/') navigate(-1)
     }
 
+    const navStyles = classNames('z-50 shadow-primary fixed', {
+        'bottom-0 left-0 w-full rounded-t-[12px]': deviceType !== 'Desktop',
+        'w-[80px] top-[80px] left-0 rounded-r-[12px]': deviceType === 'Desktop',
+    })
+
+    const listStyles = classNames('', {
+        'flex justify-center items-center px-[10px]': deviceType !== 'Desktop',
+        'py-[15px]': deviceType === 'Desktop',
+    })
+
+    const itemStyles = classNames('cursor-pointer flex justify-center', {
+        'px-[20px] py-[10px]': deviceType !== 'Desktop',
+        'pb-[20px]': deviceType === 'Desktop',
+    })
+
     return (
-        <div className="bg-secondaryBg z-50 w-[80px] h-[600px] shadow-primary fixed top-[40px] left-0 rounded-r-[12px]">
-            <nav>
-                <ul className="py-[15px]">
-                    <li
-                        className="w-full flex flex-col items-center pb-[20px] cursor-pointer"
-                        onClick={() => onNavigateHandler('/')}
-                    >
-                        <HomeIcon
-                            width="45px"
-                            height="45px"
-                            color={pathname === '/' ? '#0D6CBD' : '#8FA0AF'}
-                        />
-                    </li>
-                    <li
-                        className="w-full flex flex-col items-center pb-[18px] cursor-pointer"
-                        onClick={() => onNavigateHandler('/create-dictionary')}
-                    >
-                        <FolderPlusIcon
-                            width="45px"
-                            height="45px"
-                            color={
-                                pathname === '/create-dictionary'
-                                    ? '#0D6CBD'
-                                    : '#8FA0AF'
-                            }
-                        />
-                    </li>
-                    <li
-                        className="w-full flex flex-col items-center pb-[18px] cursor-pointer"
-                        onClick={() => onNavigateHandler('/dictionaries')}
-                    >
-                        <FolderUserIcon
-                            width="45px"
-                            height="45px"
-                            color={
-                                pathname === '/dictionaries'
-                                    ? '#0D6CBD'
-                                    : '#8FA0AF'
-                            }
-                        />
-                    </li>
-                </ul>
-            </nav>
-        </div>
+        <nav
+            style={{ backgroundColor: colors.secondaryColor }}
+            className={navStyles}
+        >
+            <ul className={listStyles}>
+                <li className={itemStyles}>
+                    <HomeIcon
+                        onClick={() => navigate('/')}
+                        width="45px"
+                        height="45px"
+                        color={pathname === '/' ? '#0D6CBD' : '#8FA0AF'}
+                    />
+                </li>
+                <li className={itemStyles}>
+                    <FolderPlusIcon
+                        onClick={() => navigate('/create-dictionary')}
+                        width="45px"
+                        height="45px"
+                        color={
+                            pathname === '/create-dictionary'
+                                ? '#0D6CBD'
+                                : '#8FA0AF'
+                        }
+                    />
+                </li>
+                <li className={itemStyles}>
+                    <FolderUserIcon
+                        onClick={() => navigate('/dictionaries')}
+                        width="45px"
+                        height="45px"
+                        color={
+                            pathname === '/dictionaries' ? '#0D6CBD' : '#8FA0AF'
+                        }
+                    />
+                </li>
+                <li
+                    className={` ${
+                        deviceType !== 'Desktop'
+                            ? 'px-[20px] py-[10px]'
+                            : 'pt-[10px]'
+                    } flex justify-center cursor-pointer fill-[#0D6CBD] hover:fill-[#0086EA] transition-colors`}
+                >
+                    <ArrowCircleLeftIcon
+                        width="45px"
+                        height="45px"
+                        onClick={goToPrevPage}
+                    />
+                </li>
+            </ul>
+        </nav>
     )
 }
 

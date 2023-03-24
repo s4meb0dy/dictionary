@@ -1,12 +1,11 @@
 import React from 'react'
 import { useParams } from 'react-router-dom'
-import PublicDictionaryInformation from '../../components/publicDictionaris/publicDictionary/PublicDictionaryInformation'
+import PublicDictionaryHeader from '../../components/publicDictionaries/publicDictionary/PublicDictionaryHeader'
 
-import Words from '../../components/publicDictionaris/publicDictionary/Words'
+import Words from '../../components/publicDictionaries/publicDictionary/Words'
 
 import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
 import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
-import { useAppDispatch } from '../../hooks/reduxHooks'
 import useErrorHandler from '../../hooks/useErrorHandler'
 import { dictionaryApi } from '../../redux/services'
 
@@ -25,9 +24,9 @@ const PublicDictionaryPage: React.FC<PublicDictionaryPageProps> = () => {
     useErrorHandler(error as string)
 
     return (
-        <div className="h-full w-full animate-appearance">
+        <div className="w-full max-w-[900px]  h-full mx-auto pt-[40px] animate-appearance">
             <HeaderUnderFullPage>
-                <PublicDictionaryInformation
+                <PublicDictionaryHeader
                     dictionaryId={Number(id) || 0}
                     dictionaryName={name || 'Dictionary'}
                     isLoading={isLoading}

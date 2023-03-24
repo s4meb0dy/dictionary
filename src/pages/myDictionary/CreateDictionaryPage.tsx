@@ -112,21 +112,10 @@ const CreateDictionaryPage: React.FC = () => {
             words: wordsWithoutId,
             isPublic: access === 'public',
         })
-        // dispatch(
-        //     createDictionary({
-        //         dictionaryName: nameValue,
-        //         words: wordsWithoutId,
-        //         isPublic: access === 'public',
-        //     })
-        // ).then((res) => {
-        //     if (res.meta.requestStatus === 'fulfilled') {
-        //         navigate('/')
-        //     }
-        // })
     }
 
     return (
-        <div className="px-[105px] animate-appearance pb-[40px]">
+        <div className="w-full max-w-[710px] h-full mx-auto px-[10px] pt-[40px]  animate-appearance pb-[40px]">
             <HeaderBlock
                 onChangeAccess={onChangeAccessHandler}
                 access={access}

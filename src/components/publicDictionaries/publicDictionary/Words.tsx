@@ -8,7 +8,7 @@ interface WordsProps {
 
 const Words: React.FC<WordsProps> = ({ words }) => {
     return (
-        <div className='flex flex-wrap mx-[-10px] '>
+        <div className="flex flex-wrap items-start justify-between">
             {words &&
                 words.map((item) => (
                     <Word

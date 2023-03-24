@@ -2,6 +2,10 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 type initialStateType = {
     deviceType: 'Desktop' | 'Tablet' | 'Mobile'
+    colors: {
+        primaryColor: string
+        secondaryColor: string
+    }
     infoBlockData: null | {
         type: 'success' | 'error' | 'info'
         title?: string
@@ -12,6 +16,10 @@ type initialStateType = {
 
 const initialState: initialStateType = {
     deviceType: 'Mobile',
+    colors: {
+        primaryColor: 'var(--primary-color)',
+        secondaryColor: 'var(--secondary-color)',
+    },
     infoBlockData: null,
     isInfoBlock: false,
 }
@@ -20,6 +28,15 @@ const appSlice = createSlice({
     name: 'appSlice',
     initialState,
     reducers: {
+        setBackgroundColor: (
+            state,
+            action: PayloadAction<'darkBlue' | 'blue'>
+        ) => {
+            if (action.payload === 'blue')
+                state.colors.primaryColor = 'var(--primary-color)'
+            else if (action.payload === 'darkBlue')
+                state.colors.primaryColor = 'var(--dark-primary-color)'
+        },
         setDeviceType: (
             state,
             action: PayloadAction<{
@@ -50,6 +67,11 @@ const appSlice = createSlice({
     },
 })
 
-export const { setDeviceType, openInfoBlock, closeInfoBlock } = appSlice.actions
+export const {
+    setDeviceType,
+    openInfoBlock,
+    closeInfoBlock,
+    setBackgroundColor,
+} = appSlice.actions
 
 export default appSlice.reducer
