@@ -1,4 +1,5 @@
 import React from 'react'
+import Preloader from '../../assets/Preloader'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import HomePage from '../../pages/home/HomePage'
 import MyDictionariesPage from '../../pages/myDictionary/MyDictionariesPage'
@@ -19,7 +20,9 @@ const HomeContainer: React.FC<HomeContainerProps> = () => {
                 <MyDictionariesPage />
             </>
         )
-    else return <HomePage />
+    else if (authorizationStatus === AuthorizationEnum.Logout)
+        return <HomePage />
+    else return <Preloader />
 }
 
 export default HomeContainer
