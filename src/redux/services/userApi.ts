@@ -5,17 +5,16 @@ import {
     IRegistrationUserRequest,
     IUser,
 } from './../../types/models'
-import { FetchBaseQueryError } from '@reduxjs/toolkit/dist/query'
-import { AppDispatch } from './../store'
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-import { ErrorResponse } from '@remix-run/router'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { apiUrl } from './api'
+
 
 export const userApi = createApi({
     reducerPath: 'userApi',
     tagTypes: ['User'],
     baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3001/api/',
+        baseUrl: apiUrl,
         prepareHeaders: (headers) => {
             if (localStorage.getItem('token')) {
                 headers.set(
