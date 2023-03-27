@@ -13,8 +13,10 @@ import { apiUrl } from './api'
 export const userApi = createApi({
     reducerPath: 'userApi',
     tagTypes: ['User'],
+    
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
+        referrerPolicy: 'unsafe-url',
         prepareHeaders: (headers) => {
             if (localStorage.getItem('token')) {
                 headers.set(

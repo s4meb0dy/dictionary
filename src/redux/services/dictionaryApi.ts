@@ -1,4 +1,4 @@
-import { apiUrl } from './api';
+import { apiUrl } from './api'
 import {
     IGetAllPublicDictionariesResponse,
     IGetWordsFromDictionaryResponse,
@@ -11,11 +11,11 @@ import {
 import { transformErrorFromApi } from '../utils/transforErrorFromApi'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
-
 export const dictionaryApi = createApi({
     reducerPath: 'dictionaryApi',
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
+        referrerPolicy: 'unsafe-url',
         prepareHeaders: (headers) => {
             if (localStorage.getItem('token')) {
                 headers.set(
