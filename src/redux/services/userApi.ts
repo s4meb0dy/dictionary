@@ -9,14 +9,12 @@ import {
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 import { apiUrl } from './api'
 
-
 export const userApi = createApi({
     reducerPath: 'userApi',
     tagTypes: ['User'],
-    
+
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
-        referrerPolicy: 'unsafe-url',
         prepareHeaders: (headers) => {
             if (localStorage.getItem('token')) {
                 headers.set(
@@ -42,7 +40,9 @@ export const userApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         registration: builder.mutation<IUser, IRegistrationUserRequest>({
@@ -59,7 +59,9 @@ export const userApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         getUserInfo: builder.query<IUser, void>({
@@ -74,7 +76,9 @@ export const userApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
     }),

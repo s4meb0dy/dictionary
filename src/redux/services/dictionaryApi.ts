@@ -15,7 +15,6 @@ export const dictionaryApi = createApi({
     reducerPath: 'dictionaryApi',
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
-        referrerPolicy: 'unsafe-url',
         prepareHeaders: (headers) => {
             if (localStorage.getItem('token')) {
                 headers.set(
@@ -49,7 +48,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         createDictionary: builder.mutation<
@@ -73,7 +74,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         getAllPublicDictionaries: builder.query<
@@ -85,6 +88,18 @@ export const dictionaryApi = createApi({
                     data.name && `&name=${data.name}`
                 }`,
             }),
+            transformErrorResponse: (
+                response: {
+                    status: number
+                    data: IError
+                },
+                meta,
+                arg
+            ) => {
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
+            },
 
             // keepUnusedDataFor: 5 * 60 * 1000,
         }),
@@ -102,7 +117,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         //----------------WORDS------------------
@@ -132,7 +149,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         getWordsFromPublicDictionary: builder.query<
@@ -150,7 +169,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         createWord: builder.mutation<
@@ -174,7 +195,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         updateWord: builder.mutation<
@@ -195,7 +218,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
         deleteWord: builder.mutation<IWord, { wordId: number }>({
@@ -215,7 +240,9 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                return transformErrorFromApi(response.data.message)
+                if (response?.data?.message)
+                    return transformErrorFromApi(response.data.message)
+                else return transformErrorFromApi('Occurred some error')
             },
         }),
     }),
