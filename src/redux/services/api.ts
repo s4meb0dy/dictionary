@@ -1,1 +1,1 @@
-export const apiUrl = 'http://94.156.144.14:3001/api'
+export const apiUrl = 'https://dictionary-api-production-9561.up.railway.app/api'
