@@ -11,50 +11,70 @@ import {
 } from 'framer-motion'
 
 const LineOfDictionaries = () => {
-    const { scrollYProgress } = useScroll()
+    const { scrollY } = useScroll()
 
-    const containerRef = React.useRef(null)
+    const firstLineRef = React.useRef<HTMLDivElement>(null)
+    const secondLineRef = React.useRef<HTMLDivElement>(null)
 
-    const [elementTop, setElementTop] = React.useState(0)
-    const [elementBottom, setElementBottom] = React.useState(0)
+    const [firstLineTop, setFirstLineTop] = React.useState(0)
+    const [firstLineBottom, setFirstLineBottom] = React.useState(0)
+    const [secondLineTop, setSecondLineTop] = React.useState(0)
+    const [secondLineBottom, setSecondLineBottom] = React.useState(0)
 
     React.useEffect(() => {
-        const element = containerRef.current
-        if (element.center != null) {
-            setElementTop(element.offsetTop)
-            setElementBottom(element.offsetTop + element.offsetHeight)
+        const element = firstLineRef.current
+        if (element != null) {
+            setFirstLineTop(element.offsetTop)
+            setFirstLineBottom(element.offsetTop + element.offsetHeight)
         }
-    }, [containerRef])
+    }, [firstLineRef])
+
+    React.useEffect(() => {
+        const element = secondLineRef.current
+        if (element != null) {
+            setSecondLineTop(element.offsetTop)
+            setSecondLineBottom(element.offsetTop + element.offsetHeight)
+        }
+    }, [secondLineRef])
 
     const rightLineX = useTransform(
-        scrollYProgress,
-        [0, 1],
-        [0, -(2990 - window.innerWidth)]
+        scrollY,
+        [
+            firstLineTop - window.innerHeight,
+            firstLineBottom + window.innerHeight,
+        ],
+        [0, -1 * (2990 - window.innerWidth)]
     )
 
     const leftLineX = useTransform(
-        scrollYProgress,
-        [0, 1],
-        [0, 2990 - window.innerWidth]
+        scrollY,
+        [
+            secondLineTop - window.innerHeight,
+            secondLineBottom + window.innerHeight,
+        ],
+        [-1 * (2990 - window.innerWidth), 0]
     )
 
-    console.log(window.innerWidth)
-
     return (
-        <div
-            ref={containerRef}
-            className="h-[335px] flex flex-col justify-between"
-        >
-            <motion.div style={{ x: rightLineX }} className="flex">
+        <section className='pb-[60px]'>
+            <motion.div
+                ref={firstLineRef}
+                style={{ x: rightLineX }}
+                className="flex"
+            >
                 {Array.from({ length: 7 }).map((item, index) => (
                     <img
                         key={index + 'right'}
                         src={dictionary1}
-                        className="h-[160px] mx-[7.5px] shadow-secondary rounded-[15px]"
+                        className="h-[160px] mx-[7.5px] mb-[15px] shadow-secondary rounded-[15px]"
                     />
                 ))}
             </motion.div>
-            <motion.div style={{ x: leftLineX }} className="flex">
+            <motion.div
+                ref={secondLineRef}
+                style={{ x: leftLineX }}
+                className="flex"
+            >
                 {Array.from({ length: 7 }).map((item, index) => (
                     <img
                         key={index + 'left'}
@@ -63,7 +83,7 @@ const LineOfDictionaries = () => {
                     />
                 ))}
             </motion.div>
-        </div>
+        </section>
     )
 }
 

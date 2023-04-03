@@ -3,6 +3,7 @@ import Content from '../../components/Home/Content'
 import LineOfDictionaries from '../../components/Home/LineOfDictionaries'
 import Header from '../../components/Home/Header'
 import Preview from '../../components/Home/Preview'
+import About from '../../components/Home/About'
 
 
 const HomePage = () => {
@@ -13,6 +14,7 @@ const HomePage = () => {
                 <Preview />
                 <Content>
                     <LineOfDictionaries />
+                    <About />
                 </Content>
             </main>
         </div>
