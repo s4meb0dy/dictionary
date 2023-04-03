@@ -1,15 +1,19 @@
 import React from 'react'
-import AboutDictionaries from '../../components/Home/AboutDictionaries'
+import Content from '../../components/Home/Content'
+import LineOfDictionaries from '../../components/Home/LineOfDictionaries'
 import Header from '../../components/Home/Header'
-import Main from '../../components/Home/Main'
+import Preview from '../../components/Home/Preview'
+
 
 const HomePage = () => {
     return (
-        <div className="h-full w-full animate-appearance">
+        <div className="h-full w-full animate-appearance flex flex-col">
             <Header />
-            <main className="w-full">
-                <Main />
-                <AboutDictionaries />
+            <main className="w-full flex-auto flex flex-col">
+                <Preview />
+                <Content>
+                    <LineOfDictionaries />
+                </Content>
             </main>
         </div>
     )

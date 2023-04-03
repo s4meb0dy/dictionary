@@ -1,1 +1,2 @@
-export const apiUrl = 'https://dictionary-api-production-9561.up.railway.app/api'
+export const apiUrl =
+    'http://localhost:3001/'

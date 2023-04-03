@@ -9,16 +9,24 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = ({}) => {
     const navigate = useNavigate()
 
+    const secondaryColor = useAppSelector(
+        (state) => state.app.colors.secondaryColor
+    )
+
     return (
-        <header className="w-full bg-white/20 flex items-center h-[90px]">
+        <header
+            style={{ backgroundColor: secondaryColor }}
+            className="flex-none w-full flex items-center h-[70px] shadow-primary"
+        >
             <div className="w-[900px] m-auto">
                 <nav className="flex justify-between items-center">
                     <div>
                         <Link
                             to={'/dictionaries'}
                             style={{
-                                color: 'white',
+                                color: 'black',
                                 fontSize: '18px',
+                                fontWeight: 500
                             }}
                         >
                             Dictionaries

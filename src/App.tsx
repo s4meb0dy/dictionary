@@ -6,7 +6,7 @@ import { setDeviceType } from './redux/features/appSlice'
 import MainNavigation from './components/navigation/MainNavigation'
 import InfoBlock from './components/modalWindows/InfoBlock'
 import { userApi } from './redux/services/userApi'
-import { useAppDispatch } from './hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
 import { ScrollbarProps, Scrollbars } from 'react-custom-scrollbars'
@@ -29,9 +29,15 @@ function App() {
         dispatch(setDeviceType({ isMobile, isTablet, isDesktop }))
     }, [isMobile, isTablet, isDesktop])
 
+    const backgroundColor = useAppSelector(
+        (state) => state.app.colors.primaryColor
+    )
     return (
-        <MyScrollbar>
-            <div className="font-main h-full w-full relative z-10">
+        <>
+            <div
+                style={{ backgroundColor: backgroundColor }}
+                className="font-main min-h-full w-full relative z-10"
+            >
                 <Routes>
                     <Route path="/*" element={<MainNavigation />} />
                     <Route path="/login" element={<LoginPage />} />
@@ -39,8 +45,9 @@ function App() {
                 </Routes>
             </div>
             <InfoBlock />
-            <AnimatedBg />
-        </MyScrollbar>
+
+            {/* <AnimatedBg />  */}
+        </>
     )
 }
 
