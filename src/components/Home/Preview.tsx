@@ -43,7 +43,7 @@ const Preview = () => {
     const containerStyles = classNames(
         'w-full flex-none flex flex-col justify-end items-center overflow-hidden',
         { 'h-[700px]': deviceType === 'Desktop' },
-        { 'h-[600px]': deviceType !== 'Desktop' }
+        { 'h-[550px]': deviceType !== 'Desktop' }
     )
 
     const mobileStyles = classNames(
@@ -82,11 +82,11 @@ const Preview = () => {
                 }}
             >
                 <div
-                    className={`absolute h-[96%] w-[90%] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-0 flex`}
+                    className={`absolute h-[96%] w-[96%] top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-0 flex`}
                 >
                     <img
                         src={backBgPicture}
-                        className="absolute w-full h-full object-contain transition-all"
+                        className="absolute top-0 left-0 w-full h-full object-contain transition-all"
                     />
 
                     <AnimatePresence>
@@ -100,7 +100,7 @@ const Preview = () => {
                                 }}
                                 transition={{ duration: 0.15 }}
                                 src={dictionaryPicture}
-                                className="absolute h-full w-full object-contain transition-all animate-appearance"
+                                className="absolute top-0 left-0 w-full h-full object-contain transition-all animate-appearance"
                             />
                         )}
                     </AnimatePresence>

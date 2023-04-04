@@ -28,7 +28,7 @@ const LineOfDictionaries = () => {
     const rightLineX = useTransform(
         scrollY,
         [
-            containerTop - window.innerHeight + 100,
+            containerTop - window.innerHeight + 50,
             containerBottom + window.innerHeight - 160,
         ],
         [
@@ -42,7 +42,7 @@ const LineOfDictionaries = () => {
     const leftLineX = useTransform(
         scrollY,
         [
-            containerTop - window.innerHeight + 100,
+            containerTop - window.innerHeight + 10,
             containerBottom + window.innerHeight / 2 - 160,
         ],
         [
