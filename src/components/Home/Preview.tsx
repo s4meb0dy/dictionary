@@ -48,8 +48,8 @@ const Preview = () => {
 
     const mobileStyles = classNames(
         '-z-[5] relative',
-        { 'h-[460px]': deviceType === 'Desktop' },
-        { 'h-[400px]': deviceType !== 'Desktop' }
+        { 'h-[460px] w-auto': deviceType === 'Desktop' },
+        { 'h-[400px] w-auto': deviceType !== 'Desktop' }
     )
 
     return (
@@ -86,7 +86,7 @@ const Preview = () => {
                 >
                     <img
                         src={backBgPicture}
-                        className="absolute w-full h-full transition-all"
+                        className="absolute w-full h-full object-contain transition-all"
                     />
 
                     <AnimatePresence>
@@ -100,7 +100,7 @@ const Preview = () => {
                                 }}
                                 transition={{ duration: 0.15 }}
                                 src={dictionaryPicture}
-                                className="absolute w-full transition-all animate-appearance"
+                                className="absolute object-contain w-full transition-all animate-appearance"
                             />
                         )}
                     </AnimatePresence>
