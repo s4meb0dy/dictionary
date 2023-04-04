@@ -12,7 +12,7 @@ const Content: React.FC<ContentProps> = ({ children }) => {
     return (
         <div
             style={{ backgroundColor: secondaryColor }}
-            className="w-full flex-auto py-[60px] rounded-t-[40px] shadow-primary"
+            className="w-full flex-auto py-[40px] lg:py-[60px] rounded-t-[30px] sm:rounded-t-[40px] shadow-primary"
         >
             {children}
         </div>

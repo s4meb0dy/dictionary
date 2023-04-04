@@ -16,7 +16,7 @@ const StudyPageContainer = withAuth(StudyPage)
 
 const MainNavigation = () => {
     return (
-        <div className="w-full h-full">
+        <div className="w-full min-h-screen">
             <Routes>
                 <Route path="/" element={<HomeContainer />} />
                 <Route

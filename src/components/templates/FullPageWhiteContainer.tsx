@@ -15,7 +15,7 @@ const FullPageWhiteContainer: React.FC<FullPageWhiteContainerProps> = ({
     return (
         <div
             style={{ backgroundColor: secondaryColor }}
-            className="min-h-[calc(100%-190px)] rounded-t-[30px] sm:rounded-t-[55px] shadow-primary px-[10px] sm:px-[20px] pt-[20px] pb-[80px] sm:pt-[30px] lg:pb-[20px] "
+            className="min-h-[calc(100vh-230px)] rounded-t-[30px] sm:rounded-t-[55px] shadow-primary px-[10px] sm:px-[20px] pt-[20px] pb-[80px] sm:pt-[30px] lg:pb-[20px] "
         >
             {children}
         </div>

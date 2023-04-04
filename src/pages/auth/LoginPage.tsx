@@ -73,7 +73,7 @@ const LoginPage = () => {
     })
 
     return (
-        <div className="min-h-full flex justify-center items-center p-[8px]">
+        <div className="min-h-screen flex justify-center items-center p-[8px]">
             <FormContainer styles="flex flex-col items-center ">
                 <h2 className="font-medium text-[32px] sm:text-[40px] tracking-tight pb-[25px]">
                     Login

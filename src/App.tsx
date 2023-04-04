@@ -36,7 +36,7 @@ function App() {
         <>
             <div
                 style={{ backgroundColor: backgroundColor }}
-                className="font-main min-h-full w-full relative z-10"
+                className="font-main min-h-screen w-full relative z-10"
             >
                 <Routes>
                     <Route path="/*" element={<MainNavigation />} />

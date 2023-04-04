@@ -8,7 +8,8 @@ type MyDictionaryProps = {
     words: number
     learnedWords: number
     access: 'private' | 'public'
-    id: number
+    id?: number
+    width?: string
 }
 
 const MyDictionary: React.FC<MyDictionaryProps> = ({
@@ -17,20 +18,28 @@ const MyDictionary: React.FC<MyDictionaryProps> = ({
     learnedWords,
     access,
     id,
+    width,
 }) => {
     const navigate = useNavigate()
 
     const onClickHandler = () => {
-        navigate(`/my-dictionary/${id}/${access}/${name}`)
+        if (id) navigate(`/my-dictionary/${id}/${access}/${name}`)
 
         // onClick({ id, name, access })
     }
 
     return (
-        <div className="h-[160px] w-[50%] px-[5px] sm:px-[10px] mb-[10px]">
+        <div
+            className={`h-[160px] ${
+                !width ? 'w-[50%]' : ''
+            } px-[5px] sm:px-[10px] mb-[10px]`}
+        >
             <div
                 onClick={onClickHandler}
-                className="h-full w-full bg-white shadow-secondary rounded-[15px] relative flex justify-center items-center cursor-pointer"
+                style={{ width: width ? width : '100%' }}
+                className={`h-full bg-white shadow-secondary rounded-[15px] relative flex justify-center items-center ${
+                    id ? 'cursor-pointer' : ''
+                } `}
             >
                 <span className="absolute top-[7px] left-[7px]">
                     {access === 'public' ? (

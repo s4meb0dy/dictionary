@@ -1,87 +1,88 @@
 import React from 'react'
 import dictionaryLinesPictures from './../../images/dictionariesLine.png'
 import dictionary1 from './../../images/preview/dictionaries/dictionary-1.png'
-import {
-    useScroll,
-    motion,
-    MotionValue,
-    useTransform,
-    useSpring,
-    useViewportScroll,
-} from 'framer-motion'
+import { useScroll, motion, useTransform } from 'framer-motion'
+import MyDictionary from '../myDictionaries/myDictionaries/MyDictionary'
+import { useAppSelector } from '../../hooks/reduxHooks'
+
+const numberOfDictionariesInLine = 6
 
 const LineOfDictionaries = () => {
     const { scrollY } = useScroll()
 
-    const firstLineRef = React.useRef<HTMLDivElement>(null)
-    const secondLineRef = React.useRef<HTMLDivElement>(null)
+    const containerRef = React.useRef<HTMLDivElement>(null)
 
-    const [firstLineTop, setFirstLineTop] = React.useState(0)
-    const [firstLineBottom, setFirstLineBottom] = React.useState(0)
-    const [secondLineTop, setSecondLineTop] = React.useState(0)
-    const [secondLineBottom, setSecondLineBottom] = React.useState(0)
+    const deviceType = useAppSelector((state) => state.app.deviceType)
 
-    React.useEffect(() => {
-        const element = firstLineRef.current
-        if (element != null) {
-            setFirstLineTop(element.offsetTop)
-            setFirstLineBottom(element.offsetTop + element.offsetHeight)
-        }
-    }, [firstLineRef])
+    const [containerTop, setContainerTop] = React.useState(0)
+    const [containerBottom, setContainerBottom] = React.useState(0)
 
     React.useEffect(() => {
-        const element = secondLineRef.current
+        const element = containerRef.current
         if (element != null) {
-            setSecondLineTop(element.offsetTop)
-            setSecondLineBottom(element.offsetTop + element.offsetHeight)
+            setContainerTop(element.offsetTop)
+            setContainerBottom(element.offsetTop + element.offsetHeight)
         }
-    }, [secondLineRef])
+    }, [containerRef])
 
     const rightLineX = useTransform(
         scrollY,
         [
-            firstLineTop - window.innerHeight,
-            firstLineBottom + window.innerHeight,
+            containerTop - window.innerHeight + 100,
+            containerBottom + window.innerHeight - 160,
         ],
-        [0, -1 * (2990 - window.innerWidth)]
+        [
+            0,
+            -1 *
+                ((deviceType === 'Desktop' ? 430 : 180) *
+                    numberOfDictionariesInLine -
+                    window.innerWidth),
+        ]
     )
-
     const leftLineX = useTransform(
         scrollY,
         [
-            secondLineTop - window.innerHeight,
-            secondLineBottom + window.innerHeight,
+            containerTop - window.innerHeight + 100,
+            containerBottom + window.innerHeight / 2 - 160,
         ],
-        [-1 * (2990 - window.innerWidth), 0]
+        [
+            -1 *
+                ((deviceType === 'Desktop' ? 430 : 180) *
+                    numberOfDictionariesInLine -
+                    window.innerWidth),
+            0,
+        ]
     )
 
     return (
-        <section className='pb-[60px]'>
-            <motion.div
-                ref={firstLineRef}
-                style={{ x: rightLineX }}
-                className="flex"
-            >
-                {Array.from({ length: 7 }).map((item, index) => (
-                    <img
-                        key={index + 'right'}
-                        src={dictionary1}
-                        className="h-[160px] mx-[7.5px] mb-[15px] shadow-secondary rounded-[15px]"
-                    />
-                ))}
+        <section ref={containerRef} className="mb-[40px] lg:mb-[60px]">
+            <motion.div style={{ x: rightLineX }} className="flex pb-[10px]">
+                {Array.from({ length: numberOfDictionariesInLine }).map(
+                    (item, index) => (
+                        <MyDictionary
+                            key={index}
+                            name="Work"
+                            words={10}
+                            learnedWords={5}
+                            access="public"
+                            width={deviceType === 'Desktop' ? '410px' : '160px'}
+                        />
+                    )
+                )}
             </motion.div>
-            <motion.div
-                ref={secondLineRef}
-                style={{ x: leftLineX }}
-                className="flex"
-            >
-                {Array.from({ length: 7 }).map((item, index) => (
-                    <img
-                        key={index + 'left'}
-                        src={dictionary1}
-                        className="h-[160px] mx-[7.5px] shadow-secondary rounded-[15px]"
-                    />
-                ))}
+            <motion.div style={{ x: leftLineX }} className="flex">
+                {Array.from({ length: numberOfDictionariesInLine }).map(
+                    (item, index) => (
+                        <MyDictionary
+                            key={index}
+                            name="Work"
+                            words={10}
+                            learnedWords={5}
+                            access="public"
+                            width={deviceType === 'Desktop' ? '410px' : '160px'}
+                        />
+                    )
+                )}
             </motion.div>
         </section>
     )

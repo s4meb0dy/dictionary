@@ -9,14 +9,12 @@ interface HeaderProps {}
 const Header: React.FC<HeaderProps> = ({}) => {
     const navigate = useNavigate()
 
-    const secondaryColor = useAppSelector(
-        (state) => state.app.colors.secondaryColor
-    )
+    const { colors, deviceType } = useAppSelector((state) => state.app)
 
     return (
         <header
-            style={{ backgroundColor: secondaryColor }}
-            className="flex-none w-full flex items-center h-[70px] shadow-primary"
+            style={{ backgroundColor: colors.secondaryColor }}
+            className="flex-none w-full flex items-center h-[70px] shadow-primary p-[10px]"
         >
             <div className="w-[900px] m-auto">
                 <nav className="flex justify-between items-center">
@@ -26,7 +24,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
                             style={{
                                 color: 'black',
                                 fontSize: '18px',
-                                fontWeight: 500
+                                fontWeight: 500,
                             }}
                         >
                             Dictionaries
@@ -34,8 +32,8 @@ const Header: React.FC<HeaderProps> = ({}) => {
                     </div>
                     <div className="flex">
                         <Button
-                            size="medium"
-                            styles="mr-[20px]"
+                            size={deviceType === 'Mobile' ? 'small' : 'medium'}
+                            styles="mr-[15px] sm:mr-[20px]"
                             color="#0086EA"
                             hoverColor="#53A0FF"
                             activeColor="#0D6CBD"
@@ -44,7 +42,7 @@ const Header: React.FC<HeaderProps> = ({}) => {
                             Create account
                         </Button>
                         <Button
-                            size="medium"
+                            size={deviceType === 'Mobile' ? 'small' : 'medium'}
                             color="#1D9745"
                             hoverColor="#24b553"
                             activeColor="#157b2f"

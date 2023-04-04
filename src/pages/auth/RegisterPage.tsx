@@ -96,7 +96,7 @@ const RegisterPage = () => {
     })
 
     return (
-        <div className="min-h-full flex justify-center items-center p-[15px]">
+        <div className="min-h-screen flex justify-center items-center p-[15px]">
             <FormContainer styles="flex flex-col items-center animate-appearance">
                 <h2 className="text-center font-medium text-[32px] sm:text-[40px] tracking-tight pb-[25px]">
                     Create An Account
