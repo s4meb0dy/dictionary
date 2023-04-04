@@ -100,14 +100,14 @@ const Preview = () => {
                                 }}
                                 transition={{ duration: 0.15 }}
                                 src={dictionaryPicture}
-                                className="absolute object-contain w-full transition-all animate-appearance"
+                                className="absolute h-full w-full object-contain transition-all animate-appearance"
                             />
                         )}
                     </AnimatePresence>
                 </div>
                 <img
                     src={mockupPicture}
-                    className="relative h-full w-full z-20 block"
+                    className="relative h-full w-full object-contain z-20 block"
                 />
             </motion.div>
         </div>
