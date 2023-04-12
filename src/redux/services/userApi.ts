@@ -1,4 +1,4 @@
-import { transformErrorFromApi } from '../utils/transforErrorFromApi'
+import { transformErrorFromApi } from '../../utils/transforErrorFromApi'
 import { IError } from './../../types/models/IError'
 import {
     ILoginUserRequest,

@@ -6,6 +6,7 @@ import FolderUserIcon from '../../assets/icons/FolderUserIcon'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import ArrowCircleLeftIcon from '../../assets/icons/ArrowCircleLeftIcon'
 import classNames from 'classnames'
+import { NavigationEnum } from '../../types/navigation'
 
 const Navbar = () => {
     const { pathname } = useLocation()
@@ -40,19 +41,25 @@ const Navbar = () => {
             <ul className={listStyles}>
                 <li className={itemStyles}>
                     <HomeIcon
-                        onClick={() => navigate('/')}
+                        onClick={() => navigate(NavigationEnum.myDictionaries)}
                         width="45px"
                         height="45px"
-                        color={pathname === '/' ? '#0D6CBD' : '#8FA0AF'}
+                        color={
+                            pathname === NavigationEnum.myDictionaries
+                                ? '#0D6CBD'
+                                : '#8FA0AF'
+                        }
                     />
                 </li>
                 <li className={itemStyles}>
                     <FolderPlusIcon
-                        onClick={() => navigate('/create-dictionary')}
+                        onClick={() =>
+                            navigate(NavigationEnum.createDictionary)
+                        }
                         width="45px"
                         height="45px"
                         color={
-                            pathname === '/create-dictionary'
+                            pathname === NavigationEnum.createDictionary
                                 ? '#0D6CBD'
                                 : '#8FA0AF'
                         }
@@ -60,11 +67,15 @@ const Navbar = () => {
                 </li>
                 <li className={itemStyles}>
                     <FolderUserIcon
-                        onClick={() => navigate('/dictionaries')}
+                        onClick={() =>
+                            navigate(NavigationEnum.publicDictionaries)
+                        }
                         width="45px"
                         height="45px"
                         color={
-                            pathname === '/dictionaries' ? '#0D6CBD' : '#8FA0AF'
+                            pathname === NavigationEnum.publicDictionaries
+                                ? '#0D6CBD'
+                                : '#8FA0AF'
                         }
                     />
                 </li>

@@ -5,8 +5,8 @@ import { useParams } from 'react-router-dom'
 import AddWord from '../../components/myDictionaries/myDictionary/AddWord'
 import MyDictionaryHeader from '../../components/myDictionaries/myDictionary/MyDictionaryHeader'
 import Words from '../../components/myDictionaries/myDictionary/Words'
-import FullPageWhiteContainer from '../../components/templates/FullPageWhiteContainer'
-import HeaderUnderFullPage from '../../components/templates/HeaderUnderFullPage'
+import FullPageWhiteContainer from '../../components/containers/FullPageWhiteContainer'
+import HeaderUnderFullPage from '../../components/containers/HeaderUnderFullPage'
 import { useAppDispatch } from '../../hooks/reduxHooks'
 import useErrorHandler from '../../hooks/useErrorHandler'
 import {
@@ -16,6 +16,8 @@ import {
 
 import { dictionaryApi } from '../../redux/services/dictionaryApi'
 import { IWord } from '../../types/models'
+import Navbar from '../../components/navigation/Navbar'
+import PageContainer from '../../components/containers/PageContainer'
 
 const DictionaryPage: React.FC = () => {
     const { id, name, access } = useParams()
@@ -76,32 +78,34 @@ const DictionaryPage: React.FC = () => {
     }, [])
 
     return (
-        <div className="w-full max-w-[900px] h-full mx-auto pt-[40px]  animate-appearance">
-            <HeaderUnderFullPage>
-                {id && name && access && (
-                    <MyDictionaryHeader
-                        dictionaryName={name}
-                        access={access}
-                        isLoading={isLoading}
-                    />
-                )}
-            </HeaderUnderFullPage>
-            <FullPageWhiteContainer>
-                <main>
-                    {id && (
-                        <ul className="px-[5px] sm:px-[10px]">
-                            <Words
-                                dictionaryId={Number(id)}
-                                words={dataFromApi.words}
-                                isLoading={isLoading}
-                            />
-                            <div ref={ref} />
-                            <AddWord dictionaryId={Number(id)} />
-                        </ul>
+        <PageContainer withNavbar>
+            <div className="w-full max-w-[900px] h-full mx-auto pt-[40px]  animate-appearance">
+                <HeaderUnderFullPage>
+                    {id && name && access && (
+                        <MyDictionaryHeader
+                            dictionaryName={name}
+                            access={access}
+                            isLoading={isLoading}
+                        />
                     )}
-                </main>
-            </FullPageWhiteContainer>
-        </div>
+                </HeaderUnderFullPage>
+                <FullPageWhiteContainer>
+                    <main>
+                        {id && (
+                            <ul className="px-[5px] sm:px-[10px]">
+                                <Words
+                                    dictionaryId={Number(id)}
+                                    words={dataFromApi.words}
+                                    isLoading={isLoading}
+                                />
+                                <div ref={ref} />
+                                <AddWord dictionaryId={Number(id)} />
+                            </ul>
+                        )}
+                    </main>
+                </FullPageWhiteContainer>
+            </div>
+        </PageContainer>
     )
 }
 

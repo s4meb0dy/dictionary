@@ -1,12 +1,9 @@
 import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/reduxHooks'
-import myDictionaryImg from '../../images/home-my-dictionaries.png'
 import Button from '../input/Button'
 
-interface HeaderProps {}
-
-const Header: React.FC<HeaderProps> = ({}) => {
+const Header: React.FC = () => {
     const navigate = useNavigate()
 
     const { colors, deviceType } = useAppSelector((state) => state.app)
@@ -58,33 +55,3 @@ const Header: React.FC<HeaderProps> = ({}) => {
 }
 
 export default Header
-
-{
-    /* <Button
-size="large"
-styles="mb-[13px]"
-color="#0086EA"
-hoverColor="#53A0FF"
-activeColor="#0D6CBD"
-onClick={() => navigate('/register')}
->
-Create account
-</Button>
-<Button
-size="large"
-color="#1D9745"
-hoverColor="#24b553"
-activeColor="#157b2f"
-onClick={() => navigate('/login')}
->
-Login
-</Button> */
-}
-
-{
-    /* <img
-                    src={myDictionaryImg}
-                    className="h-full w-full object-contain"
-                    alt="img"
-                /> */
-}

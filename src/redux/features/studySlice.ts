@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { IWord } from '../../types/models'
-import { shuffleArray } from '../utils/shuffleArray'
+import { shuffleArray } from '../../utils/shuffleArray'
 
 type initialStateType = {
     modes: { id: number; name: string }[]

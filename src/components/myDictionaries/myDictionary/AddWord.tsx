@@ -68,7 +68,7 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
     }
 
     const onSaveHandler = () => {
-        let isError: boolean = false
+        let isError = false
 
         if (wordValue === '') {
             isError = true
@@ -112,7 +112,13 @@ const AddWord: React.FC<AddWordProps> = ({ dictionaryId }) => {
                 className={`bg-white overflow-hidden shadow-secondary rounded-[15px] sm:rounded-[25px] transition-all relative mb-[10px] ${
                     isLoading && 'blur-[2px] pointer-events-none'
                 }`}
-                style={{ height: isOpen ? deviceType === 'Mobile' ? '168px' : '229px'  : '0px' }}
+                style={{
+                    height: isOpen
+                        ? deviceType === 'Mobile'
+                            ? '168px'
+                            : '229px'
+                        : '0px',
+                }}
             >
                 <div className="bg-white p-[10px] sm:p-[24px] flex flex-col items-center ">
                     <TextInput

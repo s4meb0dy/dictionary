@@ -4,15 +4,27 @@ import { closeInfoBlock } from '../../redux/features/appSlice'
 import CheckCircleIcon from '../../assets/icons/CheckCircleIcon'
 import CircleCloseIcon from '../../assets/icons/CircleCloseIcon'
 import CloseIcon from '../../assets/icons/CloseIcon'
-import { current } from '@reduxjs/toolkit'
+import { AnimatePresence, motion } from 'framer-motion'
 
-type InfoBlockProps = {}
+const variants = {
+    hidden: { opacity: 0 },
+    visible: {
+        opacity: 1,
+        transition: {
+            duration: 0.05,
+        },
+    },
+}
 
-const InfoBlock: React.FC<InfoBlockProps> = () => {
+const InfoBlock: React.FC = () => {
     const dispatch = useAppDispatch()
 
-    const isInfoBlock = useAppSelector((state) => state.app.isInfoBlock)
-    const infoBlockData = useAppSelector((state) => state.app.infoBlockData)
+    const isInfoBlock = useAppSelector(
+        (state) => state.app.infoBlock.isInfoBlock
+    )
+    const infoBlockData = useAppSelector(
+        (state) => state.app.infoBlock.infoBlockData
+    )
 
     const [isHover, setIsHover] = React.useState<boolean>(false)
     const [colorBg, setColorBg] = React.useState<string>('#E8F2FE')
@@ -38,7 +50,7 @@ const InfoBlock: React.FC<InfoBlockProps> = () => {
         if (isHover && timerRef.current) {
             timerRef.current && clearTimeout(timerRef.current)
             timerRef.current = null
-        } else if (isInfoBlock && !isHover && !timerRef.current) {
+        } else if (isInfoBlock && !isHover && !timerRef.current) {     
             timerRef.current = setTimeout(() => {
                 dispatch(closeInfoBlock())
             }, 7000)
@@ -62,49 +74,56 @@ const InfoBlock: React.FC<InfoBlockProps> = () => {
     }, [infoBlockData])
 
     return (
-        <div
-            className={`fixed bottom-[20px] right-[40px] z-50 text-textDark text-[14px] leading-[20px] rounded-[8px] px-[40px] py-[12px] transition-opacity select-none`}
-            style={{
-                backgroundColor: colorBg,
-                opacity: isInfoBlock ? '1' : '0',
-                pointerEvents: isInfoBlock ? 'all' : 'none',
-                // transition: 'all 1s'
-            }}
-            onMouseOver={handleMouseOver}
-            onMouseOut={handleMouseOut}
-        >
-            <div className="absolute top-[12px] left-[12px]">
-                {infoBlockData?.type == 'error' && (
-                    <CircleCloseIcon
-                        width="20px"
-                        height="20px"
-                        color="#FE2836"
-                    />
-                )}
-                {infoBlockData?.type == 'success' && (
-                    <CheckCircleIcon
-                        width="20px"
-                        height="20px"
-                        color="#1D9745"
-                    />
-                )}
-            </div>
-            <div
-                className="absolute top-[12px] right-[12px] cursor-pointer"
-                onClick={closeErrorHandler}
-            >
-                <CloseIcon width="20px" height="20px" color="#616C76" />
-            </div>
+        <AnimatePresence>
+            {isInfoBlock && (
+                <motion.div
+                    variants={variants}
+                    initial="hidden"
+                    animate="visible"
+                    exit="hidden"
+                    className={`max-w-[400px] fixed bottom-[20px] right-[40px] z-50 text-textDark text-[14px] leading-[20px] rounded-[8px] px-[40px] py-[12px]`}
+                    style={{
+                        backgroundColor: colorBg,
+                    }}
+                    onMouseOver={handleMouseOver}
+                    onMouseOut={handleMouseOut}
+                >
+                    <div className="absolute top-[12px] left-[12px]">
+                        {infoBlockData?.type === 'error' && (
+                            <CircleCloseIcon
+                                width="20px"
+                                height="20px"
+                                color="#FE2836"
+                            />
+                        )}
+                        {infoBlockData?.type === 'success' && (
+                            <CheckCircleIcon
+                                width="20px"
+                                height="20px"
+                                color="#1D9745"
+                            />
+                        )}
+                    </div>
+                    <div
+                        className="absolute top-[12px] right-[12px] cursor-pointer"
+                        onClick={closeErrorHandler}
+                    >
+                        <CloseIcon width="20px" height="20px" color="#616C76" />
+                    </div>
 
-            {infoBlockData?.title && (
-                <h4 className="font-semibold text-[14px]">
-                    {infoBlockData.title}
-                </h4>
+                    {infoBlockData?.title && (
+                        <h4 className="font-semibold text-[14px]">
+                            {infoBlockData.title}
+                        </h4>
+                    )}
+                    {infoBlockData?.text && (
+                        <h4 className="text-[14px] break-all w-full">
+                            {infoBlockData.text}
+                        </h4>
+                    )}
+                </motion.div>
             )}
-            {infoBlockData?.text && (
-                <h4 className="text-[14px]">{infoBlockData.text}</h4>
-            )}
-        </div>
+        </AnimatePresence>
     )
 }
 

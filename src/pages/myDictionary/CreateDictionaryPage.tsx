@@ -8,6 +8,8 @@ import { useNavigate } from 'react-router-dom'
 import { openInfoBlock } from '../../redux/features/appSlice'
 import { dictionaryApi } from '../../redux/services/dictionaryApi'
 import useErrorHandler from '../../hooks/useErrorHandler'
+import Navbar from '../../components/navigation/Navbar'
+import PageContainer from '../../components/containers/PageContainer'
 
 const CreateDictionaryPage: React.FC = () => {
     const dispatch = useAppDispatch()
@@ -115,22 +117,26 @@ const CreateDictionaryPage: React.FC = () => {
     }
 
     return (
-        <div className="w-full max-w-[710px] h-full mx-auto px-[10px] pt-[40px] animate-appearance pb-[40px]">
-            <HeaderBlock
-                onChangeAccess={onChangeAccessHandler}
-                access={access}
-                onChangeName={onChangeNameHandler}
-                nameValue={nameValue}
-                errorNameField={errorName}
-            />
-            <Words
-                onSave={onSaveHandler}
-                onAddWord={onAddWordHandler}
-                words={words}
-                onChangeDictionaryDataValue={onChangeDictionaryDataValueHandler}
-                onDeleteDictionary={onDeleteDictionaryHandler}
-            />
-        </div>
+        <PageContainer withNavbar>
+            <div className="w-full max-w-[710px] h-full mx-auto px-[10px] pt-[40px] animate-appearance pb-[40px]">
+                <HeaderBlock
+                    onChangeAccess={onChangeAccessHandler}
+                    access={access}
+                    onChangeName={onChangeNameHandler}
+                    nameValue={nameValue}
+                    errorNameField={errorName}
+                />
+                <Words
+                    onSave={onSaveHandler}
+                    onAddWord={onAddWordHandler}
+                    words={words}
+                    onChangeDictionaryDataValue={
+                        onChangeDictionaryDataValueHandler
+                    }
+                    onDeleteDictionary={onDeleteDictionaryHandler}
+                />
+            </div>
+        </PageContainer>
     )
 }
 

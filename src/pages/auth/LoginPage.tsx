@@ -10,6 +10,7 @@ import { userApi } from './../../redux/services/userApi'
 import useErrorHandler from './../../hooks/useErrorHandler'
 import { useAppDispatch, useAppSelector } from './../../hooks/reduxHooks'
 import { openInfoBlock } from './../../redux/features/appSlice'
+import { getMyDictionariesUrl } from '../../utils/navigateUrl'
 
 type initialValuesType = {
     password: string
@@ -44,7 +45,7 @@ const LoginPage = () => {
                     text: 'You are logged in',
                 })
             )
-            navigate('/')
+            navigate(getMyDictionariesUrl())
         }
     }, [isSuccess])
 

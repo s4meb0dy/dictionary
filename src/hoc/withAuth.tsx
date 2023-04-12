@@ -10,7 +10,7 @@ interface WithAuthProps {
 export default function withAuth<WProps extends WithAuthProps>(
     WrappedComponent: React.ComponentType<WProps & WithAuthProps>
 ) {
-    let WithAuth: React.FC<Omit<WProps, 'authorizationStatus'>> = (props) => {
+    const WithAuth: React.FC<Omit<WProps, 'authorizationStatus'>> = (props) => {
         const authorizationStatus = useAppSelector(
             (state) => state.user.authorizationStatus
         )
@@ -20,8 +20,6 @@ export default function withAuth<WProps extends WithAuthProps>(
 
         return <WrappedComponent {...(props as WProps)} />
     }
-
-
 
     return WithAuth
 }

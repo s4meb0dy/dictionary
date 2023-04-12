@@ -2,6 +2,7 @@ import React from 'react'
 import { useNavigate } from 'react-router-dom'
 
 import Tag from '../../info/Tag'
+import { getMyDictionaryUrl } from '../../../utils/navigateUrl'
 
 type MyDictionaryProps = {
     name: string
@@ -23,9 +24,8 @@ const MyDictionary: React.FC<MyDictionaryProps> = ({
     const navigate = useNavigate()
 
     const onClickHandler = () => {
-        if (id) navigate(`/my-dictionary/${id}/${access}/${name}`)
-
-        // onClick({ id, name, access })
+        if (id)
+            navigate(getMyDictionaryUrl({ id, access, dictionaryName: name }))
     }
 
     return (

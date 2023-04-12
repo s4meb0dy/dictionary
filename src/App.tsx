@@ -1,6 +1,5 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import AnimatedBg from './components/animations/AnimatedBg'
 import useMatchMedia from 'use-match-media-hook'
 import { setDeviceType } from './redux/features/appSlice'
 import MainNavigation from './components/navigation/MainNavigation'
@@ -9,8 +8,6 @@ import { userApi } from './redux/services/userApi'
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
-import { ScrollbarProps, Scrollbars } from 'react-custom-scrollbars'
-import MyScrollbar from './components/templates/MyScrollbar'
 
 const queries = [
     '(max-width: 639px)',
@@ -32,6 +29,7 @@ function App() {
     const backgroundColor = useAppSelector(
         (state) => state.app.colors.primaryColor
     )
+
     return (
         <>
             <div

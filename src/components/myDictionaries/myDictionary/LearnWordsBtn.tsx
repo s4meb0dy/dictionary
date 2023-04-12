@@ -1,12 +1,9 @@
-
 import React from 'react'
 import { useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../../hooks/reduxHooks'
 import Button from '../../input/Button'
 
-interface LearnWordsBtnProps {}
-
-const LearnWordsBtn: React.FC<LearnWordsBtnProps> = ({}) => {
+const LearnWordsBtn: React.FC = () => {
     const wordsToStudy = useAppSelector((state) => state.study.wordsToStudy)
 
     const navigate = useNavigate()

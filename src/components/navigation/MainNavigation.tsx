@@ -1,61 +1,53 @@
 import React from 'react'
 import { Route, Routes } from 'react-router-dom'
-import HomeContainer from '../Home/HomeContainer'
-import Navbar from './Navbar'
 import CreateDictionaryPage from '../../pages/myDictionary/CreateDictionaryPage'
 import PublicDictionariesPage from '../../pages/publicDictionary/PublicDictionariesPage'
-import DictionaryPage from '../../pages/myDictionary/MyDictionaryPage'
+import MyDictionaryPage from '../../pages/myDictionary/MyDictionaryPage'
 import PublicDictionaryPage from '../../pages/publicDictionary/PublicDictionaryPage'
 import withAuth from '../../hoc/withAuth'
 import StudyPage from '../../pages/study/StudyPage'
+import { NavigationEnum } from '../../types/navigation'
+import PreviewPage from '../../pages/preview/PreviewPage'
+import MyDictionariesPage from '../../pages/myDictionary/MyDictionariesPage'
 
 const CreateDictionaryPageContainer = withAuth(CreateDictionaryPage)
-const DictionaryPageContainer = withAuth(DictionaryPage)
+const MyDictionaryPageContainer = withAuth(MyDictionaryPage)
 const StudyPageContainer = withAuth(StudyPage)
-// const HomePageContainer = withRedirectToMain(MyDictionariesPage, HomePage)
+const MyDictionariesPageContainer = withAuth(MyDictionariesPage)
 
 const MainNavigation = () => {
     return (
         <div className="w-full min-h-screen">
             <Routes>
-                <Route path="/" element={<HomeContainer />} />
                 <Route
-                    path="/create-dictionary"
-                    element={
-                        <>
-                            <Navbar />
-                            <CreateDictionaryPageContainer />
-                        </>
-                    }
+                    path={NavigationEnum.preview}
+                    element={<PreviewPage />}
                 />
                 <Route
-                    path="/dictionaries"
-                    element={
-                        <>
-                            <Navbar />
-                            <PublicDictionariesPage />
-                        </>
-                    }
+                    path={NavigationEnum.myDictionaries}
+                    element={<MyDictionariesPageContainer />}
+                />
+
+                <Route
+                    path={NavigationEnum.createDictionary}
+                    element={<CreateDictionaryPageContainer />}
                 />
                 <Route
-                    path="/my-dictionary/:id/:access/:name"
-                    element={
-                        <>
-                            <Navbar />
-                            <DictionaryPageContainer />
-                        </>
-                    }
+                    path={NavigationEnum.myDictionary}
+                    element={<MyDictionaryPageContainer />}
                 />
                 <Route
-                    path="/dictionary/:id/:name"
-                    element={
-                        <>
-                            <Navbar />
-                            <PublicDictionaryPage />
-                        </>
-                    }
+                    path={NavigationEnum.publicDictionaries}
+                    element={<PublicDictionariesPage />}
                 />
-                <Route path="/learn/*" element={<StudyPageContainer />} />
+                <Route
+                    path={NavigationEnum.publicDictionary}
+                    element={<PublicDictionaryPage />}
+                />
+                <Route
+                    path={NavigationEnum.study}
+                    element={<StudyPageContainer />}
+                />
             </Routes>
         </div>
     )

@@ -1,8 +1,7 @@
 import React from 'react'
-import previewPicture from './../../images/iPhone.png'
-import mockupPicture from './../../images/iPhone-mockup.png'
-import backBgPicture from './../../images/backBg.png'
-import dictionaryPicture from './../../images/mobile-open-dictionary.png'
+import mockupPicture from './../../assets/images/iPhone-mockup.png'
+import backBgPicture from './../../assets/images/backBg.png'
+import dictionaryPicture from './../../assets/images/mobile-open-dictionary.png'
 import { AnimatePresence, motion } from 'framer-motion'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import classNames from 'classnames'
@@ -36,7 +35,7 @@ const imgVariants = {
     }),
 }
 
-const Preview = () => {
+const Banner = () => {
     const [isPictureInDisplay, setIsPictureInDisplay] = React.useState(false)
     const deviceType = useAppSelector((state) => state.app.deviceType)
 
@@ -114,9 +113,4 @@ const Preview = () => {
     )
 }
 
-export default Preview
-
-{
-    /* <h1 className='text-white text-[55px] tracking-tight font-semibold'>Your dictionary!</h1>
-                <p className="text-white/50 text-[25px] font-medium w-[350px]">Learn foreign words efficiently!</p> */
-}
+export default Banner

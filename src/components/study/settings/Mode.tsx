@@ -10,7 +10,7 @@ interface ModeProps {
 
 const Mode: React.FC<ModeProps> = ({ name, onClick, id }) => {
     const onOpenInfo = () => {
-        console.log('info')
+        // console.log('info')
     }
 
     return (

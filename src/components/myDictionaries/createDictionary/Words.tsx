@@ -1,8 +1,6 @@
 import React from 'react'
-
 import Button from '../../input/Button'
 import Word from './Word'
-import { nanoid } from 'nanoid'
 import PluseIcon from '../../../assets/icons/PluseIcon'
 import CheckCircleIcon from '../../../assets/icons/CheckCircleIcon'
 import { useAppSelector } from '../../../hooks/reduxHooks'

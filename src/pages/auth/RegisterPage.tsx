@@ -1,5 +1,4 @@
 import React from 'react'
-
 import FormContainer from '../../components/auth/FormContainer'
 import Button from '../../components/input/Button'
 import TextInput from '../../components/input/TextInput'
@@ -10,6 +9,7 @@ import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import { openInfoBlock } from '../../redux/features/appSlice'
 import { userApi } from '../../redux/services'
 import useErrorHandler from '../../hooks/useErrorHandler'
+import { getMyDictionariesUrl } from '../../utils/navigateUrl'
 
 type initialValuesType = {
     email: string
@@ -62,7 +62,7 @@ const RegisterPage = () => {
                     text: 'The account is registered ',
                 })
             )
-            navigate('/')
+            navigate(getMyDictionariesUrl())
         }
     }, [isSuccess])
 

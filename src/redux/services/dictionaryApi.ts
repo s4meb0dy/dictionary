@@ -8,7 +8,7 @@ import {
     IDictionary,
     ICreateDictionaryWithWordsRequest,
 } from './../../types/models'
-import { transformErrorFromApi } from '../utils/transforErrorFromApi'
+import { transformErrorFromApi } from '../../utils/transforErrorFromApi'
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 export const dictionaryApi = createApi({

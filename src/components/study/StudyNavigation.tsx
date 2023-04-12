@@ -19,9 +19,8 @@ const variants: Variants = {
     },
 }
 
-interface StudyNavigationProps {}
 
-const StudyNavigation: React.FC<StudyNavigationProps> = () => {
+const StudyNavigation: React.FC = () => {
     const { currentStep, wordsToStudy, studyWay } = useAppSelector(
         (state) => state.study
     )

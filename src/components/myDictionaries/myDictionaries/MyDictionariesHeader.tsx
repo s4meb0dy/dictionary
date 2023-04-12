@@ -1,7 +1,7 @@
 import React from 'react'
 import { useAppSelector } from '../../../hooks/reduxHooks'
 import { dictionaryApi } from '../../../redux/services/dictionaryApi'
-import DictionaryInformation from '../../templates/DictionaryInformation'
+import DictionaryInformation from '../../containers/DictionaryInformation'
 
 const MyDictionariesHeader: React.FC = () => {
     // const { isLoading } = useAppSelector((state) => state.dictionary)

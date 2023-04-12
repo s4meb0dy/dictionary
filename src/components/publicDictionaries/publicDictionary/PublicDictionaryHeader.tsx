@@ -8,7 +8,7 @@ import { openInfoBlock } from '../../../redux/features'
 import { dictionaryApi } from '../../../redux/services'
 import { AuthorizationEnum } from '../../../types'
 import Button from '../../input/Button'
-import DictionaryInformation from '../../templates/DictionaryInformation'
+import DictionaryInformation from '../../containers/DictionaryInformation'
 
 type PublicDictionaryHeaderProps = {
     dictionaryName: string

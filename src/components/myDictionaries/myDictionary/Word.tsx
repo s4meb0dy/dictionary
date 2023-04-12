@@ -83,7 +83,7 @@ const Word: React.FC<WordProps> = ({ word, onSelectWord, isChecked }) => {
     }
 
     const onSaveChangesHandler = () => {
-        let isError: boolean = false
+        let isError = false
 
         if (wordValue === '') {
             isError = true

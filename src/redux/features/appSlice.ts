@@ -6,12 +6,15 @@ type initialStateType = {
         primaryColor: string
         secondaryColor: string
     }
-    infoBlockData: null | {
-        type: 'success' | 'error' | 'info'
-        title?: string
-        text?: string
+
+    infoBlock: {
+        infoBlockData: null | {
+            type: 'success' | 'error' | 'info'
+            title?: string
+            text?: string
+        }
+        isInfoBlock: boolean
     }
-    isInfoBlock: boolean
 }
 
 const initialState: initialStateType = {
@@ -20,8 +23,7 @@ const initialState: initialStateType = {
         primaryColor: 'var(--primary-color)',
         secondaryColor: 'var(--secondary-color)',
     },
-    infoBlockData: null,
-    isInfoBlock: false,
+    infoBlock: { infoBlockData: null, isInfoBlock: false },
 }
 
 const appSlice = createSlice({
@@ -57,12 +59,12 @@ const appSlice = createSlice({
                 type: 'success' | 'error' | 'info'
             }>
         ) => {
-            state.infoBlockData = action.payload
-            state.isInfoBlock = true
+            state.infoBlock.infoBlockData = action.payload
+            state.infoBlock.isInfoBlock = true
         },
         closeInfoBlock: (state) => {
             // state.infoBlockData = null
-            state.isInfoBlock = false
+            state.infoBlock.isInfoBlock = false
         },
     },
 })
