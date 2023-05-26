@@ -38,6 +38,7 @@ const Navbar = () => {
             style={{ backgroundColor: colors.secondaryColor }}
             className={navStyles}
         >
+            
             <ul className={listStyles}>
                 <li className={itemStyles}>
                     <HomeIcon

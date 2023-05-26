@@ -66,7 +66,7 @@ export const userApi = createApi({
         }),
         getUserInfo: builder.query<IUser, void>({
             query: () => ({
-                url: 'user/userinfo',
+                url: 'user/status',
             }),
             transformErrorResponse: (
                 response: {

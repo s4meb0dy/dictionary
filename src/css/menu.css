@@ -1,0 +1,41 @@
+.menu-button {
+    width: 36px;
+    height: 28px;
+    position: relative;
+}
+
+.menu-button::before, .menu-button::after{
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+
+    background-color: #fff;
+    height: 2.5px;
+    border-radius: 5px;
+}
+
+.menu-button::before{
+    transform: translate(0, 0);
+}
+
+.menu-button::after{
+    transform: translate(0, 25.5px);
+}
+
+.menu-button span {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    background-color: #fff;
+    height: 2.5px;
+    border-radius: 5px;
+
+    transform: translate(0, 12.5px);
+}
+
+.menu-button-active {
+    
+}

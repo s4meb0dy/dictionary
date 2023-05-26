@@ -10,6 +10,7 @@ import { openInfoBlock } from '../../redux/features/appSlice'
 import { userApi } from '../../redux/services'
 import useErrorHandler from '../../hooks/useErrorHandler'
 import { getMyDictionariesUrl } from '../../utils/navigateUrl'
+import { NavigationEnum } from '../../types/navigation'
 
 type initialValuesType = {
     email: string
@@ -67,7 +68,7 @@ const RegisterPage = () => {
     }, [isSuccess])
 
     React.useEffect(() => {
-        isSuccess && navigate('/')
+        isSuccess && navigate(NavigationEnum.myDictionaries)
     }, [isSuccess])
 
     useErrorHandler(error as string)

@@ -9,7 +9,7 @@ import PageContainer from '../../components/containers/PageContainer'
 
 const MyDictionariesPage = () => {
     return (
-        <PageContainer withNavbar>
+        <PageContainer withNavbar withMenu>
             <div className="w-full max-w-[900px] h-full mx-auto pt-[40px] animate-appearance">
                 <HeaderUnderFullPage>
                     <MyDictionariesHeader />

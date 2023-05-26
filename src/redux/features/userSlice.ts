@@ -2,14 +2,16 @@ import { userApi } from './../services/userApi'
 import { AppDispatch } from './../store'
 import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthorizationEnum } from './../../types/index'
-import { IError } from '../../types/models'
+import { IError, IUser } from '../../types/models'
 
 type initialStateType = {
     authorizationStatus: AuthorizationEnum
+    user: IUser | null
 }
 
 const initialState: initialStateType = {
     authorizationStatus: AuthorizationEnum.Unknown,
+    user: null
 }
 
 const userSlice = createSlice({
@@ -34,6 +36,7 @@ const userSlice = createSlice({
                             action.payload.access_token
                         )
                         state.authorizationStatus = AuthorizationEnum.Login
+                        state.user = action.payload 
                     }
                 }
             )
@@ -53,6 +56,7 @@ const userSlice = createSlice({
                             action.payload.access_token
                         )
                         state.authorizationStatus = AuthorizationEnum.Login
+                        state.user = action.payload 
                     }
                 }
             )
@@ -60,6 +64,7 @@ const userSlice = createSlice({
                 userApi.endpoints.getUserInfo.matchFulfilled,
                 (state, action) => {
                     state.authorizationStatus = AuthorizationEnum.Login
+                    state.user = action.payload 
                 }
             )
             .addMatcher(
