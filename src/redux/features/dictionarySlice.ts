@@ -23,26 +23,34 @@ const dictionarySlice = createSlice({
     initialState,
     reducers: {},
     extraReducers: (builder) => {
-        builder.addMatcher(
+        builder
+        .addMatcher(
             dictionaryApi.endpoints.getMyDictionaries.matchFulfilled,
             (state, action: PayloadAction<IDictionary[]>) => {
-                console.log('pick')
-                let totalWords = 0
-                let totalLearnedWords = 0
 
-                action.payload.forEach((item) => {
-                    totalWords += item.total
-                    totalLearnedWords += item.learned
-                })
+                // let totalWords = 0
+                // let totalLearnedWords = 0
 
-                state.totalInformationAboutMyDictionaries.totalLearnedWords =
-                    totalLearnedWords
-                state.totalInformationAboutMyDictionaries.totalWords =
-                    totalWords
-                state.totalInformationAboutMyDictionaries.totalDictionaries =
-                    action.payload.length
+                // action?.payload?.forEach((item) => {
+                //     totalWords += item.total
+                //     totalLearnedWords += item.learned
+                // })
+
+                // state.totalInformationAboutMyDictionaries.totalLearnedWords =
+                //     totalLearnedWords
+                // state.totalInformationAboutMyDictionaries.totalWords =
+                //     totalWords
+                // state.totalInformationAboutMyDictionaries.totalDictionaries =
+                //     action.payload.length
             }
         )
+        .addMatcher(
+            dictionaryApi.endpoints.getMyDictionaries.matchRejected,
+            (state, action) => {
+                console.log('error')
+            }
+        )
+        
     },
 })
 

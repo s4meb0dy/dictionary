@@ -73,7 +73,7 @@ const PublicDictionaries: React.FC = () => {
                         <div key={item.id}>
                             <PublicDictionary
                                 name={item.name}
-                                words={item.total}
+                                words={1}
                                 id={item.id}
                             />
                             {index === dataFromApi.dictionaries.length - 1 && (

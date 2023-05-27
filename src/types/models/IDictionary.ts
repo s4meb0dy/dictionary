@@ -1,11 +1,7 @@
 export interface IDictionary {
     id: number
     createdAt: string
-    learned: number
-    updatedAt: string
-    isPublic: boolean
     name: string
-    total: number
 }
 
 export interface ICreateDictionaryWithWordsRequest {

@@ -16,7 +16,7 @@ const MyDictionaries: React.FC = () => {
         isLoading,
     } = dictionaryApi.useGetMyDictionariesQuery()
 
-    useErrorHandler(error as string)
+    // useErrorHandler(error as string)
 
     React.useEffect(() => {
         window.scrollTo(0, 0)
@@ -34,10 +34,10 @@ const MyDictionaries: React.FC = () => {
                     <MyDictionary
                         key={item.id}
                         name={item.name}
-                        words={item.total}
-                        learnedWords={item.learned}
+                        words={1}
+                        learnedWords={1}
                         id={item.id}
-                        access={item.isPublic ? 'public' : 'private'}
+                        access={'public'}
                     />
                 ))}
             {myDictionaries && myDictionaries.length === 0 && isLoading && (

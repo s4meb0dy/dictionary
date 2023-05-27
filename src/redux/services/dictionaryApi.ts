@@ -32,10 +32,11 @@ export const dictionaryApi = createApi({
     tagTypes: ['MyDictionary', 'MyWord', '1'],
     endpoints: (builder) => ({
         //----------------Dictionary------------------
-        getMyDictionaries: builder.query<IDictionary[], void>({
+        getMyDictionaries: builder.query< IDictionary[], void>({
             query: () => ({ url: '/dictionary' }),
-            providesTags: (result) =>
-                result
+            providesTags: (result) => {
+                
+                return result
                     ? [
                           ...result.map(({ id }) => ({
                               type: 'MyDictionary' as const,
@@ -43,7 +44,10 @@ export const dictionaryApi = createApi({
                           })),
                           { type: 'MyDictionary', id: 'LIST' },
                       ]
-                    : [{ type: 'MyDictionary', id: 'LIST' }],
+                    : [{ type: 'MyDictionary', id: 'LIST' }]
+                
+                
+            },
             transformErrorResponse: (
                 response: {
                     status: number
