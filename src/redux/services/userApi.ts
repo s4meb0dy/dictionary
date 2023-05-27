@@ -16,9 +16,13 @@ export const userApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
         prepareHeaders: (headers) => {
+            headers.set(
+                "ngrok-skip-browser-warning",
+                "true"
+            );
             if (localStorage.getItem('token')) {
                 headers.set(
-                    'authorization',
+                    'Authorization',
                     `Bearer ${localStorage.getItem('token')}`
                 )
             }
@@ -28,7 +32,7 @@ export const userApi = createApi({
     endpoints: (builder) => ({
         login: builder.mutation<IUser, ILoginUserRequest>({
             query: (body) => ({
-                url: '/auth/login',
+                url: '/user/login',
                 method: 'POST',
                 body,
             }),
@@ -47,7 +51,7 @@ export const userApi = createApi({
         }),
         registration: builder.mutation<IUser, IRegistrationUserRequest>({
             query: (body) => ({
-                url: 'auth/signup',
+                url: 'user/signup',
                 method: 'POST',
                 body,
             }),

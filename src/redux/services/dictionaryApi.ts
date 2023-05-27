@@ -16,9 +16,13 @@ export const dictionaryApi = createApi({
     baseQuery: fetchBaseQuery({
         baseUrl: apiUrl,
         prepareHeaders: (headers) => {
+            headers.set(
+                "ngrok-skip-browser-warning",
+                "true"
+            );
             if (localStorage.getItem('token')) {
                 headers.set(
-                    'authorization',
+                    'Authorization',
                     `Bearer ${localStorage.getItem('token')}`
                 )
             }
