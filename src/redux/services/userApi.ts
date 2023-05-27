@@ -44,8 +44,8 @@ export const userApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -63,8 +63,8 @@ export const userApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -80,8 +80,8 @@ export const userApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),

@@ -56,8 +56,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -82,8 +82,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -104,8 +104,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
 
@@ -125,8 +125,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -136,7 +136,7 @@ export const dictionaryApi = createApi({
             { page: number; dictionaryId: number | string }
         >({
             query: ({ page, dictionaryId }) => ({
-                url: `word/dictionary/${dictionaryId}?page=${page}&limit=10`,
+                url: `dictionary/${dictionaryId}?page=${page}&limit=10`,
             }),
             providesTags: (result) =>
                 result
@@ -157,8 +157,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -177,8 +177,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -203,8 +203,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -226,8 +226,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
@@ -248,8 +248,8 @@ export const dictionaryApi = createApi({
                 meta,
                 arg
             ) => {
-                if (response?.data?.message)
-                    return transformErrorFromApi(response.data.message)
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
                 else return transformErrorFromApi('Occurred some error')
             },
         }),
