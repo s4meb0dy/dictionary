@@ -51,24 +51,7 @@ interface DropDownProps {
 }
 
 const DropDown: React.FC<DropDownProps> = ({ isOpen }) => {
-    const [logout, { isSuccess, error }] = userApi.useLogoutMutation()
-
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
-    React.useEffect(() => {
-        if (isSuccess) {
-            console.log('yes')
-            dispatch(
-                openInfoBlock({
-                    type: 'success',
-                    title: 'Success',
-                    text: 'You are logged out',
-                })
-            )
-            // navigate(getPreviewUrl())
-        }
-    }, [isSuccess])
-
+    const [logout, { error }] = userApi.useLogoutMutation()
 
     useErrorHandler(error as string)
 

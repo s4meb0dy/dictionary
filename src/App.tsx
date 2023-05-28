@@ -8,8 +8,6 @@ import { userApi } from './redux/services/userApi'
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
-import { AuthorizationEnum } from './types'
-import { getMyDictionariesUrl, getPreviewUrl } from './utils/navigateUrl'
 import Preloader from './assets/Preloader'
 
 const queries = [
@@ -32,24 +30,6 @@ function App() {
     const backgroundColor = useAppSelector(
         (state) => state.app.colors.primaryColor
     )
-
-    // const authorizationStatus = useAppSelector(
-    //     (state) => state.user.authorizationStatus
-    // )
-
-    // const navigation = useNavigate()
-
-    // React.useEffect(() => {
-    //     console.log(authorizationStatus, 1)
-    //     switch (authorizationStatus) {
-    //         case AuthorizationEnum.Login:
-    //             navigation(getMyDictionariesUrl())
-    //             break
-    //         case AuthorizationEnum.Logout:
-    //             navigation(getPreviewUrl())
-    //             break
-    //     }
-    // }, [authorizationStatus])
 
     return (
         <>
