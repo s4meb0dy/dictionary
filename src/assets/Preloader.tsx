@@ -1,6 +1,6 @@
 import React from 'react'
 
-const PreloaderForElement = () => {
+const Preloader = () => {
     return (
         <div className="absolute top-[50%] left-[50%] translate-x-[-50%] translate-y-[-50%] z-50 animate-appearance">
             <svg
@@ -114,4 +114,4 @@ const PreloaderForElement = () => {
     )
 }
 
-export default PreloaderForElement
+export default Preloader

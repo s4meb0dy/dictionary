@@ -1,11 +1,11 @@
 export interface IUser {
     access_token?: string
     username: string
+    password: string
     email: string
     createdAt: string
-    id: number
+    userId: number
 }
-
 
 export interface ILoginUserRequest {
     email: string

@@ -34,6 +34,10 @@ export const getMyDictionariesUrl = () => {
     return NavigationEnum.myDictionaries
 }
 
+export const getPreviewUrl = () => {
+    return NavigationEnum.preview
+}
+
 export const getCreateDictionaryUrl = () => {
     return NavigationEnum.createDictionary
 }

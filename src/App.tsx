@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import useMatchMedia from 'use-match-media-hook'
 import { setDeviceType } from './redux/features/appSlice'
 import MainNavigation from './components/navigation/MainNavigation'
@@ -8,6 +8,9 @@ import { userApi } from './redux/services/userApi'
 import { useAppDispatch, useAppSelector } from './hooks/reduxHooks'
 import LoginPage from './pages/auth/LoginPage'
 import RegisterPage from './pages/auth/RegisterPage'
+import { AuthorizationEnum } from './types'
+import { getMyDictionariesUrl, getPreviewUrl } from './utils/navigateUrl'
+import Preloader from './assets/Preloader'
 
 const queries = [
     '(max-width: 639px)',
@@ -18,7 +21,7 @@ const queries = [
 function App() {
     const dispatch = useAppDispatch()
 
-    userApi.useGetUserInfoQuery()
+    const { isLoading } = userApi.useGetUserInfoQuery()
 
     const [isMobile, isTablet, isDesktop] = useMatchMedia(queries)
 
@@ -30,17 +33,39 @@ function App() {
         (state) => state.app.colors.primaryColor
     )
 
+    // const authorizationStatus = useAppSelector(
+    //     (state) => state.user.authorizationStatus
+    // )
+
+    // const navigation = useNavigate()
+
+    // React.useEffect(() => {
+    //     console.log(authorizationStatus, 1)
+    //     switch (authorizationStatus) {
+    //         case AuthorizationEnum.Login:
+    //             navigation(getMyDictionariesUrl())
+    //             break
+    //         case AuthorizationEnum.Logout:
+    //             navigation(getPreviewUrl())
+    //             break
+    //     }
+    // }, [authorizationStatus])
+
     return (
         <>
             <div
                 style={{ backgroundColor: backgroundColor }}
                 className="font-main min-h-screen w-full relative z-10"
             >
-                <Routes>
-                    <Route path="/*" element={<MainNavigation />} />
-                    <Route path="/login" element={<LoginPage />} />
-                    <Route path="/register" element={<RegisterPage />} />
-                </Routes>
+                {isLoading ? (
+                    <Preloader />
+                ) : (
+                    <Routes>
+                        <Route path="/*" element={<MainNavigation />} />
+                        <Route path="/login" element={<LoginPage />} />
+                        <Route path="/register" element={<RegisterPage />} />
+                    </Routes>
+                )}
             </div>
             <InfoBlock />
 

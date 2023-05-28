@@ -2,6 +2,7 @@ export interface IDictionary {
     id: number
     createdAt: string
     name: string
+    userId: number
 }
 
 export interface ICreateDictionaryWithWordsRequest {

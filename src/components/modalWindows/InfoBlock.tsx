@@ -26,6 +26,7 @@ const InfoBlock: React.FC = () => {
         (state) => state.app.infoBlock.infoBlockData
     )
 
+
     const [isHover, setIsHover] = React.useState<boolean>(false)
     const [colorBg, setColorBg] = React.useState<string>('#E8F2FE')
 
@@ -117,8 +118,13 @@ const InfoBlock: React.FC = () => {
                         </h4>
                     )}
                     {infoBlockData?.text && (
-                        <h4 className="text-[14px] break-all w-full">
-                            {infoBlockData.text}
+                        <h4 className="text-[14px] w-full ">
+                            {infoBlockData.text.split('\n').map((line, index) => (
+                                <React.Fragment key={index}>
+                                    {line}
+                                <br />
+                                </React.Fragment>
+                            ))}
                         </h4>
                     )}
                 </motion.div>

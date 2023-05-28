@@ -1,5 +1,5 @@
 import React from 'react'
-import { Route, Routes } from 'react-router-dom'
+import { Route, Routes, useNavigate } from 'react-router-dom'
 import CreateDictionaryPage from '../../pages/myDictionary/CreateDictionaryPage'
 import PublicDictionariesPage from '../../pages/publicDictionary/PublicDictionariesPage'
 import MyDictionaryPage from '../../pages/myDictionary/MyDictionaryPage'
@@ -16,6 +16,9 @@ const StudyPageContainer = withAuth(StudyPage)
 const MyDictionariesPageContainer = withAuth(MyDictionariesPage)
 
 const MainNavigation = () => {
+
+    
+
     return (
         <div className="w-full min-h-screen">
             <Routes>

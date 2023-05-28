@@ -4,14 +4,14 @@ import { createAsyncThunk, createSlice, PayloadAction } from '@reduxjs/toolkit'
 import { AuthorizationEnum } from './../../types/index'
 import { IError, IUser } from '../../types/models'
 
-type initialStateType = {
+interface initialStateType {
     authorizationStatus: AuthorizationEnum
-    user: IUser | null
+    userData: IUser | null
 }
 
 const initialState: initialStateType = {
     authorizationStatus: AuthorizationEnum.Unknown,
-    user: null
+    userData: null,
 }
 
 const userSlice = createSlice({
@@ -24,7 +24,7 @@ const userSlice = createSlice({
                 userApi.endpoints.registration.matchPending,
                 (state, action) => {
                     localStorage.removeItem('token')
-                    state.authorizationStatus = AuthorizationEnum.Logout
+                    state.authorizationStatus = AuthorizationEnum.Unknown
                 }
             )
             .addMatcher(
@@ -36,15 +36,25 @@ const userSlice = createSlice({
                             action.payload.access_token
                         )
                         state.authorizationStatus = AuthorizationEnum.Login
-                        state.user = action.payload 
+                        state.userData = action.payload
                     }
+                }
+            )
+            .addMatcher(
+                userApi.endpoints.logout.matchFulfilled,
+                (state, action) => {
+                  
+                    localStorage.removeItem('token')
+                    state.authorizationStatus = AuthorizationEnum.Logout
+                    state.userData = null
+                    
                 }
             )
             .addMatcher(
                 userApi.endpoints.login.matchPending,
                 (state, action) => {
                     localStorage.removeItem('token')
-                    state.authorizationStatus = AuthorizationEnum.Logout
+                    state.authorizationStatus = AuthorizationEnum.Unknown
                 }
             )
             .addMatcher(
@@ -56,15 +66,22 @@ const userSlice = createSlice({
                             action.payload.access_token
                         )
                         state.authorizationStatus = AuthorizationEnum.Login
-                        state.user = action.payload 
+                        state.userData = action.payload
                     }
+                }
+            )
+            .addMatcher(
+                userApi.endpoints.login.matchRejected,
+                (state, action) => {
+                    state.authorizationStatus = AuthorizationEnum.Logout
+                    localStorage.removeItem('token')
                 }
             )
             .addMatcher(
                 userApi.endpoints.getUserInfo.matchFulfilled,
                 (state, action) => {
                     state.authorizationStatus = AuthorizationEnum.Login
-                    state.user = action.payload 
+                    state.userData = action.payload
                 }
             )
             .addMatcher(

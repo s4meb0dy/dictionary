@@ -5,7 +5,7 @@ export const transformErrorFromApi = (
     if (Array.isArray(error)) {
         errorMsg = error
             .map((item) => item.charAt(0).toUpperCase() + item.slice(1))
-            .join('. ')
+            .join('\n')
     } else if (error) errorMsg = error
 
     return errorMsg

@@ -2,6 +2,7 @@ import React from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useAppSelector } from '../../hooks/reduxHooks'
 import Button from '../input/Button'
+import { getMyDictionariesUrl, getPublicDictionariesUrl } from '../../utils/navigateUrl'
 
 const Header: React.FC = () => {
     const navigate = useNavigate()
@@ -17,7 +18,7 @@ const Header: React.FC = () => {
                 <nav className="flex justify-between items-center">
                     <div>
                         <Link
-                            to={'/dictionaries'}
+                            to={getPublicDictionariesUrl()}
                             style={{
                                 color: 'black',
                                 fontSize: '18px',

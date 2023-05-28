@@ -30,6 +30,24 @@ export const userApi = createApi({
         },
     }),
     endpoints: (builder) => ({
+        logout: builder.mutation<IUser, void>({
+            query: () => ({
+                url: '/user/logout',
+                method: 'POST',
+            }),
+            transformErrorResponse: (
+                response: {
+                    status: number
+                    data: IError
+                },
+                meta,
+                arg
+            ) => {
+                if (response?.data?.error)
+                    return transformErrorFromApi(response.data.error)
+                else return transformErrorFromApi('Occurred some error')
+            },
+        }),
         login: builder.mutation<IUser, ILoginUserRequest>({
             query: (body) => ({
                 url: '/user/login',

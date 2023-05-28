@@ -2,8 +2,13 @@ import React from 'react'
 import './../../css/menu.css'
 import MenuIcon from '../../assets/icons/MenuIcon'
 import { AnimatePresence, motion } from 'framer-motion'
-import { useAppSelector } from '../../hooks/reduxHooks'
+import { useAppDispatch, useAppSelector } from '../../hooks/reduxHooks'
 import classNames from 'classnames'
+import { userApi } from '../../redux/services'
+import useErrorHandler from '../../hooks/useErrorHandler'
+import { openInfoBlock } from '../../redux/features'
+import { getPreviewUrl } from '../../utils/navigateUrl'
+import { useNavigate } from 'react-router-dom'
 
 const Menu = () => {
     const [isOpen, setIsOpen] = React.useState(false)
@@ -46,12 +51,41 @@ interface DropDownProps {
 }
 
 const DropDown: React.FC<DropDownProps> = ({ isOpen }) => {
+    const [logout, { isSuccess, error }] = userApi.useLogoutMutation()
+
+    const dispatch = useAppDispatch()
+    const navigate = useNavigate()
+    React.useEffect(() => {
+        if (isSuccess) {
+            console.log('yes')
+            dispatch(
+                openInfoBlock({
+                    type: 'success',
+                    title: 'Success',
+                    text: 'You are logged out',
+                })
+            )
+            // navigate(getPreviewUrl())
+        }
+    }, [isSuccess])
+
+
+    useErrorHandler(error as string)
+
+
     const colors = useAppSelector((state) => state.app.colors)
-    const username = useAppSelector((state) => state.user.user?.username)
+    const username = useAppSelector(
+        (state) => state.user.userData?.username
+    )
 
     const itemStyle = classNames(
         'pl-[15px] pr-[25px] text-textDark text-[14px]'
     )
+
+    const handleLogout = () => {
+        logout()
+    }
+
     return (
         <AnimatePresence>
             {isOpen && (
@@ -64,11 +98,14 @@ const DropDown: React.FC<DropDownProps> = ({ isOpen }) => {
                     style={{ backgroundColor: colors.secondaryColor }}
                 >
                     <ul className="w-max">
-                        <li className={`${itemStyle} font-bold pb-[7px] `}>
-                            {username}
-                        </li>
+                        {username && (
+                            <li className={`${itemStyle} font-bold pb-[7px] `}>
+                                {username}
+                            </li>
+                        )}
                         <li
                             className={`${itemStyle} py-[3px] transition-colors hover:opacity-[0.5] cursor-pointer`}
+                            onClick={handleLogout}
                         >
                             Log out
                         </li>
