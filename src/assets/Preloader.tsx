@@ -13,7 +13,7 @@ const Preloader = () => {
                 viewBox="0 0 100 100"
                 preserveAspectRatio="xMidYMid"
             >
-                <circle cx="18" cy="50" r="4" fill="#e15b64">
+                <circle cx="18" cy="50" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
@@ -25,7 +25,7 @@ const Preloader = () => {
                         repeatCount="indefinite"
                     ></animate>
                 </circle>
-                <circle cx="27" cy="61.31370849898476" r="4" fill="#f47e60">
+                <circle cx="27" cy="61.31370849898476" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
@@ -37,7 +37,7 @@ const Preloader = () => {
                         repeatCount="indefinite"
                     ></animate>
                 </circle>
-                <circle cx="36" cy="66" r="4" fill="#f8b26a">
+                <circle cx="36" cy="66" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
@@ -49,7 +49,7 @@ const Preloader = () => {
                         repeatCount="indefinite"
                     ></animate>
                 </circle>
-                <circle cx="45" cy="61.31370849898476" r="4" fill="#abbd81">
+                <circle cx="45" cy="61.31370849898476" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
@@ -61,7 +61,7 @@ const Preloader = () => {
                         repeatCount="indefinite"
                     ></animate>
                 </circle>
-                <circle cx="54" cy="50" r="4" fill="#e15b64">
+                <circle cx="54" cy="50" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
@@ -73,7 +73,7 @@ const Preloader = () => {
                         repeatCount="indefinite"
                     ></animate>
                 </circle>
-                <circle cx="63" cy="38.68629150101524" r="4" fill="#f47e60">
+                <circle cx="63" cy="38.68629150101524" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
@@ -85,7 +85,7 @@ const Preloader = () => {
                         repeatCount="indefinite"
                     ></animate>
                 </circle>
-                <circle cx="72" cy="34" r="4" fill="#f8b26a">
+                <circle cx="72" cy="34" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
@@ -97,7 +97,7 @@ const Preloader = () => {
                         repeatCount="indefinite"
                     ></animate>
                 </circle>
-                <circle cx="81" cy="38.68629150101523" r="4" fill="#abbd81">
+                <circle cx="81" cy="38.68629150101523" r="4" fill="#ffffff">
                     <animate
                         attributeName="cy"
                         values="34;66;34"
